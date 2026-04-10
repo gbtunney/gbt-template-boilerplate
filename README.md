@@ -24,6 +24,7 @@ TODO:
 [ ] .nvmrc
 [ ] pnpm-workspace.yaml
 [ ] .husky prepush - enfore commit rules - husky disallow commits to main
+[ ] Github Rule set file
 [ ] .github folder
   [ ] instructions
   [ ] actions
