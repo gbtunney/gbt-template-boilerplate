@@ -2,7 +2,7 @@
 
 export type HelloWorld = string | number
 
-/** Returns the input value unchanged. */
-export function echoHelloWorld(value: HelloWorld): HelloWorld {
+const sampleFunc = (value: HelloWorld): HelloWorld => {
+    console.log('sampleFunc:: ', value)
     return value
 }
