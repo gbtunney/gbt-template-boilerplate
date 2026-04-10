@@ -2,7 +2,8 @@
 description: "Workspace setup checklist and actions for Copilot Chat. Use `/my-setup` to trigger."
 ---
 
-# Workspace Setup Checklist
+
+# Workspace Setup Checklist (Current)
 
 - [ ] Install completions and recommended extensions
 - [ ] Sync/pull template files from upstream if needed
@@ -20,8 +21,18 @@ description: "Workspace setup checklist and actions for Copilot Chat. Use `/my-s
 - To push template: `/push-template` or ask Copilot Chat to push to template-upstream
 - To check dependencies: `/check-deps` or ask Copilot Chat to check for outdated packages
 
-_You can edit this checklist as your workflow evolves._
+
+_Keep this checklist up to date with only actionable, current setup steps. Remove or update any items that become obsolete._
 
 ---
 
+
 Type `/my-setup` in Copilot Chat to insert this checklist and instructions.
+
+---
+
+**To run a code block directly:**
+
+- Copy the code block from the prompt and paste it into your terminal.
+- For shell scripts, you can also save the block to a file (e.g., `setup.sh`), then run `bash setup.sh` or `zsh setup.sh`.
+- Copilot Chat cannot execute code blocks automatically; manual copy-paste is required for now.
