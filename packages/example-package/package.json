@@ -1,0 +1,78 @@
+{
+    "name": "@snailicid3/example-package",
+    "version": "0.0.0",
+    "private": false,
+    "description": "Example monorepo package",
+    "scripts": {
+        "build:nx": "nx run $npm_package_name:build",
+        "test:nx": "nx run $npm_package_name:test",
+        "clean:nx": "nx run $npm_package_name:clean",
+        "\n========== DEVELOPMENT >> ==========": "",
+        "dev": "tsc --build --watch",
+        "dev:rollup": "rollup --watch --config ./rollup.config.mts",
+        "\n========== TEST >> ==========": "",
+        "test:watch": "vitest watch",
+        "test:coverage": "vitest run --coverage"
+    },
+    "devDependencies": {
+        "@snailicid3/build-config": "workspace:*",
+        "@snailicid3/config": "workspace:*",
+        "@types/node": "^22.0.0",
+        "rollup": "^4.24.0",
+        "typescript": "^5.7.0",
+        "vitest": "^2.1.0"
+    },
+    "exports": {
+        ".": {
+            "import": "./dist/index.js",
+            "types": "./dist/index.d.ts"
+        }
+    },
+    "files": [
+        "CHANGELOG.md",
+        "dist"
+    ],
+    "nx": {
+        "targets": {
+            "dev": {},
+            "dev:ts": {},
+            "dev:rollup": {},
+            "dev:vite": {},
+            "build:ts": {},
+            "build:rollup": {},
+            "build:vite": {},
+            "build": {
+                "dependsOn": [
+                    "build:ts",
+                    "build:rollup"
+                ]
+            },
+            "test": {},
+            "test:nx": {},
+            "test:watch": {},
+            "lint": {},
+            "fix": {},
+            "clean": {},
+            "clean:ts": {},
+            "clean:build": {},
+            "docs:build": {}
+        }
+    },
+    "type": "module",
+    "author": {
+        "name": "Gillian Tunney",
+        "email": "gbtunney@mac.com"
+    },
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/gbtunney/snailicid3-monorepo"
+    },
+    "main": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "buildConfig": {
+        "runtime": "node",
+        "product": "library",
+        "buildStrategy": "bundle"
+    }
+}
