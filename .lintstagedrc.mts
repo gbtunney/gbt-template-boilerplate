@@ -14,11 +14,14 @@ const mdIgnores = [
 // If true, markdownlint will run but will not block commits
 const WARN_ONLY: boolean = true
 
-const quotePath = (p: string) => `"${p.replaceAll('"', '\\"')}"`
+const quoteArg = (p: string) => `"${p.replaceAll('"', '\\"')}"`
+
 const toFileArgs = (stagedFiles: string | string[]) => {
     const arr = Array.isArray(stagedFiles) ? stagedFiles : [stagedFiles]
-    return arr.map(quotePath).join(' ')
+    return arr.map(quoteArg).join(' ')
 }
+
+const toIgnoreArgs = (ignores: string[]) => ignores.map(quoteArg).join(' ')
 
 /** TODO: had to remove the type so i could use staged function */
 const getLintStagedConfig = () => {
@@ -26,25 +29,20 @@ const getLintStagedConfig = () => {
     const prettierExt = getFileExtensionList<true>(PRETTIER_FILE_EXTENSIONS)
     const mdExt = getFileExtensionList<true>(['md'])
 
-    const configExample = {
+    return {
         /** Markdown */
-        [`*.${mdExt.toString()}`]: (stagedFiles: string | Array<string>) => {
+        [`*.${mdExt.toString()}`]: (stagedFiles: string | string[]) => {
             const files = toFileArgs(stagedFiles)
 
             const markdownlintCmd = WARN_ONLY
-                ? `pnpm exec markdownlint-cli2 ${files} ${mdIgnores.join(' ')} || true`
-                : `pnpm exec markdownlint-cli2 ${files} ${mdIgnores.join(' ')}`
+                ? `pnpm exec markdownlint-cli2 ${files} ${toIgnoreArgs(mdIgnores)} || true`
+                : `pnpm exec markdownlint-cli2 ${files} ${toIgnoreArgs(mdIgnores)}`
 
-            return [
-                // Only format the staged markdown files
-                `pnpm exec prettier --write ${files}`,
-                // Lint only the staged markdown files (optionally warn-only)
-                markdownlintCmd,
-            ]
+            return [`pnpm exec prettier --write ${files}`, markdownlintCmd]
         },
 
         /** JS-Like Files */
-        [`*.{${jsExt.toString()}}`]: (stagedFiles: string | Array<string>) => {
+        [`*.{${jsExt.toString()}}`]: (stagedFiles: string | string[]) => {
             const files = toFileArgs(stagedFiles)
             return [
                 `pnpm exec prettier --write ${files}`,
@@ -53,19 +51,18 @@ const getLintStagedConfig = () => {
         },
 
         /** Misc Prettier Files */
-        [`*.{${prettierExt.toString()}}`]: (stagedFiles: string | Array<string>) => {
+        [`*.{${prettierExt.toString()}}`]: (stagedFiles: string | string[]) => {
             const files = toFileArgs(stagedFiles)
             return `pnpm exec prettier --write ${files}`
         },
 
-        /** Shell Scripts and Ignores */
         '.gitignore': 'pnpm exec prettier --write .gitignore',
-        '.husky/**/*': (stagedFiles: string | Array<string>) => {
+
+        '.husky/**/*': (stagedFiles: string | string[]) => {
             const files = toFileArgs(stagedFiles)
             return `pnpm exec prettier --write ${files}`
         },
     }
-    return configExample
 }
 
 export default getLintStagedConfig()

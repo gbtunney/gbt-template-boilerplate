@@ -14,20 +14,22 @@ if [ "$BRANCH" = "development" ]; then
     LINT_MODE="LINT_ALL"
 fi
 
-echo -e "\n===\n>> Running in shell:: $SHELL"
-echo -e ">> Pre-commit Hook:: Checking BRANCH: $BRANCH LINT_MODE: $LINT_MODE \n===\n"
+printf "\n===\n>> Running in shell:: %s\n" "${SHELL:-unknown}"
+printf ">> Pre-commit Hook:: Checking BRANCH: %s LINT_MODE: %s\n===\n\n" "$BRANCH" "$LINT_MODE"
 
 # Protect branches from accidental commits.
 if echo "$BRANCH" | grep -Eq "$PROTECTED_BRANCHES"; then
-    echo -e "\n🚫 Commit directly to BRANCH: $BRANCH is not allowed!\n"
+    printf "\nCommit directly to BRANCH '%s' is not allowed.\n\n" "$BRANCH"
     exit 1
 fi
 
-# Validate branch name.
-if echo "$BRANCH" | grep -Eq "^[a-z]*([/-][a-z]+)*$"; then
+# Validate branch name:
+# - lowercase letters + digits
+# - segments separated by / or -
+if echo "$BRANCH" | grep -Eq '^[a-z0-9]+([/-][a-z0-9]+)*$'; then
     echo "Branch name is valid"
 else
-    echo -e "\n🚫 Branch name should be lowercase and NOT have any characters besides - or / :::: please rename your branch $BRANCH\n"
+    printf "\nBranch name must be lowercase [a-z0-9] and may contain '/' or '-': %s\n\n" "$BRANCH"
     exit 1
 fi
 
@@ -38,9 +40,9 @@ BAD_FILES="$(
       || true
 )"
 if [ -n "$BAD_FILES" ]; then
-    echo -e "\n🚫 Bad characters in staged filenames."
-    echo -e "Allowed: A-Z a-z 0-9 space . _ - + @ /"
-    echo -e "Rename these files:\n$BAD_FILES\n"
+    printf "\nBad characters in staged filenames.\n"
+    printf "Allowed: A-Z a-z 0-9 space . _ - + @ /\n"
+    printf "Rename these files:\n%s\n\n" "$BAD_FILES"
     exit 1
 fi
 
@@ -48,19 +50,14 @@ if [ "$LINT_MODE" = "DISABLED" ]; then
     exit 0
 fi
 
-# IF lint-staged IS NOT being used
 if [ "$LINT_MODE" = "LINT_ALL" ]; then
-    echo -e "\n🚫 LINT_ALL ($BRANCH), checking + fixing ALL FILES before commit \n"
+    printf "\nRunning full lint/format (LINT_ALL)...\n\n"
     pnpm lint:all
-
-    # Stage any fixes produced by lint:all
     git add -A
     exit 0
 fi
 
-if [ "$LINT_MODE" = "LINT_STAGED" ]; then
-    # Intentionally do not run lint-staged here; commit flow handles it elsewhere.
-    echo -e "\nℹ️ LINT_STAGED ($BRANCH): hook checks passed (lint-staged runs in commit flow)\n"
-fi
-
+# LINT_STAGED:
+# Intentionally do not run lint-staged here; commit flow handles it elsewhere.
+printf "\nLINT_STAGED: hook checks passed.\n\n"
 exit 0
