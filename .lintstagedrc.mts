@@ -16,12 +16,12 @@ const WARN_ONLY: boolean = true
 
 const quoteArg = (p: string) => `"${p.replaceAll('"', '\\"')}"`
 
-const toFileArgs = (stagedFiles: string | string[]) => {
+const toFileArgs = (stagedFiles: string | Array<string>) => {
     const arr = Array.isArray(stagedFiles) ? stagedFiles : [stagedFiles]
     return arr.map(quoteArg).join(' ')
 }
 
-const toIgnoreArgs = (ignores: string[]) => ignores.map(quoteArg).join(' ')
+const toIgnoreArgs = (ignores: Array<string>) => ignores.map(quoteArg).join(' ')
 
 /** TODO: had to remove the type so i could use staged function */
 const getLintStagedConfig = () => {
@@ -31,18 +31,21 @@ const getLintStagedConfig = () => {
 
     return {
         /** Markdown */
-        [`*.${mdExt.toString()}`]: (stagedFiles: string | string[]) => {
+        [`*.${mdExt.toString()}`]: (stagedFiles: string | Array<string>) => {
             const files = toFileArgs(stagedFiles)
-
+            /**
+             * TODO #6 : lint-staged fails on Markdown linting and stashes/resets changes; filenames with spaces were previously
+             * split
+             */
             const markdownlintCmd = WARN_ONLY
                 ? `pnpm exec markdownlint-cli2 ${files} ${toIgnoreArgs(mdIgnores)} || true`
                 : `pnpm exec markdownlint-cli2 ${files} ${toIgnoreArgs(mdIgnores)}`
 
-            return [`pnpm exec prettier --write ${files}`, markdownlintCmd]
+            return [`pnpm exec prettier --write ${files}` /* markdownlintCmd*/]
         },
 
         /** JS-Like Files */
-        [`*.{${jsExt.toString()}}`]: (stagedFiles: string | string[]) => {
+        [`*.{${jsExt.toString()}}`]: (stagedFiles: string | Array<string>) => {
             const files = toFileArgs(stagedFiles)
             return [
                 `pnpm exec prettier --write ${files}`,
@@ -51,14 +54,14 @@ const getLintStagedConfig = () => {
         },
 
         /** Misc Prettier Files */
-        [`*.{${prettierExt.toString()}}`]: (stagedFiles: string | string[]) => {
+        [`*.{${prettierExt.toString()}}`]: (stagedFiles: string | Array<string>) => {
             const files = toFileArgs(stagedFiles)
             return `pnpm exec prettier --write ${files}`
         },
 
         '.gitignore': 'pnpm exec prettier --write .gitignore',
 
-        '.husky/**/*': (stagedFiles: string | string[]) => {
+        '.husky/**/*': (stagedFiles: string | Array<string>) => {
             const files = toFileArgs(stagedFiles)
             return `pnpm exec prettier --write ${files}`
         },
