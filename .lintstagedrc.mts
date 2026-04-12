@@ -4,7 +4,7 @@ import {
     PRETTIER_FILE_EXTENSIONS,
 } from '@snailicide/build-config'
 
-//TODO: figure out a way this is not utterly ridiculous
+//TODO : figure out a way this is not utterly ridiculous
 const mdIgnores = [
     '#**/{node_modules,.changeset,docs,scratch}/**',
     '#packages/cli-template/templates/**/*',
@@ -23,7 +23,7 @@ const toFileArgs = (stagedFiles: string | Array<string>) => {
 
 const toIgnoreArgs = (ignores: Array<string>) => ignores.map(quoteArg).join(' ')
 
-/** TODO: had to remove the type so i could use staged function */
+/** TODO #6 : had to remove the type so i could use staged function */
 const getLintStagedConfig = () => {
     const jsExt = getFileExtensionList(JSLIKE_FILE_EXTENSIONS)
     const prettierExt = getFileExtensionList<true>(PRETTIER_FILE_EXTENSIONS)
@@ -34,8 +34,8 @@ const getLintStagedConfig = () => {
         [`*.${mdExt.toString()}`]: (stagedFiles: string | Array<string>) => {
             const files = toFileArgs(stagedFiles)
             /**
-             * TODO #6 : lint-staged fails on Markdown linting and stashes/resets changes; filenames with spaces were previously
-             * split
+             * TODO #6 : lint-staged fails on Markdown linting and stashes/resets changes; filenames with spaces were
+             * previously split
              */
             const markdownlintCmd = WARN_ONLY
                 ? `pnpm exec markdownlint-cli2 ${files} ${toIgnoreArgs(mdIgnores)} || true`
@@ -54,7 +54,9 @@ const getLintStagedConfig = () => {
         },
 
         /** Misc Prettier Files */
-        [`*.{${prettierExt.toString()}}`]: (stagedFiles: string | Array<string>) => {
+        [`*.{${prettierExt.toString()}}`]: (
+            stagedFiles: string | Array<string>,
+        ) => {
             const files = toFileArgs(stagedFiles)
             return `pnpm exec prettier --write ${files}`
         },
