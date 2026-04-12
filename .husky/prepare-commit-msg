@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# filepath: /Users/gilliantunney/gbt-template-boilerplate/.husky/prepare-commit-msg
+set -euo pipefail
+
+. "$(dirname -- "$0")/hook-lib.sh"
+
+PROTECTED_BRANCHES="^(master|main)$"
+BAD_FILENAME_RE='[^A-Za-z0-9._/@ +\-]'
+
+BRANCH="$(get_branch)"
+hook_banner "prepare-commit-msg" "shell=${SHELL:-unknown}" "branch=$BRANCH"
+
+assert_not_protected_branch "$BRANCH" "$PROTECTED_BRANCHES"
+assert_valid_branch_name "$BRANCH"
+assert_no_bad_chars_in_staged_filenames "$BAD_FILENAME_RE"
+
+exit 0
