@@ -1,5 +1,6 @@
 ---
-description: "Best practices and actions for managing .gitignore in this workspace. Use `/gitignore` to trigger."
+description:
+  'Best practices and actions for managing .gitignore in this workspace. Use `/gitignore` to trigger.'
 ---
 
 # .gitignore Management

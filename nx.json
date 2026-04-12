@@ -3,7 +3,7 @@
         "default": {
             "runner": "nx/tasks-runners/default",
             "options": {
-                "cacheableOperations": ["build", "test", "fix", "docs:build"]
+                "cacheableOperations": ["build", "test"]
             }
         }
     },
@@ -16,9 +16,7 @@
         },
         "docs:build": {
             "dependsOn": ["build", "test", "^docs:build"]
-        },
-        "prerelease": {
-            "dependsOn": ["^prerelease"]
         }
-    }
+    },
+    "analytics": true
 }

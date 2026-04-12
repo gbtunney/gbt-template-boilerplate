@@ -1,3 +1,10 @@
+# ============================================================
+# WORKFLOW:  🧱 Build Workflow
+# SOURCE: gbtunney/snailicide-monorepo
+# NOTES:
+#   - calling contained workflow was kind of pointless, so this is an example
+# ============================================================
+
 name: 🧱 Build Workflow
 
 on:

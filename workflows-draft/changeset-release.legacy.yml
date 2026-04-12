@@ -1,3 +1,9 @@
+# ============================================================
+# WORKFLOW: Release
+# SOURCE: gbtunney/snailicide-monorepo
+# NOTES:
+#   - this served me well, an attempt was made.
+# ============================================================
 name: 🐌 Snailicide Release
 run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
 on:
@@ -18,12 +24,12 @@ jobs:
             HUSKY: 0
         steps:
             - name: Checkout Repo 🛎️
-              uses: actions/checkout@v3
+              uses: actions/checkout@v4
 
             - name: Setup Node.js environment 🛎️
-              uses: actions/setup-node@v3.8.1
+              uses: actions/setup-node@v4
               with:
-                  node-version: '20.11.1'
+                  node-version: 'lts/*'
 
             - name: Install pnpm 🔧
               env:

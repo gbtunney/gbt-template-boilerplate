@@ -4,8 +4,7 @@
 ![License: MIT](https://img.shields.io/npm/l/@snailicide/build-config)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 
-_Provides repository with base configurations that can be extended in new
-packages._
+_Provides repository with base configurations that can be extended in new packages._
 
 ---
 
@@ -22,10 +21,8 @@ packages._
 - **Github:**
   [`@snailicide/build-config`](https://github.com/gbtunney/snailicide-monorepo/tree/main/packages/build-config)
   • [`snailicide-monorepo`](https://github.com/gbtunney/snailicide-monorepo.git)
-- **CDN**:
-  [jsdeliver](https://cdn.jsdelivr.net/npm/@snailicide/build-config/dist/index.min.js)
-- **Documentation**:
-  [@snailicide/build-config docs](https://build-config.snailicide.com)
+- **CDN**: [jsdeliver](https://cdn.jsdelivr.net/npm/@snailicide/build-config/dist/index.min.js)
+- **Documentation**: [@snailicide/build-config docs](https://build-config.snailicide.com)
 
 ### Author
 
@@ -42,75 +39,66 @@ packages._
 
 ---
 
-This package provides reusable configuration files for commonly used tooling. It
-aims to define,extend, and manage build settings , ensuring consistency across
-different environments, projects and packages.
+This package provides reusable configuration files for commonly used tooling. It aims to define,extend, and
+manage build settings , ensuring consistency across different environments, projects and packages.
 
 ### `@snailicide/build-config` _contains configurations for:_
 
 #### Build Tooling
 
 - [**commitlint**](https://commitlint.js.org/#/) • _Lint commit messages_
-- [**@commitlint/config-conventional**](https://www.npmjs.com/package/@commitlint/config-conventional)
-  • _Shareable commitlint configuration_
-- [**commitizen**](https://commitizen-tools.github.io/commitizen/) •
-  _Command-line utility to create commits with your rules._
-- [**eslint**](https://eslint.org/) • _Find and fix problems in your JavaScript
-  code._
-- [**typescript-eslint**](https://typescript-eslint.io/getting-started/) •
-  _Tooling that enables ESLint and Prettier to support TypeScript._
+- [**@commitlint/config-conventional**](https://www.npmjs.com/package/@commitlint/config-conventional) •
+  _Shareable commitlint configuration_
+- [**commitizen**](https://commitizen-tools.github.io/commitizen/) • _Command-line utility to create commits
+  with your rules._
+- [**eslint**](https://eslint.org/) • _Find and fix problems in your JavaScript code._
+- [**typescript-eslint**](https://typescript-eslint.io/getting-started/) • _Tooling that enables ESLint and
+  Prettier to support TypeScript._
 - [**npm**](https://www.npmjs.com/) • _Node package manager_
 - [**prettier**](https://prettier.io/) • _Opinionated code formatter_
 - [**rollup**](https://rollupjs.org/guide/en/) • _The JavaScript module bundler_
-- [**typedoc**](https://typedoc.org/) • _Documentation generator for TypeScript
-  projects_
-- [**typedoc-plugin-markdown**](https://typedoc-plugin-markdown.org/) •
-  _Generate TypeScript documentation as markdown_
+- [**typedoc**](https://typedoc.org/) • _Documentation generator for TypeScript projects_
+- [**typedoc-plugin-markdown**](https://typedoc-plugin-markdown.org/) • _Generate TypeScript documentation as
+  markdown_
 - [**vite**](https://vitejs.dev/) • _Next generation frontend tooling_
 - [**vitest**](https://vitest.dev/) • _A Vite-native testing framework_
-- [**vitepress**](https://vitepress.dev/) • _Vite & Vue powered static site
-  generator_
+- [**vitepress**](https://vitepress.dev/) • _Vite & Vue powered static site generator_
 
 #### Eslint Plugins
 
-- [**typescript-eslint**](https://typescript-eslint.io/packages/typescript-eslint/)
-  • _Provides linting rules for TypeScript code._
-- [**eslint-comments**](https://www.npmjs.com/package/eslint-plugin-eslint-comments)
-  • _Enforces best practices for ESLint directive comments._
-- [**filenames-simple**](https://www.npmjs.com/package/eslint-plugin-filenames-simple)
-  • _Ensures consistent and simple file naming conventions._
-- [**import**](https://www.npmjs.com/package/eslint-plugin-import) • _Supports
-  linting of ES2015+ import/export syntax, and prevent issues with misspelling
-  of file paths and import names._
-- [**jsdoc**](https://www.npmjs.com/package/eslint-plugin-jsdoc) • _Enforces
-  JSDoc comments and validates their syntax._
-- [**sort**](https://www.npmjs.com/package/eslint-plugin-sort) • _Provides rules
-  for sorting various code elements, including: exports, object properties,
-  TypeScript type properties, and string unions._
-- [**unused-imports**](https://www.npmjs.com/package/eslint-plugin-unused-imports)
-  • _Identifies and removes unused imports in your code._
-- [**vitest**](https://www.npmjs.com/package/eslint-plugin-vitest) • _Contains
-  linting rules for Vitest, a Vite-native testing framework._
+- [**typescript-eslint**](https://typescript-eslint.io/packages/typescript-eslint/) • _Provides linting rules
+  for TypeScript code._
+- [**eslint-comments**](https://www.npmjs.com/package/eslint-plugin-eslint-comments) • _Enforces best
+  practices for ESLint directive comments._
+- [**filenames-simple**](https://www.npmjs.com/package/eslint-plugin-filenames-simple) • _Ensures consistent
+  and simple file naming conventions._
+- [**import**](https://www.npmjs.com/package/eslint-plugin-import) • _Supports linting of ES2015+
+  import/export syntax, and prevent issues with misspelling of file paths and import names._
+- [**jsdoc**](https://www.npmjs.com/package/eslint-plugin-jsdoc) • _Enforces JSDoc comments and validates
+  their syntax._
+- [**sort**](https://www.npmjs.com/package/eslint-plugin-sort) • _Provides rules for sorting various code
+  elements, including: exports, object properties, TypeScript type properties, and string unions._
+- [**unused-imports**](https://www.npmjs.com/package/eslint-plugin-unused-imports) • _Identifies and removes
+  unused imports in your code._
+- [**vitest**](https://www.npmjs.com/package/eslint-plugin-vitest) • _Contains linting rules for Vitest, a
+  Vite-native testing framework._
 
 #### Rollup Plugins
 
-- [**rollup-plugin-ts**](https://www.npmjs.com/package/rollup-plugin-ts) •
-  _Allows Rollup to bundle declarations, and respects Browserslists, and enables
-  integration with transpilers_
-- [**@rollup/plugin-json**](https://www.npmjs.com/package/@rollup/plugin-json) •
-  _Allows Rollup to import JSON files, converting them to ES6 modules._
-- [**@rollup/plugin-commonjs**](https://www.npmjs.com/package/@rollup/plugin-commonjs)
-  • _Converts CommonJS modules to ES6, so they can be included in a Rollup
-  bundle._
-- [**@rollup/plugin-node-resolve**](https://www.npmjs.com/package/@rollup/plugin-node-resolve)
-  • _Locates and bundles third-party dependencies in `node_modules`._
-- [**rollup-plugin-node-externals**](https://www.npmjs.com/package/rollup-plugin-node-externals)
-  • _Excludes Node.js built-in modules, dependencies & devDependencies from the
-  bundle._
-- [**rollup-plugin-polyfill-node**](https://www.npmjs.com/package/rollup-plugin-polyfill-node)
-  • _Provides polyfills for Node.js core modules when bundling for the browser._
-- [**@rollup/plugin-terser**](https://www.npmjs.com/package/@rollup/plugin-terser)
-  • _Minifies the generated Rollup bundle using Terser._
+- [**rollup-plugin-ts**](https://www.npmjs.com/package/rollup-plugin-ts) • _Allows Rollup to bundle
+  declarations, and respects Browserslists, and enables integration with transpilers_
+- [**@rollup/plugin-json**](https://www.npmjs.com/package/@rollup/plugin-json) • _Allows Rollup to import JSON
+  files, converting them to ES6 modules._
+- [**@rollup/plugin-commonjs**](https://www.npmjs.com/package/@rollup/plugin-commonjs) • _Converts CommonJS
+  modules to ES6, so they can be included in a Rollup bundle._
+- [**@rollup/plugin-node-resolve**](https://www.npmjs.com/package/@rollup/plugin-node-resolve) • _Locates and
+  bundles third-party dependencies in `node_modules`._
+- [**rollup-plugin-node-externals**](https://www.npmjs.com/package/rollup-plugin-node-externals) • _Excludes
+  Node.js built-in modules, dependencies & devDependencies from the bundle._
+- [**rollup-plugin-polyfill-node**](https://www.npmjs.com/package/rollup-plugin-polyfill-node) • _Provides
+  polyfills for Node.js core modules when bundling for the browser._
+- [**@rollup/plugin-terser**](https://www.npmjs.com/package/@rollup/plugin-terser) • _Minifies the generated
+  Rollup bundle using Terser._
 
 ## Installation
 
@@ -227,10 +215,7 @@ const typeDocConfig = {
   ...typedoc.configMarkdown(__dirname, newTypeDocConfig),
 
   /** Entrypoint and excludes array is overwritten */
-  entryPoints: [
-    path.resolve(`${__dirname}/src/**/index.ts`),
-    path.resolve(`${__dirname}/src/utilities.ts`),
-  ],
+  entryPoints: [path.resolve(`${__dirname}/src/**/index.ts`), path.resolve(`${__dirname}/src/utilities.ts`)],
   exclude: [path.resolve(`${__dirname}/src/index.ts`)],
 }
 

@@ -1,0 +1,11 @@
+{
+    "extends": "@snailicide/build-config/tsconfig-base",
+    "compilerOptions": {
+        "rootDir": ".",
+        "types": ["node"],
+        "sourceMap": true,
+        "declarationMap": true,
+        "declaration": true
+    },
+    "include": ["./**/*.ts", "./**/*.mts", "./**/*.cts", "./**/*.json"]
+}
