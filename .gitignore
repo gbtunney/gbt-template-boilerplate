@@ -153,6 +153,11 @@ dist
 # Allowed javascript source files
 #!eslint.config.js
 
+
+# PNPM lockfile - remove from most repos 
+pnpm-lock.yaml
+
+
 # Scratch Files
 scratch
 examples
