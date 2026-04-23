@@ -1,4 +1,4 @@
-name: Reporting Dispatch
+name: Pipeline Dispatch
 
 on:
     workflow_dispatch:
@@ -60,13 +60,23 @@ on:
                 required: true
                 default: false
                 type: boolean
+            upload_workspace_artifact:
+                description: Upload workspace artifact at end (for debugging / downstream jobs)
+                required: true
+                default: false
+                type: boolean
+            artifact_name_prefix:
+                description: Artifact name prefix (artifact name also includes repo + run id)
+                required: true
+                default: workspace
+                type: string
 
 permissions:
     contents: read
 
 jobs:
-    reporting:
-        uses: ./.github/workflows/reporting.yml
+    pipeline:
+        uses: ./.github/workflows/pipeline.yml
         with:
             mode: ${{ inputs.mode }}
             check_mode: ${{ inputs.check_mode }}
@@ -78,3 +88,23 @@ jobs:
             run_docs_build: ${{ inputs.run_docs_build }}
             nx_cache_reset: ${{ inputs.nx_cache_reset }}
             pnpm_store_reset: ${{ inputs.pnpm_store_reset }}
+            upload_workspace_artifact: ${{ inputs.upload_workspace_artifact }}
+            artifact_name_prefix: ${{ inputs.artifact_name_prefix }}
+
+    summary:
+        name: Summarize pipeline outputs
+        runs-on: ubuntu-latest
+        needs: pipeline
+        if: ${{ always() }}
+        steps:
+            - name: 🧾 Output Summary
+              shell: bash
+              run: |
+                  {
+                    echo "## Pipeline Dispatch 결과"
+                    echo ""
+                    echo "- pipeline result: \`${{ needs.pipeline.result }}\`"
+                    echo "- is_repo_dirty: \`${{ needs.pipeline.outputs.is_repo_dirty }}\`"
+                    echo "- artifact_uploaded: \`${{ needs.pipeline.outputs.artifact_uploaded }}\`"
+                    echo "- workspace_artifact_name: \`${{ needs.pipeline.outputs.workspace_artifact_name }}\`"
+                  } >> "$GITHUB_STEP_SUMMARY"
