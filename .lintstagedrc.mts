@@ -1,5 +1,3 @@
-import { lintstaged,LintStagedConfiguration } from '@snailicid3/config'
-console.log("hi,",lintstaged)
-const config:LintStagedConfiguration = await lintstaged.configuration()
-console.log("gbtcconfig", JSON.stringify(config, null, 2))
+import { lintstaged, type LintStagedConfiguration } from '@snailicid3/config'
+const config: LintStagedConfiguration = lintstaged.configuration()
 export default config

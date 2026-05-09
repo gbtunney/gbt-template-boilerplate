@@ -1,5 +1,5 @@
 {
-    "name": "@gbt/example-package",
+    "name": "@snailicid3/template-example-package",
     "version": "0.0.0",
     "private": false,
     "description": "Example monorepo package",

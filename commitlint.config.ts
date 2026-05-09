@@ -8,7 +8,7 @@ import { commitlint, type CommitlintUserConfig } from '@snailicid3/config'
 const configuration: CommitlintUserConfig = commitlint.configuration([
     'root',
     'notes',
-    '@gbt/example-package',
+    'template-example-package',
     'todo:fix disable scope',
 ])
 export default configuration

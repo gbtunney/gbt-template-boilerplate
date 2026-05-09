@@ -15,7 +15,7 @@ Use this skill to:
 
 ## Workflow
 
-### 1. Print Hello, World!
+### 1. Print Hello, World
 
 Run the following command to print "Hello, World!":
 

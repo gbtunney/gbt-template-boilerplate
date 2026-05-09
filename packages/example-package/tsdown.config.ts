@@ -6,10 +6,11 @@ const plan = defineBuildPlan(pkg, {
     entries: [
         {
             banner: true,
-            key: '*',runtime: 'node',
+            key: '*',
+            lint: false,
             output_formats: ['esm', 'cjs', 'iife', 'ts'],
-            lint:false
-        }
+            runtime: 'node',
+        },
     ],
     root: {
         outputDir: './dist',

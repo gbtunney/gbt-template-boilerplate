@@ -1,4 +1,4 @@
-import { Prettier ,PrettierConfig} from '@snailicid3/config'
+import { Prettier, type PrettierConfig } from '@snailicid3/config'
 
-const config:PrettierConfig=Prettier.config
+const config: PrettierConfig = Prettier.config
 export default config
