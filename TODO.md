@@ -78,3 +78,7 @@ Basically stuff i have a zillion copies of and constantly forget what i am doing
   - [ ] Runs standard fixer (prettier, eslint, markdownlint)
   - [ ] Lists non-blocking lint errors
   - [ ] Dumps the file somewhere to be cut/pasted or make artifact
+
+# TODO Fix missing packages from other repo - list here
+
+[ ][error] TODO Cannot find package 'typescript-eslint', remember to remove
