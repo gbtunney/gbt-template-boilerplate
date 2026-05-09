@@ -9,7 +9,7 @@
 
         "build:ts": {
             "cache": true,
-            "dependsOn": [   ],
+            "dependsOn": [],
             "inputs": [
                 "{projectRoot}/*.ts",
                 "{projectRoot}/*.mts",
