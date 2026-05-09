@@ -84,7 +84,11 @@ Basically stuff i have a zillion copies of and constantly forget what i am doing
 
 ### TODO Fix missing packages from other repo - list here
 
-[ ][error] TODO Cannot find package 'typescript-eslint', remember to remove [ ]
-config/dist/.markdownlint.json That file isn’t “pretty JSON” right now — it’s a
-JSON string that contains JSON (everything is wrapped in quotes and escaped). To
-read it, you need to decode the string, then pretty-print.
+- [ ][error] TODO Cannot find package 'typescript-eslint', remember to remove
+
+- [ ] config/dist/.markdownlint.json That file isn’t “pretty JSON” right now —
+      it’s aJSON string that contains JSON (everything is wrapped in quotes and
+      escaped). Toread it, you need to decode the string, then pretty-print.
+
+- [ ] GBT comitt scope seems to have the @domain/ part coded in for @snailicide,
+      it silent fails and doesnt commit
