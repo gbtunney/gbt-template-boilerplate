@@ -1,6 +1,7 @@
 ---
 name: Operator Editor Work Item
-description: Create a feature, bug, or design issue for the Operator Editor system
+description:
+  Create a feature, bug, or design issue for the Operator Editor system
 title: '<scope>: <short summary>'
 labels: []
 assignees: []
