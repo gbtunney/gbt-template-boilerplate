@@ -1,4 +1,4 @@
-# Utility Naming Verb Guide
+# Utility Naming Verb Guide v1
 
 Names should describe **caller intent**, not implementation.
 
