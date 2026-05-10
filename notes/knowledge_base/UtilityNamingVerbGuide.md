@@ -8,7 +8,7 @@ _A reference for picking the right prefix when naming utility functions._
 > `replaceWhitespaceWithEmptyString(value)`, even if the implementation uses
 > `.replace(/\s+/g, '')`.
 
-> **Scope note.** This guide covers _action_ utility functions -- the kind that
+> **Scope note.** This guide covers _action_ utility functions - the kind that
 > live in a `utils` package. Separate naming conventions apply to constructors
 > (PascalCase nouns: `URL`, `Date`), components (PascalCase nouns: `Button`),
 > event handlers (`on` + noun: `onClick`), and functional combinators (often

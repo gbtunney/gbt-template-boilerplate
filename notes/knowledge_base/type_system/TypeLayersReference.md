@@ -254,7 +254,7 @@ Starting from a Zod type and working toward a widget.
 > requirements._
 
 | Conceptual Type     | Meaning                               | Common Raw Types                                 | Typical UI Widget            | Multi-Value?        |
-| ------------------- | ------------------------------------- | ------------------------------------------------ | ---------------------------- | ------------------- | ------ |
+| ------------------- | ------------------------------------- | ------------------------------------------------ | ---------------------------- | ------------------- |
 | Identifier          | Stable ID for a thing                 | `string`, `number`                               | text, read-only-text         | Single              |
 | Reference           | Points to another entity              | `string`, `{ id: string, label: string }`        | entity-picker, combobox      | Single              |
 | Name                | Human-facing title                    | `string`                                         | text                         | Single              |
@@ -281,7 +281,7 @@ Starting from a Zod type and working toward a widget.
 | Event               | Record of something that happened     | `{ [key: string]: any }`                         | table-editor, repeater       | List                |
 | File                | File object/ref                       | `Binary`, `{ id: string, name: string }`         | file-upload                  | Single              |
 | Image               | Image file                            | same as File                                     | image-upload                 | Single              |
-| Enum                | Closed set of predefined values       | `Enum<string                                     | number>`                     | select, radio-group | Single |
+| Enum                | Closed set of predefined values       | `Enum<string>`, `Enum<number>`                   | select, radio-group          | Single              |
 | Multi-Select Enum   | Multiple values from a predefined set | `Array<Enum<string>>`                            | multi-select, checkbox-group | List                |
 
 ---
