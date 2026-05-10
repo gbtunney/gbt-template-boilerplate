@@ -150,14 +150,12 @@ dist
 
 #Husky
 .husky/_
-# Allowed javascript source files
-#!eslint.config.js
 
 # PNPM lockfile - remove from most repos
 pnpm-lock.yaml
 
 # Eslint JS - remove once switched to ts
-!eslint.config.js
+#!eslint.config.js
 
 # Scratch Files
 scratch

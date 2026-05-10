@@ -1,20 +1,4 @@
-import { merge, Prettier } from '@snailicide/build-config'
-import type { Config as PrettierConfig } from 'prettier'
+import { Prettier, type PrettierConfig } from '@snailicid3/config'
 
-const overrides: PrettierConfig = {
-    overrides: [
-        {
-            files: '**/*.md',
-            options: {
-                printWidth: 110,
-                proseWrap: 'always',
-            },
-        },
-    ],
-
-    plugins: ['@prettier/plugin-xml'],
-}
-
-const default_config: PrettierConfig = Prettier.config
-const config: PrettierConfig = merge(default_config, overrides)
+const config: PrettierConfig = Prettier.config
 export default config

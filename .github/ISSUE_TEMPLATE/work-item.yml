@@ -1,0 +1,175 @@
+name: Work Item
+description: Create a feature, bug, task, or design issue for this repo
+title: '<scope>: <short summary>'
+labels: []
+assignees: []
+
+body:
+    - type: dropdown
+      id: issue_type
+      attributes:
+          label: Issue Type
+          description: What kind of work is this?
+          options:
+              - bug
+              - feature
+              - fix
+              - task
+              - refactor
+              - docs
+              - chore
+              - test
+              - ci
+              - build
+              - release
+              - idea
+      validations:
+          required: true
+    - type: dropdown
+      id: scope
+      attributes:
+          label: Scope
+          description: Which package/workspace owns this work?
+          options:
+              - root
+              - repo
+              - template
+              - scripts
+              - build-config
+              - cli-app
+              - color
+              - config
+              - example-package
+              - logger
+              - node-utils
+              - playground
+              - scaffold
+              - types
+              - utils
+              - workspace-tools
+      validations:
+          required: true
+    - type: dropdown
+      id: category
+      attributes:
+          label: Category
+          description: Cross-cutting technical area
+          options:
+              - none
+              - build
+              - ci
+              - deps
+              - dx
+              - security
+              - perf
+              - release
+              - publishing
+              - docs
+              - testing
+      validations:
+          required: true
+    - type: dropdown
+      id: domain
+      attributes:
+          label: Domain
+          description: Conceptual system or feature area
+          options:
+              - none
+              - api
+              - api-client
+              - api-server
+              - build-plan
+              - changesets
+              - commitlint
+              - exports
+              - formatting
+              - github-actions
+              - github-issues
+              - linting
+              - monorepo
+              - package-consumption
+              - smoke-tests
+              - template-sync
+              - typedoc
+              - string-helpers
+              - color-tools
+      validations:
+          required: true
+    - type: dropdown
+      id: sync_mode
+      attributes:
+          label: Sync Mode
+          description: Does this need to move between template/source/consumer repos?
+          options:
+              - none
+              - template-source
+              - template-consumer
+              - needs-sync
+              - synced
+              - manual-port
+              - do-not-sync
+      validations:
+          required: true
+    - type: dropdown
+      id: priority
+      attributes:
+          label: Priority
+          description: How important is this?
+          options:
+              - normal
+              - low
+              - high
+              - urgent
+      validations:
+          required: true
+    - type: textarea
+      id: summary
+      attributes:
+          label: Summary
+          description: Short description of the problem or request
+          placeholder: Describe the issue briefly.
+      validations:
+          required: true
+    - type: textarea
+      id: requirements
+      attributes:
+          label: Acceptance Criteria
+          description: Checklist for when this is done
+          placeholder: |
+              - [ ] Requirement 1
+              - [ ] Requirement 2
+      validations:
+          required: false
+    - type: textarea
+      id: sync_notes
+      attributes:
+          label: Sync Notes
+          description: Files/repos that may need to be synced or manually ported
+          placeholder: |
+              Source repo:
+              Consumer repo(s):
+              Files:
+                - .github/workflows/ci.yml
+                - .github/ISSUE_TEMPLATE/work-item.yml
+      validations:
+          required: false
+    - type: textarea
+      id: release_docs
+      attributes:
+          label: Release / Docs
+          description: Does this need a changeset or docs update?
+          placeholder: |
+              Changeset needed: no
+              Docs update needed: no
+      validations:
+          required: false
+    - type: textarea
+      id: notes
+      attributes:
+          label: Notes
+          description: Extra context, links, screenshots, blockers, or references
+          placeholder: |
+              Related to #123
+              Blocked by #456
+      validations:
+          required: false

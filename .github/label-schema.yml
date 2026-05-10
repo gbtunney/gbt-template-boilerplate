@@ -1,0 +1,97 @@
+version: 1
+
+repos:
+    - gbtunney/gbt-template-boilerplate
+    - gbtunney/snailicid3
+
+labels:
+    type:
+        color: '70cc53'
+        description: 'Kind of work'
+        values:
+            bug: 'Something broken or incorrect'
+            feature: 'New functionality'
+            fix: 'Bug fix or corrective change'
+            task: 'General development work'
+            refactor: 'Internal code restructuring'
+            docs: 'Documentation work'
+            chore: 'Maintenance or tooling work'
+            test: 'Tests or test infrastructure'
+            ci: 'Continuous integration work'
+            build: 'Build system work'
+            release: 'Release, versioning, or publishing work'
+            idea: 'Future concept or rough improvement'
+    scope:
+        color: '6f42c1'
+        description: 'Owning package, workspace, or repo area'
+        values:
+            root: 'Workspace root scripts or config'
+            repo: 'Repository-level work'
+            template: 'Template or template-consumer work'
+            scripts: 'Generic tooling or scripts'
+            build-config: 'Build config package'
+            cli-app: 'CLI application package'
+            color: 'Color package'
+            config: 'Shared config package'
+            example-package: 'Example package'
+            logger: 'Logger package'
+            node-utils: 'Node utilities package'
+            playground: 'Playground package or app'
+            scaffold: 'Scaffold package'
+            types: 'Shared types package'
+            utils: 'Utilities package'
+            workspace-tools: 'Workspace tools package'
+    category:
+        color: '0e8a16'
+        description: 'Cross-cutting technical category'
+        values:
+            build: 'Build system'
+            ci: 'Continuous integration'
+            deps: 'Dependency management'
+            dx: 'Developer experience'
+            security: 'Security'
+            perf: 'Performance'
+            release: 'Release workflow'
+            publishing: 'Package publishing'
+            docs: 'Documentation generation or publishing'
+            testing: 'Testing infrastructure'
+    domain:
+        color: 'e99695'
+        description: 'Conceptual system or feature area'
+        values:
+            api: 'General API work'
+            api-client: 'API client work'
+            api-server: 'API server work'
+            build-plan: 'Build plan generation or normalization'
+            changesets: 'Changesets workflow'
+            commitlint: 'Commit message validation'
+            exports: 'Package exports'
+            formatting: 'Formatting tools'
+            github-actions: 'GitHub Actions'
+            github-issues: 'GitHub issues and project workflow'
+            linting: 'Linting tools'
+            monorepo: 'Monorepo structure'
+            package-consumption: 'External consumer/package testing'
+            smoke-tests: 'Smoke tests'
+            template-sync: 'Template/source/consumer sync'
+            typedoc: 'TypeDoc documentation'
+            string-helpers: 'String helper utilities'
+            color-tools: 'Color utilities'
+    sync:
+        color: 'fbca04'
+        description: 'Template/source/consumer sync responsibility'
+        values:
+            template-source: 'Change belongs in the template/source repo'
+            template-consumer: 'Change belongs in a template consumer repo'
+            needs-sync: 'Needs to be synced across repos'
+            synced: 'Already synced across repos'
+            manual-port: 'Needs manual adaptation while porting'
+            do-not-sync: 'Repo-specific; do not sync'
+    priority:
+        color: 'd93f0b'
+        description: 'Urgency or importance'
+        values:
+            low: 'Low priority'
+            normal: 'Normal priority'
+            high: 'High priority'
+            urgent: 'Urgent priority'
