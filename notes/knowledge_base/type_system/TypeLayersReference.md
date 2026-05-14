@@ -253,36 +253,36 @@ Starting from a Zod type and working toward a widget.
 > _Not exhaustive. Implementations vary by platform, framework, and
 > requirements._
 
-| Conceptual Type     | Meaning                               | Common Raw Types                                 | Typical UI Widget            | Multi-Value?        |
-| ------------------- | ------------------------------------- | ------------------------------------------------ | ---------------------------- | ------------------- |
-| Identifier          | Stable ID for a thing                 | `string`, `number`                               | text, read-only-text         | Single              |
-| Reference           | Points to another entity              | `string`, `{ id: string, label: string }`        | entity-picker, combobox      | Single              |
-| Name                | Human-facing title                    | `string`                                         | text                         | Single              |
-| Description / Notes | Longer free text                      | `string`                                         | textarea, richtext           | Single              |
-| Code / Slug         | Constrained token                     | `string`                                         | text, code                   | Single              |
-| URL                 | Web/resource locator                  | `string`                                         | text                         | Single              |
-| Email               | Email address                         | `string`                                         | text                         | Single              |
-| Phone               | Phone number                          | `string`                                         | text (`type="tel"`)          | Single              |
-| Flag                | Binary on/off                         | `boolean`                                        | switch, checkbox             | Single              |
-| Status              | Current state from a fixed set        | `Enum<string>`                                   | select, radio-group          | Single              |
-| Mode                | Behavior selector                     | `Enum<string>`                                   | segmented-control, select    | Single              |
-| Count               | Discrete quantity                     | `number`                                         | number-input, stepper        | Single              |
-| Percentage          | Ratio value                           | `number`                                         | number-input, slider         | Single              |
-| Rating              | Bounded score                         | `number`, `Enum<number>`                         | slider, select               | Single              |
-| Money               | Amount + currency                     | `{ amount: number, currency: string }`           | number-input + select        | Single              |
-| Measurement         | Value + unit                          | `{ value: number, unit: string }`                | number-input + select        | Single              |
-| Date                | Calendar date                         | `string` (ISO 8601)                              | date-picker                  | Single              |
-| Time                | Time of day                           | `string`                                         | time-picker                  | Single              |
-| DateTime            | Timestamp                             | `string`, `number`                               | datetime-picker              | Single              |
-| Duration            | Length of time                        | `number`, `string`, `{ value, unit }`            | duration-input               | Single              |
-| Interval            | Start/end span                        | `{ start: string\|number, end: string\|number }` | datetime-picker (×2)         | Single              |
-| Tag                 | Label for grouping                    | `string`, `string[]`                             | tag-input, multi-select      | List                |
-| Labels / Metadata   | Arbitrary key-value props             | `Record<string, string>`                         | key-value-editor             | Map                 |
-| Event               | Record of something that happened     | `{ [key: string]: any }`                         | table-editor, repeater       | List                |
-| File                | File object/ref                       | `Binary`, `{ id: string, name: string }`         | file-upload                  | Single              |
-| Image               | Image file                            | same as File                                     | image-upload                 | Single              |
-| Enum                | Closed set of predefined values       | `Enum<string>`, `Enum<number>`                   | select, radio-group          | Single              |
-| Multi-Select Enum   | Multiple values from a predefined set | `Array<Enum<string>>`                            | multi-select, checkbox-group | List                |
+| Conceptual Type     | Meaning                               | Common Raw Types                                 | Typical UI Widget            | Multi-Value? |
+| ------------------- | ------------------------------------- | ------------------------------------------------ | ---------------------------- | ------------ |
+| Identifier          | Stable ID for a thing                 | `string`, `number`                               | text, read-only-text         | Single       |
+| Reference           | Points to another entity              | `string`, `{ id: string, label: string }`        | entity-picker, combobox      | Single       |
+| Name                | Human-facing title                    | `string`                                         | text                         | Single       |
+| Description / Notes | Longer free text                      | `string`                                         | textarea, richtext           | Single       |
+| Code / Slug         | Constrained token                     | `string`                                         | text, code                   | Single       |
+| URL                 | Web/resource locator                  | `string`                                         | text                         | Single       |
+| Email               | Email address                         | `string`                                         | text                         | Single       |
+| Phone               | Phone number                          | `string`                                         | text (`type="tel"`)          | Single       |
+| Flag                | Binary on/off                         | `boolean`                                        | switch, checkbox             | Single       |
+| Status              | Current state from a fixed set        | `Enum<string>`                                   | select, radio-group          | Single       |
+| Mode                | Behavior selector                     | `Enum<string>`                                   | segmented-control, select    | Single       |
+| Count               | Discrete quantity                     | `number`                                         | number-input, stepper        | Single       |
+| Percentage          | Ratio value                           | `number`                                         | number-input, slider         | Single       |
+| Rating              | Bounded score                         | `number`, `Enum<number>`                         | slider, select               | Single       |
+| Money               | Amount + currency                     | `{ amount: number, currency: string }`           | number-input + select        | Single       |
+| Measurement         | Value + unit                          | `{ value: number, unit: string }`                | number-input + select        | Single       |
+| Date                | Calendar date                         | `string` (ISO 8601)                              | date-picker                  | Single       |
+| Time                | Time of day                           | `string`                                         | time-picker                  | Single       |
+| DateTime            | Timestamp                             | `string`, `number`                               | datetime-picker              | Single       |
+| Duration            | Length of time                        | `number`, `string`, `{ value, unit }`            | duration-input               | Single       |
+| Interval            | Start/end span                        | `{ start: string\|number, end: string\|number }` | datetime-picker (×2)         | Single       |
+| Tag                 | Label for grouping                    | `string`, `string[]`                             | tag-input, multi-select      | List         |
+| Labels / Metadata   | Arbitrary key-value props             | `Record<string, string>`                         | key-value-editor             | Map          |
+| Event               | Record of something that happened     | `{ [key: string]: any }`                         | table-editor, repeater       | List         |
+| File                | File object/ref                       | `Binary`, `{ id: string, name: string }`         | file-upload                  | Single       |
+| Image               | Image file                            | same as File                                     | image-upload                 | Single       |
+| Enum                | Closed set of predefined values       | `Enum<string>`, `Enum<number>`                   | select, radio-group          | Single       |
+| Multi-Select Enum   | Multiple values from a predefined set | `Array<Enum<string>>`                            | multi-select, checkbox-group | List         |
 
 ---
 
