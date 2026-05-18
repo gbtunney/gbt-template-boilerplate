@@ -6,7 +6,6 @@
     "scripts": {
         "\n========== COMMIT >> ==========": "",
         "commit": "pnpm build:self && pnpm exec scope-commit --checked-commit",
-        "commit:cz": "pnpm exec git-cz",
         "commit:direct": "git commit --no-verify -m",
         "lint:staged": "pnpm exec lint-staged --relative",
         "\n========== BUILD >> ==========": "",
@@ -60,12 +59,9 @@
         "@changesets/cli": "^2.29.8",
         "@commitlint/cli": "^21.0.0",
         "@commitlint/config-conventional": "^21.0.0",
-        "@commitlint/cz-commitlint": "^21.0.0",
         "@commitlint/types": "^21.0.0",
         "@snailicid3/config": "^0.0.4",
         "@types/node": "^25.6.2",
-        "@types/shelljs": "^0.10.0",
-        "commitizen": "^4.3.1",
         "cross-var": "^1.1.0",
         "dotenv-cli": "^11.0.0",
         "eslint": "^10.3.0",
@@ -74,11 +70,8 @@
         "markdownlint-cli2": "^0.22.1",
         "nx": "^22.7.1",
         "prettier": "^3.8.1",
-        "tsx": "^4.21.0",
         "typescript": "^6.0.3",
-        "verdaccio": "^6.2.5",
-        "vitepress": "^1.6.4",
-        "vitest": "^4.0.18"
+        "verdaccio": "^6.2.5"
     },
     "type": "module",
     "author": {
@@ -95,27 +88,9 @@
     "engines": {
         "node": ">=20.x"
     },
-    "files": [
-        "CHANGELOG.md",
-        "dist",
-        "types"
-    ],
     "keywords": [
         "boilerplate"
     ],
-    "config": {
-        "prettier": {
-            "extensions": "ts,js,cjs,mjs,cts,mts,sh,html,json,yaml,yml,graphql,md",
-            "path": "*,**/*",
-            "config": "prettier.config.js"
-        },
-        "eslint": {
-            "config": "eslint.config.js"
-        },
-        "commitizen": {
-            "path": "@commitlint/cz-commitlint"
-        }
-    },
     "nx": {
         "includedScripts": []
     }
