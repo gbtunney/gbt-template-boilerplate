@@ -2,11 +2,12 @@
 set -euo pipefail
 
 ROOT_DIR="${ROOT_DIR:-$(git rev-parse --show-toplevel 2> /dev/null || pwd)}"
-SCRIPT_DIR="$ROOT_DIR/.github/scripts"
 
 cd "$ROOT_DIR"
 
-source "$SCRIPT_DIR/report-lib.sh"
+snail_sh() {
+    pnpm exec snail-sh "$@"
+}
 
 snail_sh section "Prettier"
 
