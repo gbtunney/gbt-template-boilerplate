@@ -8,7 +8,6 @@ import { commitlint, type CommitlintUserConfig } from '@snailicid3/config'
 const configuration: CommitlintUserConfig = commitlint.configuration([
     'root',
     'actions',
-    '@gbt/drizzle-blueprint',
     'drizzle-blueprint',
     'notes',
     'template-example-package',
