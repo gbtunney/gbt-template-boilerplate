@@ -19,3 +19,5 @@ export const ordersEndpoints = makeCrudEndpoints({
     },
     service: ordersService,
 })
+
+export default ordersEndpoints

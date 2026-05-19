@@ -56,7 +56,7 @@ export function makeCrudService<
     idColumn: SQLiteColumn,
 ): CrudService<TSelect, TInsert, TUpdate> {
     return {
-        async create(input) {
+        async create(input): Promise<TSelect> {
             const rows = await db
                 .insert(table)
                 .values(input as never)
@@ -64,7 +64,7 @@ export function makeCrudService<
             return rows[0] as TSelect
         },
 
-        async getById(id) {
+        async getById(id): Promise<null | TSelect> {
             const rows = await db
                 .select()
                 .from(table)
@@ -74,12 +74,12 @@ export function makeCrudService<
             return (rows[0] as TSelect | undefined) ?? null
         },
 
-        async list() {
+        async list(): Promise<Array<TSelect>> {
             const rows = await db.select().from(table)
             return rows as Array<TSelect>
         },
 
-        async remove(id) {
+        async remove(id): Promise<null | TSelect> {
             const rows = await db
                 .delete(table)
                 .where(eq(idColumn, id))
@@ -88,7 +88,7 @@ export function makeCrudService<
             return (rows[0] as TSelect | undefined) ?? null
         },
 
-        async update(id, patch) {
+        async update(id, patch): Promise<null | TSelect> {
             // Automatically patch datetime_modified so callers don't have to.
             // If a table lacks this column, this is a no-op at the SQL level
             // (Drizzle ignores unknown columns in set()).

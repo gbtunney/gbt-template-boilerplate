@@ -14,10 +14,21 @@
 // See app.ts for the correct v22+ createConfig() shape.
 
 import { defaultEndpointsFactory } from 'express-zod-api'
+import type { Routing } from 'express-zod-api'
 import { z } from 'zod'
 
 // Import CrudService type from the factory — not redeclared here.
 import type { CrudService } from '../services/makeCrudService.js'
+
+type CrudEndpoint = Routing[string]
+
+type CrudEndpoints = {
+    create: CrudEndpoint
+    getById: CrudEndpoint
+    list: CrudEndpoint
+    remove: CrudEndpoint
+    update: CrudEndpoint
+}
 
 export function makeCrudEndpoints<
     TCreateInput extends object,
@@ -31,7 +42,7 @@ export function makeCrudEndpoints<
     }
 
     service: CrudService<TEntity, TCreateInput, TUpdateInput>
-}) {
+}): CrudEndpoints {
     // ---- POST / create ----
     const create = defaultEndpointsFactory.build({
         handler: async ({ input }) => ({
@@ -107,3 +118,4 @@ export function makeCrudEndpoints<
         update,
     }
 }
+export default makeCrudEndpoints

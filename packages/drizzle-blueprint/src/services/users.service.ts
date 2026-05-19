@@ -24,3 +24,5 @@ export const usersService = {
     // Full-text LIKE search across user names.
     searchByName: q.searchBy(users.name),
 }
+
+export default usersService

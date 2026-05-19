@@ -19,3 +19,5 @@ export const usersEndpoints = makeCrudEndpoints({
     },
     service: usersService,
 })
+
+export default usersEndpoints

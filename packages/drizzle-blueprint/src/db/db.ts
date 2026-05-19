@@ -12,3 +12,5 @@ const sqlite = new Database('./dev.db')
 sqlite.pragma('foreign_keys = ON')
 
 export const db = drizzle(sqlite)
+
+export default db

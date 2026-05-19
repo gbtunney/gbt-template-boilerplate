@@ -18,6 +18,7 @@
 //   searchBy(col)            — LIKE %pattern% on text-like columns only
 
 import { and, eq, like, or } from 'drizzle-orm'
+import type { InferSelectModel } from 'drizzle-orm'
 import type { AnySQLiteTable, SQLiteColumn } from 'drizzle-orm/sqlite-core'
 
 import { db } from '../db/db.js'
@@ -28,6 +29,35 @@ import { db } from '../db/db.js'
 // makeCrudService does NOT use this — it works at the row level.
 // ============================================================
 type ColumnValue<TColumn extends SQLiteColumn> = TColumn['_']['data']
+
+type QueryHelpers<TTable extends AnySQLiteTable> = {
+    findManyBy<TColumn extends SQLiteColumn>(
+        column: TColumn,
+    ): (value: ColumnValue<TColumn>) => Promise<Array<InferSelectModel<TTable>>>
+    findManyByAnd<TColumnA extends SQLiteColumn, TColumnB extends SQLiteColumn>(
+        colA: TColumnA,
+        colB: TColumnB,
+    ): (
+        valueA: ColumnValue<TColumnA>,
+        valueB: ColumnValue<TColumnB>,
+    ) => Promise<Array<InferSelectModel<TTable>>>
+    findManyByOr<TColumnA extends SQLiteColumn, TColumnB extends SQLiteColumn>(
+        colA: TColumnA,
+        colB: TColumnB,
+    ): (
+        valueA: ColumnValue<TColumnA>,
+        valueB: ColumnValue<TColumnB>,
+    ) => Promise<Array<InferSelectModel<TTable>>>
+    findOneBy<TColumn extends SQLiteColumn>(
+        column: TColumn,
+    ): (value: ColumnValue<TColumn>) => Promise<InferSelectModel<TTable> | null>
+    findOneByStrict<TColumn extends SQLiteColumn>(
+        column: TColumn,
+    ): (value: ColumnValue<TColumn>) => Promise<InferSelectModel<TTable> | null>
+    searchBy<TColumn extends TextColumn>(
+        column: TColumn,
+    ): (pattern: string) => Promise<Array<InferSelectModel<TTable>>>
+}
 
 type TextColumn = SQLiteColumn & {
     _: {
@@ -41,7 +71,9 @@ type TextLike = null | string
 // ============================================================
 // makeQueryHelpers — factory function
 /** ============================================================ */
-export function makeQueryHelpers<TTable extends AnySQLiteTable>(table: TTable) {
+export function makeQueryHelpers<TTable extends AnySQLiteTable>(
+    table: TTable,
+): QueryHelpers<TTable> {
     return {
         // ----------------------------------------------------------
         // findManyBy — generic filtered list lookup.
@@ -51,7 +83,9 @@ export function makeQueryHelpers<TTable extends AnySQLiteTable>(table: TTable) {
         //   const listByUserId = q.findManyBy(orders.userId)
         /** ListByUserId(42) // infers argument as number */
         findManyBy<TColumn extends SQLiteColumn>(column: TColumn) {
-            return (value: ColumnValue<TColumn>) =>
+            return (
+                value: ColumnValue<TColumn>,
+            ): Promise<Array<InferSelectModel<TTable>>> =>
                 db.select().from(table).where(eq(column, value))
         },
 
@@ -68,7 +102,7 @@ export function makeQueryHelpers<TTable extends AnySQLiteTable>(table: TTable) {
             return (
                 valueA: ColumnValue<TColumnA>,
                 valueB: ColumnValue<TColumnB>,
-            ) =>
+            ): Promise<Array<InferSelectModel<TTable>>> =>
                 db
                     .select()
                     .from(table)
@@ -87,7 +121,7 @@ export function makeQueryHelpers<TTable extends AnySQLiteTable>(table: TTable) {
             return (
                 valueA: ColumnValue<TColumnA>,
                 valueB: ColumnValue<TColumnB>,
-            ) =>
+            ): Promise<Array<InferSelectModel<TTable>>> =>
                 db
                     .select()
                     .from(table)
@@ -102,7 +136,9 @@ export function makeQueryHelpers<TTable extends AnySQLiteTable>(table: TTable) {
         //   const getFirstByUserId = q.findOneBy(orders.userId)
         /** GetFirstByUserId(42) */
         findOneBy<TColumn extends SQLiteColumn>(column: TColumn) {
-            return async (value: ColumnValue<TColumn>) => {
+            return async (
+                value: ColumnValue<TColumn>,
+            ): Promise<InferSelectModel<TTable> | null> => {
                 const rows = await db
                     .select()
                     .from(table)
@@ -122,7 +158,9 @@ export function makeQueryHelpers<TTable extends AnySQLiteTable>(table: TTable) {
         //   const getByEmail = q.findOneByStrict(users.email)
         /** GetByEmail("alice@example.com") */
         findOneByStrict<TColumn extends SQLiteColumn>(column: TColumn) {
-            return async (value: ColumnValue<TColumn>) => {
+            return async (
+                value: ColumnValue<TColumn>,
+            ): Promise<InferSelectModel<TTable> | null> => {
                 const rows = await db
                     .select()
                     .from(table)
@@ -131,7 +169,7 @@ export function makeQueryHelpers<TTable extends AnySQLiteTable>(table: TTable) {
 
                 if (rows.length > 1) {
                     throw new Error(
-                        `Expected at most one row for column lookup, got ${rows.length}.`,
+                        `Expected at most one row for column lookup, got ${String(rows.length)}.`,
                     )
                 }
 
@@ -147,7 +185,9 @@ export function makeQueryHelpers<TTable extends AnySQLiteTable>(table: TTable) {
         //   const searchByName = q.searchBy(users.name)
         /** SearchByName("ali") // matches "Alice", "Malik", etc. */
         searchBy<TColumn extends TextColumn>(column: TColumn) {
-            return (pattern: string) =>
+            return (
+                pattern: string,
+            ): Promise<Array<InferSelectModel<TTable>>> =>
                 db
                     .select()
                     .from(table)
@@ -155,3 +195,5 @@ export function makeQueryHelpers<TTable extends AnySQLiteTable>(table: TTable) {
         },
     }
 }
+
+export default makeQueryHelpers

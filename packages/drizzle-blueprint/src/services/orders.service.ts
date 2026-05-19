@@ -32,3 +32,5 @@ export const ordersService = {
     // LIKE search across product names.
     searchProducts: q.searchBy(orders.product),
 }
+
+export default ordersService

@@ -19,3 +19,5 @@ export const baseColumns = {
 
     id: integer('id').primaryKey({ autoIncrement: true }),
 }
+
+export default baseColumns
