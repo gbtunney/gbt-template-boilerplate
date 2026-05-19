@@ -149,12 +149,20 @@ dist
 *.d.cts.map
 *.map
 
+# Docs
+docs
+
 #Husky
 .husky/_
-
-.pnpm-store/
+# Allowed javascript source files
 
 # Scratch Files
 scratch
+temp
+tmp
+.prettierignore.generated
 examples
-!notes/scratch
+!/notes/scratch
+
+.cursor/rules/nx-rules.mdc
+.github/instructions/nx.instructions.md
