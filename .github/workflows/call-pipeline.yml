@@ -221,6 +221,11 @@ jobs:
               continue-on-error: ${{ inputs.mode == 'report' }}
               run: bash .github/scripts/report-workspace.sh
 
+            - name: 🧱 Nx Report
+              if: ${{ always() }}
+              continue-on-error: ${{ inputs.mode == 'report' }}
+              run: pnpm exec nx report
+
             # ── Cache resets ─────────────────────────────────────────
             - name: 🧹 Reset Nx Cache
               if: ${{ inputs.nx_cache_reset }}
