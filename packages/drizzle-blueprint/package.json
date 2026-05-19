@@ -2,13 +2,12 @@
     "name": "@gbt/drizzle-blueprint",
     "version": "0.0.0",
     "private": false,
-    "description": "Example monorepo package",
+    "description": "Drizzle ORM blueprint for Express API",
     "scripts": {
         "build:nx": "nx run $npm_package_name:build",
         "test:nx": "nx run $npm_package_name:test",
         "clean:nx": "nx run $npm_package_name:clean",
-        "dev:nx": "nx run $npm_package_name:dev",
-        "test:coverage": "vitest run --coverage"
+        "dev:nx": "nx run $npm_package_name:dev"
     },
     "nx": {
         "targets": {
@@ -61,10 +60,9 @@
     "license": "MIT",
     "repository": {
         "type": "git",
-        "url": "https://github.com/gbtunney/gbt-boilerplate",
+        "url": "https://github.com/gbtunney/gbt-template-boilerplate",
         "directory": "packages/drizzle-blueprint"
     },
-    "homepage": "https://github.com/gbtunney/gbt-boilerplate",
     "files": [
         "CHANGELOG.md",
         "dist",
