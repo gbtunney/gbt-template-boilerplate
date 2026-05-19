@@ -1,4 +1,4 @@
-name: Pipeline Dispatch
+name: Dispatch Pipeline
 
 on:
     workflow_dispatch:
@@ -11,6 +11,15 @@ on:
                 options:
                     - report
                     - abort_on_error
+            check_mode:
+                description: Check routine mode
+                required: true
+                default: check
+                type: choice
+                options:
+                    - fix
+                    - check
+                    - skip
             require_lockfile:
                 description: Treat frozen lockfile install as required
                 required: true
@@ -67,13 +76,29 @@ on:
                 required: true
                 default: workspace
                 type: string
+            use_nx_affected:
+                description: Run nx affected instead of full workspace build/test/check
+                required: true
+                default: false
+                type: boolean
+            nx_targets:
+                description: Space-delimited Nx targets for affected mode
+                required: true
+                default: lint test build
+                type: string
+            nx_fix_ci:
+                description: Run nx fix-ci after main steps (Nx Cloud self-healing CI)
+                required: true
+                default: false
+                type: boolean
 
 permissions:
     contents: read
+    actions: read
 
 jobs:
     pipeline:
-        uses: ./.github/workflows/pipeline.yml
+        uses: ./.github/workflows/call-pipeline.yml
         with:
             mode: ${{ inputs.mode }}
             check_mode: ${{ inputs.check_mode }}
@@ -82,9 +107,14 @@ jobs:
             run_build: ${{ inputs.run_build }}
             run_test: ${{ inputs.run_test }}
             run_docs_build: ${{ inputs.run_docs_build }}
+            node_version: ${{ inputs.node_version }}
             nx_cache_reset: ${{ inputs.nx_cache_reset }}
+            pnpm_cache: ${{ inputs.pnpm_cache }}
             upload_workspace_artifact: ${{ inputs.upload_workspace_artifact }}
             artifact_name_prefix: ${{ inputs.artifact_name_prefix }}
+            use_nx_affected: ${{ inputs.use_nx_affected }}
+            nx_targets: ${{ inputs.nx_targets }}
+            nx_fix_ci: ${{ inputs.nx_fix_ci }}
 
     summary:
         name: Summarize pipeline outputs

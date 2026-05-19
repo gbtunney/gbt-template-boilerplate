@@ -7,6 +7,7 @@ import { commitlint, type CommitlintUserConfig } from '@snailicid3/config'
 
 const configuration: CommitlintUserConfig = commitlint.configuration([
     'root',
+    'actions',
     'notes',
     'template-example-package',
     'todo:fix disable scope',

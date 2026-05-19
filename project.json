@@ -1,15 +1,12 @@
 {
     "$schema": "./node_modules/nx/schemas/project-schema.json",
-    "name": "@gbt/root",
     "projectType": "application",
     "targets": {
         "build": {
             "dependsOn": ["build:ts"]
         },
-
         "build:ts": {
             "cache": true,
-            "dependsOn": [],
             "inputs": [
                 "{projectRoot}/*.ts",
                 "{projectRoot}/*.mts",
@@ -24,7 +21,6 @@
             "command": "tsc --build tsconfig.json",
             "options": { "cwd": "{projectRoot}" }
         },
-
         "clean:ts": {
             "cache": false,
             "command": "tsc --build --clean tsconfig.json",
