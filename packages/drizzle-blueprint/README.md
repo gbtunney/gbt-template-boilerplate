@@ -235,13 +235,13 @@ users: {
 
 ```bash
 # Generate migration files
-pnpm drizzle-kit generate
+pnpm exec drizzle-kit generate
 
 # Apply migrations
-pnpm drizzle-kit migrate
+pnpm exec drizzle-kit migrate
 
 # Push schema directly (dev only)
-pnpm drizzle-kit push
+pnpm exec drizzle-kit push
 ```
 
 `drizzle.config.ts` points at `src/db/tables/index.ts` and outputs to `./drizzle/`.

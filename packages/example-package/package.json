@@ -1,8 +1,8 @@
 {
-    "name": "@snailicid3/template-example-package",
+    "name": "@gbt/template-example-package",
     "version": "0.0.0",
     "private": false,
-    "description": "Example monorepo package",
+    "description": "Example child package in monorepo",
     "scripts": {
         "build:nx": "nx run $npm_package_name:build",
         "test:nx": "nx run $npm_package_name:test",
@@ -49,10 +49,9 @@
     "license": "MIT",
     "repository": {
         "type": "git",
-        "url": "https://github.com/gbtunney/gbt-template-boilerplate",
+        "url": "https://github.com/OWNER/REPOSITORY",
         "directory": "packages/example-package"
     },
-    "homepage": "https://github.com/gbtunney/snailicid3#README",
     "packageManager": "pnpm@10.9.0",
     "files": [
         "CHANGELOG.md",
