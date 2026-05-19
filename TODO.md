@@ -122,3 +122,4 @@ Core files/folders to copy into other repos when applying this template:
 - [ ] Fix `scope-commit`/`scope-affected` in `@snailicid3/config` to strip any package namespace
       prefix, not just `@snailicid3/`. Example: `@gbt/drizzle-blueprint` should emit
       `drizzle-blueprint`.
+- [ ] Trying to fix my seriously busted acitons.
