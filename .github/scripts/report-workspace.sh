@@ -2,12 +2,11 @@
 set -euo pipefail
 
 ROOT_DIR="${ROOT_DIR:-$(git rev-parse --show-toplevel 2> /dev/null || pwd)}"
+SCRIPT_DIR="$ROOT_DIR/.github/scripts"
 
 cd "$ROOT_DIR"
 
-snail_sh() {
-    pnpm exec snail-sh "$@"
-}
+source "$SCRIPT_DIR/report-lib.sh"
 
 count_lines() {
     local value="${1:-}"
@@ -32,13 +31,25 @@ workspace_app_count() {
     find apps -name package.json -not -path '*/node_modules/*' 2> /dev/null | wc -l | tr -d ' '
 }
 
+normalize_scope_output() {
+    local value="${1:-}"
+
+    value="$(printf '%s\n' "$value" | sed -E 's/@[^/, ]+\// /g; s/(^|[,[:space:]])\./\1root/g; s/[[:space:]]+/ /g; s/ *, */, /g; s/^ //; s/ $//')"
+    if [[ "$value" == "@gbt/root" ]]; then
+        printf 'root\n'
+        return 0
+    fi
+
+    printf '%s\n' "$value"
+}
+
 workspace_changed_scope() {
     local command_name="$1"
     shift
     local output=""
     output="$(pnpm exec "$command_name" "$@" 2> /dev/null || true)"
 
-    if printf '%s\n' "$output" | grep -Eq 'Failed to load [0-9]+ default Nx plugin|Plugin worker|Pass --verbose'; then
+    if printf '%s\n' "$output" | grep -Eq 'ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL|Command ".+" not found|Failed to load [0-9]+ default Nx plugin|Plugin worker|Pass --verbose'; then
         if [[ "$command_name" == "scope-affected" ]]; then
             printf '%s\n' "workspace"
         else
@@ -47,7 +58,8 @@ workspace_changed_scope() {
         return 0
     fi
 
-    printf '%s\n' "$output" | sed '/^$/d' | tail -n 1
+    output="$(printf '%s\n' "$output" | sed '/^$/d' | tail -n 1)"
+    normalize_scope_output "$output"
 }
 
 snail_sh section "Workspace"

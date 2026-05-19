@@ -2,14 +2,13 @@
 set -euo pipefail
 
 ROOT_DIR="${ROOT_DIR:-$(git rev-parse --show-toplevel 2> /dev/null || pwd)}"
+SCRIPT_DIR="$ROOT_DIR/.github/scripts"
 timestamp="$(date -u '+%Y-%m-%d %H:%M:%S UTC')"
+
+source "$SCRIPT_DIR/report-lib.sh"
 
 git_output() {
     git "$@" 2> /dev/null || true
-}
-
-snail_sh() {
-    pnpm exec snail-sh "$@"
 }
 
 log_lines() {

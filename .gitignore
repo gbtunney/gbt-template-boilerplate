@@ -154,6 +154,7 @@ dist
 
 # PNPM lockfile - remove from most repos
 pnpm-lock.yaml
+.pnpm-store/
 
 # Eslint JS - remove once switched to ts
 #!eslint.config.js

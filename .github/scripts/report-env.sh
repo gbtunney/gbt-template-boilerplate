@@ -2,6 +2,9 @@
 set -euo pipefail
 
 ROOT_DIR="${ROOT_DIR:-$(git rev-parse --show-toplevel 2> /dev/null || pwd)}"
+SCRIPT_DIR="$ROOT_DIR/.github/scripts"
+
+source "$SCRIPT_DIR/report-lib.sh"
 
 command_version() {
     local command_name="$1"
@@ -15,10 +18,6 @@ command_version() {
 
     output="$("$command_name" "$version_flag" 2>&1 | sed -n '1p' || true)"
     printf '%s\n' "${output:-unknown}"
-}
-
-snail_sh() {
-    pnpm exec snail-sh "$@"
 }
 
 timestamp="$(date -u '+%Y-%m-%d %H:%M:%S UTC')"
@@ -35,5 +34,15 @@ snail_sh kv_pair "pnpm" "$(command_version pnpm -v)"
 snail_sh kv_pair "git" "$(command_version git --version)"
 snail_sh kv_pair "gh" "$(command_version gh --version)"
 snail_sh kv_pair "python" "$(command_version python3 --version)"
+
+snail_sh section "Nx Report"
+if output="$(pnpm exec nx report 2>&1)"; then
+    printf '%s\n' "$output"
+else
+    snail_sh status_pair "nx report" "unavailable before install" "warn"
+    if [[ -n "$output" ]]; then
+        snail_sh log "$output" "grey"
+    fi
+fi
 
 snail_sh spacer 1
