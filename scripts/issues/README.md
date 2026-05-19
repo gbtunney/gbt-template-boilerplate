@@ -1,18 +1,14 @@
 # GBT issue label helper files
 
-Copy these files into `gbt-template-boilerplate` first, then sync/adapt them
-into `snailicid3`.
+Copy these files into `gbt-template-boilerplate` first, then sync/adapt them into `snailicid3`.
 
 ## Files
 
 - `.github/label-schema.yml` — canonical label list.
-- `.github/ISSUE_TEMPLATE/work-item.yml` — issue form with fields matching label
-  suffixes.
-- `.github/workflows/label-issue.yml` — labels issues when
-  opened/edited/reopened.
+- `.github/ISSUE_TEMPLATE/work-item.yml` — issue form with fields matching label suffixes.
+- `.github/workflows/label-issue.yml` — labels issues when opened/edited/reopened.
 - `scripts/issues/sync-labels.sh` — creates/updates repo labels.
-- `scripts/issues/label-issue.sh` — applies labels to one issue from issue-form
-  fields.
+- `scripts/issues/label-issue.sh` — applies labels to one issue from issue-form fields.
 - `scripts/issues/label-all-issues.sh` — applies labels to all open/all issues.
 
 ## Optional package scripts

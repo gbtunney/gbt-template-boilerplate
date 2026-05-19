@@ -6,12 +6,11 @@ Shared repository for commonly used files. Includes things like:
 - code boilerplate
 - configuration files
 
-Provides a single source of truth for default instructions, reusable prompts,
-shell completions, recommended extensions, and automation checklists to
-standardize and accelerate new project onboarding.
+Provides a single source of truth for default instructions, reusable prompts, shell completions,
+recommended extensions, and automation checklists to standardize and accelerate new project
+onboarding.
 
-Basically stuff i have a zillion copies of and constantly forget what i am doing
-:(
+Basically stuff i have a zillion copies of and constantly forget what i am doing :(
 
 ## TODO Checklist
 
@@ -66,8 +65,7 @@ Basically stuff i have a zillion copies of and constantly forget what i am doing
 
 ### Project Specific Template
 
-- [ ] Generic reference docs for types, package anatomy, nx to package.json,
-      other
+- [ ] Generic reference docs for types, package anatomy, nx to package.json, other
 - [ ] Common CLI commands constantly forgotten like:
   - [ ] adding SSH to agent
   - [ ] copy file contents to clipboard
@@ -86,9 +84,9 @@ Basically stuff i have a zillion copies of and constantly forget what i am doing
 
 - [ ][error] TODO Cannot find package 'typescript-eslint', remember to remove
 
-- [ ] config/dist/.markdownlint.json That file isn’t “pretty JSON” right now —
-      it’s aJSON string that contains JSON (everything is wrapped in quotes and
-      escaped). Toread it, you need to decode the string, then pretty-print.
+- [ ] config/dist/.markdownlint.json That file isn’t “pretty JSON” right now — it’s aJSON string
+      that contains JSON (everything is wrapped in quotes and escaped). Toread it, you need to
+      decode the string, then pretty-print.
 
-- [ ] GBT comitt scope seems to have the @domain/ part coded in for @snailicide,
-      it silent fails and doesnt commit
+- [ ] GBT comitt scope seems to have the @domain/ part coded in for @snailicide, it silent fails and
+      doesnt commit

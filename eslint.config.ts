@@ -14,10 +14,7 @@ export default EsLint.defineConfig([
     ...CONFIG,
 
     {
-        files: expandExtensions(
-            TS_FILE_EXTENSIONS,
-            '**/src/**/*',
-        ),
+        files: expandExtensions(TS_FILE_EXTENSIONS, '**/src/**/*'),
 
         name: 'Naming: allow ids for paramaters',
 
@@ -26,16 +23,15 @@ export default EsLint.defineConfig([
                 'error',
 
                 {
-                    selector: 'parameter',
+                    custom: {
+                        match: true,
+
+                        regex: '^([a-zA-Z][a-zA-Z0-9_]{2,}|id|db|fs|ctx|req|res)$',
+                    },
 
                     format: ['camelCase'],
 
-                    custom: {
-                        regex:
-                            '^([a-zA-Z][a-zA-Z0-9_]{2,}|id|db|fs|ctx|req|res)$',
-
-                        match: true,
-                    },
+                    selector: 'parameter',
                 },
             ],
         },
