@@ -4,15 +4,13 @@ _A reference for picking the right prefix when naming utility functions._
 
 > Names should describe **caller intent**, not implementation.
 >
-> `removeWhitespace(value)` is better than
-> `replaceWhitespaceWithEmptyString(value)`, even if the implementation uses
-> `.replace(/\s+/g, '')`.
-
-> **Scope note.** This guide covers _action_ utility functions - the kind that
-> live in a `utils` package. Separate naming conventions apply to constructors
-> (PascalCase nouns: `URL`, `Date`), components (PascalCase nouns: `Button`),
-> event handlers (`on` + noun: `onClick`), and functional combinators (often
-> noun-named for their result: `identity`, `pipe`, `path`).
+> `removeWhitespace(value)` is better than `replaceWhitespaceWithEmptyString(value)`, even if the
+> implementation uses `.replace(/\s+/g, '')`.
+>
+> **Scope note.** This guide covers _action_ utility functions - the kind that live in a `utils`
+> package. Separate naming conventions apply to constructors (PascalCase nouns: `URL`, `Date`),
+> components (PascalCase nouns: `Button`), event handlers (`on` + noun: `onClick`), and functional
+> combinators (often noun-named for their result: `identity`, `pipe`, `path`).
 
 ---
 
@@ -20,8 +18,6 @@ _A reference for picking the right prefix when naming utility functions._
 
 - [Verb Categories](#verb-categories)
 - [Verb Semantics](#verb-semantics)
-- [Pipeline Layers](#pipeline-layers)
-- [Discriminators](#discriminators)
 - [Core Rules](#core-rules)
   - [Names should describe caller intent](#names-should-describe-caller-intent)
   - [Use verbs consistently](#use-verbs-consistently)
@@ -34,40 +30,33 @@ _A reference for picking the right prefix when naming utility functions._
 
 ## Verb Categories
 
-Verbs cluster into semantic groups. The full table below lists each verb
-individually, but the category is what I scan first when I'm trying to remember
-_what's the verb for the thing I'm doing?_
+Verbs cluster into semantic groups. The full table below lists each verb individually, but the
+category is what I scan first when I'm trying to remember _what's the verb for the thing I'm doing?_
 
-- **Predicate** -- _boolean checks of identity, capability, or containment._
-  `is`, `has`, `can`
+- **Predicate** -- _boolean checks of identity, capability, or containment._ `is`, `has`, `can`
 - **Assertion** -- _throw or report on a condition._ `assert`, `validate`
-- **Accessor** -- _retrieve or change parts of a value._ `get`, `set`, `pick`,
-  `omit`
-- **Collection** -- _operate on lists, sets, or maps as a whole._ `find`,
-  `filter`, `map`, `reduce`, `sort`, `group`, `partition`, `count`, `dedupe`,
-  `clear`
-- **Conversion (intake)** -- _take loose input and produce a structured value._
-  `parse`, `tryParse`, `coerce`, `normalize`, `sanitize`, `decode`,
-  `deserialize`, `from`, `resolve`, `unescape`, `unwrap`
-- **Conversion (emit)** -- _take a structured value and produce an external
-  representation._ `format`, `stringify`, `serialize`, `encode`, `escape`, `to`
-- **Edit** -- _modify a value within the same domain._ `replace`, `remove`,
-  `strip`, `trim`, `transform`, `toggle`
-- **Composition** -- _combine or decompose values of similar shape._ `merge`,
-  `combine`, `flatten`, `expand`, `split`, `join`, `compose`, `wrap`
-- **Construction** -- _build new objects, schemas, or resources._ `create`,
-  `define`, `build`, `make`
-- **Binding & Effect** -- _attach or run external behavior._ `use`, `apply`,
-  `run`, `tap`
-- **I/O & State** -- _read, write, or manage external resources and lifecycle._
-  `load`, `save`, `read`, `write`, `watch`, `open`, `close`, `init`, `reset`,
-  `delete`
-- **Subscription** -- _register and tear down listeners._ `subscribe`,
-  `unsubscribe`, `register`, `deregister`
-- **Function modifier** -- _wrap an existing function with new behavior._
-  `debounce`, `throttle`, `memoize`
-- **Value op** -- _operate on any value regardless of domain._ `clone`,
-  `freeze`, `ensure`
+- **Accessor** -- _retrieve or change parts of a value._ `get`, `set`, `pick`, `omit`
+- **Collection** -- _operate on lists, sets, or maps as a whole._ `find`, `filter`, `map`, `reduce`,
+  `sort`, `group`, `partition`, `count`, `dedupe`, `clear`
+- **Conversion (intake)** -- _take loose input and produce a structured value._ `parse`, `tryParse`,
+  `coerce`, `normalize`, `sanitize`, `decode`, `deserialize`, `from`, `resolve`, `unescape`,
+  `unwrap`
+- **Conversion (emit)** -- _take a structured value and produce an external representation._
+  `format`, `stringify`, `serialize`, `encode`, `escape`, `to`
+- **Edit** -- _modify a value within the same domain._ `replace`, `remove`, `strip`, `trim`,
+  `transform`, `toggle`
+- **Composition** -- _combine or decompose values of similar shape._ `merge`, `combine`, `flatten`,
+  `expand`, `split`, `join`, `compose`, `wrap`
+- **Construction** -- _build new objects, schemas, or resources._ `create`, `define`, `build`,
+  `make`
+- **Binding & Effect** -- _attach or run external behavior._ `use`, `apply`, `run`, `tap`
+- **I/O & State** -- _read, write, or manage external resources and lifecycle._ `load`, `save`,
+  `read`, `write`, `watch`, `open`, `close`, `init`, `reset`, `delete`
+- **Subscription** -- _register and tear down listeners._ `subscribe`, `unsubscribe`, `register`,
+  `deregister`
+- **Function modifier** -- _wrap an existing function with new behavior._ `debounce`, `throttle`,
+  `memoize`
+- **Value op** -- _operate on any value regardless of domain._ `clone`, `freeze`, `ensure`
 
 ---
 
@@ -223,8 +212,8 @@ coerceArraySchema(schema) // Zod schema helper
 
 ### `use` rule
 
-Use `use` only when the function is about binding or applying an external
-resource, adapter, plugin, context, or runtime dependency.
+Use `use` only when the function is about binding or applying an external resource, adapter, plugin,
+context, or runtime dependency.
 
 Good:
 
@@ -276,5 +265,4 @@ validators
 stringUtils
 ```
 
-These are acceptable as temporary internal folders, but they make public APIs
-hard to remember.
+These are acceptable as temporary internal folders, but they make public APIs hard to remember.

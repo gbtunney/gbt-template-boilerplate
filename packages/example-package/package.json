@@ -1,8 +1,8 @@
 {
-    "name": "@snailicid3/template-example-package",
+    "name": "@gbt/template-example-package",
     "version": "0.0.0",
     "private": false,
-    "description": "Example monorepo package",
+    "description": "Example child package in monorepo",
     "scripts": {
         "build:nx": "nx run $npm_package_name:build",
         "test:nx": "nx run $npm_package_name:test",
@@ -30,14 +30,16 @@
         }
     },
     "dependencies": {
-        "@snailicid3/utils": "^0.0.2"
+        "@snailicid3/utils": "^0.0.4"
     },
     "devDependencies": {
-        "@types/node": "^22.13.1",
+        "@snailicid3/build-config": "^0.0.4",
+        "@snailicid3/config": "^0.0.4",
+        "@types/node": "^25.9.0",
         "cross-var": "^1.1.0",
-        "typescript": "^5.7.3",
-        "vitest": "^3.2.4",
-        "tsdown": "^0.22.0"
+        "tsdown": "^0.22.0",
+        "typescript": "^6.0.3",
+        "vitest": "^4.1.6"
     },
     "type": "module",
     "author": {
@@ -47,10 +49,9 @@
     "license": "MIT",
     "repository": {
         "type": "git",
-        "url": "https://github.com/gbtunney/gbt-template-boilerplate",
+        "url": "https://github.com/OWNER/REPOSITORY",
         "directory": "packages/example-package"
     },
-    "homepage": "https://github.com/gbtunney/snailicid3#README",
     "packageManager": "pnpm@10.9.0",
     "files": [
         "CHANGELOG.md",

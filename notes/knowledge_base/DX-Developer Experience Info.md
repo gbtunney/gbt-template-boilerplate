@@ -8,8 +8,8 @@ tags:
 
 ## Concise Checklist
 
-Use this to judge **any dev library in ~5 minutes**. Translation: _“Would
-Future‑Me curse Present‑Me for choosing this?”_
+Use this to judge **any dev library in ~5 minutes**. Translation: _“Would Future‑Me curse Present‑Me
+for choosing this?”_
 
 ---
 

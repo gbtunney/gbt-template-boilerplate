@@ -1,4 +1,4 @@
-name: Build Docs & Commit
+name: Dispatch Docs & Commit
 
 # ─────────────────────────────────────────────────────────────
 # Manually triggered workflow for building docs and committing changes
@@ -54,9 +54,23 @@ env:
     HUSKY: 0
 
 jobs:
+    guard:
+        name: Guard — refuse main
+        runs-on: ubuntu-latest
+        steps:
+            - name: 🚫 Refuse to run on main
+              shell: bash
+              run: |
+                  if [ "${{ github.ref_name }}" = "main" ]; then
+                    echo "❌ Build Docs cannot run on main. Checkout a feature or fix branch first."
+                    exit 1
+                  fi
+                  echo "✅ Branch: ${{ github.ref_name }}"
+
     pipeline_build_docs:
         name: Run Doc pipeline
-        uses: ./.github/workflows/pipeline.yml
+        needs: guard
+        uses: ./.github/workflows/call-pipeline.yml
         with:
             mode: abort_on_error
             check_mode: check
@@ -75,27 +89,21 @@ jobs:
         if: ${{ needs.pipeline_build_docs.result == 'success' && needs.pipeline_build_docs.outputs.artifact_uploaded == 'true' }}
 
         steps:
-            # ── Guard: refuse to run on main ─────────────────────────
-            - name: 🚫 Refuse to run on main
-              shell: bash
-              run: |
-                  if [ "${{ github.ref_name }}" = "main" ]; then
-                    echo "❌ Document build cannot run on main. Checkout a feature or fix branch first."
-                    exit 1
-                  fi
-                  echo "✅ Branch: ${{ github.ref_name }}"
-
             # ── Checkout ──────────────────────────────────────────────
+            # Use GH_PAT so the push below triggers downstream PR workflows.
+            # GITHUB_TOKEN pushes are silently blocked from triggering CI.
+            # Create a PAT with repo scope and store it as secret GH_PAT.
             - uses: actions/checkout@v4
               with:
                   fetch-depth: 0
-                  token: ${{ secrets.GITHUB_TOKEN }}
+                  token: ${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}
 
-            - uses: actions/setup-node@v4
-              with:
-                  node-version: 'lts/*'
-
-            - uses: pnpm/action-setup@v4
+            - name: ⚠️ Warn if GH_PAT is not set
+              if: ${{ env.GH_PAT == '' }}
+              shell: bash
+              run: echo "::warning::GH_PAT secret is not set — push will use GITHUB_TOKEN and will NOT trigger PR workflows. Add a repo-scoped PAT as secret GH_PAT to enable CI re-runs."
+              env:
+                  GH_PAT: ${{ secrets.GH_PAT }}
 
             # ── Restore pipeline artifact ────────────────────────────
             - name: 📥 Download workspace artifact
@@ -108,12 +116,14 @@ jobs:
               shell: bash
               run: |
                   ARTIFACT_DIR="${{ runner.temp }}/workspace-artifact"
-                  rsync -a \
-                    --exclude='.git/' \
-                    --exclude='node_modules/' \
-                    --exclude='dist/' \
-                    --exclude='types/' \
-                    "$ARTIFACT_DIR"/ "$GITHUB_WORKSPACE"/
+                  ARCHIVE_PATH="$(find "$ARTIFACT_DIR" -maxdepth 1 -name '*.tar.gz' | head -n 1)"
+
+                  if [ -z "$ARCHIVE_PATH" ]; then
+                    echo "❌ Workspace artifact archive not found."
+                    exit 1
+                  fi
+
+                  tar -xzf "$ARCHIVE_PATH" -C "$GITHUB_WORKSPACE"
 
             # ── Check if repo is dirty ────────────────────────────────
             - name: 🧼 Check repo status
@@ -131,27 +141,41 @@ jobs:
                   fi
 
             # ── Commit and push ───────────────────────────────────────
+            - name: 🏷️ Compute scoped commit message
+              id: scoped_message
+              if: ${{ steps.dirty.outputs.dirty == 'true' }}
+              shell: bash
+              env:
+                  SCOPE_COMMIT_SKIP_COMMITLINT: '1'
+              run: |
+                  TYPE="${{ inputs.commit_message_type }}"
+                  SUBJECT="${{ inputs.commit_message_subject }}"
+
+                  git add -A
+                  MESSAGE="$(bash packages/config/bin/scope/commit.sh --staged --message "$TYPE" "$SUBJECT" 2>/dev/null || echo "$TYPE(root): $SUBJECT")"
+                  echo "message=$MESSAGE" >> "$GITHUB_OUTPUT"
+                  echo "✅ Scoped message: $MESSAGE"
+
             - name: 📝 Commit changes
               if: ${{ steps.dirty.outputs.dirty == 'true' }}
               shell: bash
               run: |
                   git config user.name  "${{ inputs.commit_user_name }}"
                   git config user.email "${{ inputs.commit_user_name }}@${{ inputs.commit_user_domain }}"
+                  git config commit.gpgsign false
 
-                  TYPE="${{ inputs.commit_message_type }}"
-                  SUBJECT="${{ inputs.commit_message_subject }}"
+                  if git diff --cached --quiet; then
+                    echo "No staged changes after message generation. Skipping commit."
+                    exit 0
+                  fi
 
-                  MESSAGE="${TYPE}(root): ${SUBJECT}"
-
-                  git add -A
-                   
-                  git commit -m "$MESSAGE" \
+                  git commit -m "${{ steps.scoped_message.outputs.message }}" \
                     -m "Triggered by: @${{ github.actor }} via workflow_dispatch" \
                     -m "Branch: ${{ github.ref_name }}" \
                     -m "Pipeline artifact: ${{ needs.pipeline_build_docs.outputs.workspace_artifact_name }}" \
                     -m "Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
 
-                  echo "✅ Committed: $MESSAGE"
+                  echo "✅ Committed: ${{ steps.scoped_message.outputs.message }}"
 
             - name: 🚀 Push
               if: ${{ steps.dirty.outputs.dirty == 'true' }}
@@ -169,10 +193,10 @@ jobs:
                     echo "## Autofix summary"
                     echo ""
                     echo "- branch: \`${{ github.ref_name }}\`"
-                    echo "- scope: \`${{ steps.scope.outputs.scope }}\`"
                     echo "- dirty: \`${{ steps.dirty.outputs.dirty }}\`"
                     echo "- pipeline result: \`${{ needs.pipeline_build_docs.result }}\`"
                     echo "- artifact_uploaded: \`${{ needs.pipeline_build_docs.outputs.artifact_uploaded }}\`"
                     echo "- workspace_artifact_name: \`${{ needs.pipeline_build_docs.outputs.workspace_artifact_name }}\`"
                     echo "- verify: \`${{ inputs.run_verify }}\`"
+                    echo "- computed_message: \`${{ steps.scoped_message.outputs.message }}\`"
                   } >> "$GITHUB_STEP_SUMMARY"

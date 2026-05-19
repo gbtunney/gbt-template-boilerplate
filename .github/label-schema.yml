@@ -1,8 +1,6 @@
 version: 1
 
-repos:
-    - gbtunney/gbt-template-boilerplate
-    - gbtunney/snailicid3
+repos: []
 
 labels:
     type:
