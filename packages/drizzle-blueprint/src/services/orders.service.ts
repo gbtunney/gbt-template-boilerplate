@@ -13,9 +13,10 @@
 import { makeCrudService } from './makeCrudService.js'
 import { makeQueryHelpers } from './makeQueryHelpers.js'
 import { orders } from '../db/tables/orders.table.js'
+import { db } from '../db/db.js'
 
-const q = makeQueryHelpers(orders)
-const base = makeCrudService(orders, orders.id)
+const q = makeQueryHelpers(db, orders)
+const base = makeCrudService(db, orders, orders.id)
 
 export const ordersService = {
     ...base,

@@ -19,9 +19,8 @@
 
 import { and, eq, like, or } from 'drizzle-orm'
 import type { InferSelectModel } from 'drizzle-orm'
+import type { BetterSQLite3Database } from 'drizzle-orm/better-sqlite3'
 import type { AnySQLiteTable, SQLiteColumn } from 'drizzle-orm/sqlite-core'
-
-import { db } from '../db/db.js'
 
 // ============================================================
 // ColumnValue — infers the data type for a given column.
@@ -72,6 +71,7 @@ type TextLike = null | string
 // makeQueryHelpers — factory function
 /** ============================================================ */
 export function makeQueryHelpers<TTable extends AnySQLiteTable>(
+    db: BetterSQLite3Database,
     table: TTable,
 ): QueryHelpers<TTable> {
     return {
