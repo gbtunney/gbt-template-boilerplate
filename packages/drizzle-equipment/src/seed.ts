@@ -49,9 +49,7 @@ const [powerTools, handTools, safety, measurement, electrical] = await db
     ])
     .returning()
 
-console.log(
-    `✓ Inserted ${[powerTools, handTools, safety, measurement, electrical].length} categories`,
-)
+console.log(`✓ Inserted 5 categories`)
 
 // Null-safe IDs (they are always present after INSERT … RETURNING)
 const powerToolsId = powerTools.id
@@ -193,14 +191,13 @@ const items = await db
     ])
     .returning()
 
-console.log(`✓ Inserted ${items.length} equipment items`)
+console.log(`✓ Inserted ${String(items.length)} equipment items`)
 
 // ── Summary ───────────────────────────────────────────────────────────────────
-const statusCounts = items.reduce<Record<string, number>>((acc, item) => {
-    const s = item.status ?? 'unknown'
-    acc[s] = (acc[s] ?? 0) + 1
-    return acc
-}, {})
+const statusCounts: Record<string, number> = {}
+for (const item of items) {
+    statusCounts[item.status] = (statusCounts[item.status] ?? 0) + 1
+}
 
 console.log('\nStatus breakdown:')
 for (const [status, count] of Object.entries(statusCounts)) {
@@ -212,7 +209,7 @@ for (const [status, count] of Object.entries(statusCounts)) {
               : status === 'maintenance'
                 ? '🔴'
                 : '⚪'
-    console.log(`  ${emoji}  ${status}: ${count}`)
+    console.log(`  ${emoji}  ${status}: ${String(count)}`)
 }
 
 console.log(
