@@ -4,8 +4,9 @@
 //
 // Imports baseColumns from @gbt/drizzle-blueprint (schema helper, no db dependency).
 
-import { baseColumns } from '@gbt/drizzle-blueprint'
 import { sqliteTable, text } from 'drizzle-orm/sqlite-core'
+
+import { baseColumns } from './base-columns.js'
 
 export const categories = sqliteTable('categories', {
     ...baseColumns,

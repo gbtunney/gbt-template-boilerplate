@@ -9,6 +9,7 @@ const configuration: CommitlintUserConfig = commitlint.configuration([
     'root',
     'actions',
     'drizzle-blueprint',
+    'drizzle-equipment',
     'notes',
     'template-example-package',
     'todo:fix disable scope',

@@ -7,7 +7,10 @@
         "build:nx": "nx run $npm_package_name:build",
         "test:nx": "nx run $npm_package_name:test",
         "clean:nx": "nx run $npm_package_name:clean",
-        "dev:nx": "nx run $npm_package_name:dev"
+        "dev:nx": "nx run $npm_package_name:dev",
+        "db:push": "drizzle-kit push",
+        "db:seed": "tsx src/seed.ts",
+        "db:studio": "drizzle-kit studio"
     },
     "nx": {
         "targets": {
