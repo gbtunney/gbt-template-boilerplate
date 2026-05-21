@@ -11,17 +11,20 @@
 //
 // All mock paths below are relative to THIS file (src/index.test.ts).
 
-import { vi, describe, expect, test } from 'vitest'
+import { describe, expect, test, vi } from 'vitest'
 
 // ─── Mocks ────────────────────────────────────────────────────────────────────
 
 vi.mock('@gbt/drizzle-blueprint', () => ({
+    // baseColumns is spread into sqliteTable calls — not needed at test time
+    // since table files are mocked below.
+    baseColumns: {},
     makeCrudService: () => ({
         create: vi.fn(),
         getById: vi.fn(),
         list: vi.fn(),
-        update: vi.fn(),
         remove: vi.fn(),
+        update: vi.fn(),
     }),
     makeQueryHelpers: () => ({
         findManyBy: () => vi.fn(),
@@ -31,9 +34,6 @@ vi.mock('@gbt/drizzle-blueprint', () => ({
         findOneByStrict: () => vi.fn(),
         searchBy: () => vi.fn(),
     }),
-    // baseColumns is spread into sqliteTable calls — not needed at test time
-    // since table files are mocked below.
-    baseColumns: {},
 }))
 
 // Prevent better-sqlite3 from opening a real file during tests.
