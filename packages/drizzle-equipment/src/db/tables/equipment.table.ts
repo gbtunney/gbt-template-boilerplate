@@ -12,27 +12,26 @@
 import { integer, sqliteTable, text } from 'drizzle-orm/sqlite-core'
 
 import { baseColumns } from './base-columns.js'
-
 import { categories } from './categories.table.js'
 
 export const equipment = sqliteTable('equipment', {
     ...baseColumns,
 
-    name: text('name').notNull(),
+    // FK to categories.id. Nullable — equipment can be uncategorized.
+    categoryId: integer('category_id').references(() => categories.id),
 
     description: text('description'),
 
-    // FK to categories.id. Nullable — equipment can be uncategorized.
-    categoryId: integer('category_id').references(() => categories.id),
+    // Physical location label — free-form, nullable.
+    location: text('location'),
+
+    name: text('name').notNull(),
 
     // Unique at DB level — service uses findOneByStrict for serial lookups.
     serialNumber: text('serial_number').notNull().unique(),
 
     // Application-level enum enforced by Zod: 'available' | 'in_use' | 'maintenance'.
     status: text('status').notNull().default('available'),
-
-    // Physical location label — free-form, nullable.
-    location: text('location'),
 })
 
 export type Equipment = typeof equipment.$inferSelect

@@ -17,8 +17,8 @@ export * from './db/tables/index.js'
 // Zod schemas + EquipmentStatus
 export * from './db/zod/index.js'
 
-// Services
-export * from './services/index.js'
-
 // Endpoints
 export * from './endpoints/index.js'
+
+// Services
+export * from './services/index.js'

@@ -15,8 +15,6 @@ import { sql } from 'drizzle-orm'
 import { integer } from 'drizzle-orm/sqlite-core'
 
 export const baseColumns = {
-    id: integer('id').primaryKey({ autoIncrement: true }),
-
     datetime_created: integer('datetime_created', { mode: 'timestamp' })
         .notNull()
         .default(sql`(unixepoch())`),
@@ -24,6 +22,8 @@ export const baseColumns = {
     datetime_modified: integer('datetime_modified', { mode: 'timestamp' })
         .notNull()
         .default(sql`(unixepoch())`),
+
+    id: integer('id').primaryKey({ autoIncrement: true }),
 }
 
 export default baseColumns

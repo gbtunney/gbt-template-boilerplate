@@ -10,18 +10,18 @@
 //   - db: the blueprint's own SQLite connection (re-exported for consumers that
 //         want to share it; most consumers should create their own db instead)
 
+// Blueprint's own db connection — re-exported so consumers can optionally share it.
+// Most consumers should create their own drizzle(sqlite) instance instead.
+export { db } from './db/db.js'
+
 // DB layer — table definitions, base columns, table factory
 export * from './db/tables/index.js'
 
 // Zod schemas derived from the blueprint's tables
 export * from './db/zod/index.js'
 
-// Service factories (DI: accept db as first param) + blueprint's own services
-export * from './services/index.js'
-
 // Endpoint factory + blueprint's own endpoints
 export * from './endpoints/index.js'
 
-// Blueprint's own db connection — re-exported so consumers can optionally share it.
-// Most consumers should create their own drizzle(sqlite) instance instead.
-export { db } from './db/db.js'
+// Service factories (DI: accept db as first param) + blueprint's own services
+export * from './services/index.js'

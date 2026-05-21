@@ -9,8 +9,8 @@
 
 import { makeCrudService } from './makeCrudService.js'
 import { makeQueryHelpers } from './makeQueryHelpers.js'
-import { users } from '../db/tables/users.table.js'
 import { db } from '../db/db.js'
+import { users } from '../db/tables/users.table.js'
 
 const q = makeQueryHelpers(db, users)
 const base = makeCrudService(db, users, users.id)

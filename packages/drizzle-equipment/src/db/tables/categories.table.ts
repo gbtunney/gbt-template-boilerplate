@@ -11,10 +11,10 @@ import { baseColumns } from './base-columns.js'
 export const categories = sqliteTable('categories', {
     ...baseColumns,
 
+    description: text('description'),
+
     // Unique at DB level — service uses findOneByStrict for name lookups.
     name: text('name').notNull().unique(),
-
-    description: text('description'),
 })
 
 export type Category = typeof categories.$inferSelect
