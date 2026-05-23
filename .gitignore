@@ -152,9 +152,6 @@ dist
 #Husky
 .husky/_
 
-# PNPM lockfile - remove from most repos
-pnpm-lock.yaml
-
 # Eslint JS - remove once switched to ts
 #!eslint.config.js
 

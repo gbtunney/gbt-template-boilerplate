@@ -1,7 +1,7 @@
 {
     "name": "@gbt/drizzle-equipment",
     "version": "0.0.0",
-    "private": false,
+    "private": true,
     "description": "Equipment tracking database — consumer example of @gbt/drizzle-blueprint",
     "scripts": {
         "build:nx": "nx run $npm_package_name:build",
