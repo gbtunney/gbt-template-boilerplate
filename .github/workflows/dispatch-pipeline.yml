@@ -20,6 +20,16 @@ on:
                     - fix
                     - check
                     - skip
+            api_report_mode:
+                description: Api Report Mode
+                required: true
+                default: skip
+                type: choice
+                options:
+                    - update
+                    - check
+                    - skip
+
             require_lockfile:
                 description: Treat frozen lockfile install as required
                 required: true
@@ -102,6 +112,7 @@ jobs:
         with:
             mode: ${{ inputs.mode }}
             check_mode: ${{ inputs.check_mode }}
+            api_report_mode: ${{ inputs.api_report_mode }}
             require_lockfile: ${{ inputs.require_lockfile }}
             require_clean_repo: ${{ inputs.require_clean_repo }}
             run_build: ${{ inputs.run_build }}

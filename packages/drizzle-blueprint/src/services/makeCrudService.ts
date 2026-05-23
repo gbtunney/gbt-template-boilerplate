@@ -13,17 +13,14 @@
 // CrudService<TSelect, TInsert, TUpdate> is exported so makeCrudEndpoints.ts
 // can import the type directly instead of redeclaring it.
 //
-// FIXME: idColumn is typed as `TTable["id"]` which resolves via AnySQLiteTable's
-// index signature and may widen to `unknown` in strict mode depending on the
-// Drizzle version. To fix, change the parameter type to:
-//   idColumn: SQLiteColumn
-// imported from "drizzle-orm/sqlite-core", and remove the `as never` cast on eq().
+// db is accepted as a first parameter (dependency injection) so that consumers
+// in other packages can supply their own database connection rather than sharing
+// this package's internal singleton. Pass the result of drizzle(sqlite) here.
 
 import { eq } from 'drizzle-orm'
 import type { InferInsertModel, InferSelectModel } from 'drizzle-orm'
+import type { BetterSQLite3Database } from 'drizzle-orm/better-sqlite3'
 import type { AnySQLiteTable, SQLiteColumn } from 'drizzle-orm/sqlite-core'
-
-import { db } from '../db/db.js'
 
 // ============================================================
 // CrudService — exported type contract
@@ -52,6 +49,7 @@ export function makeCrudService<
     TInsert = InferInsertModel<TTable>,
     TUpdate = Partial<InferInsertModel<TTable>>,
 >(
+    db: BetterSQLite3Database,
     table: TTable,
     idColumn: SQLiteColumn,
 ): CrudService<TSelect, TInsert, TUpdate> {

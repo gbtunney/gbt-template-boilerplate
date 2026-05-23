@@ -1,13 +1,16 @@
 {
-    "name": "@gbt/drizzle-blueprint",
+    "name": "@gbt/drizzle-equipment",
     "version": "0.0.0",
     "private": false,
-    "description": "Drizzle ORM blueprint for Zod Express API",
+    "description": "Equipment tracking database — consumer example of @gbt/drizzle-blueprint",
     "scripts": {
         "build:nx": "nx run $npm_package_name:build",
         "test:nx": "nx run $npm_package_name:test",
         "clean:nx": "nx run $npm_package_name:clean",
-        "dev:nx": "nx run $npm_package_name:dev"
+        "dev:nx": "nx run $npm_package_name:dev",
+        "db:push": "drizzle-kit push",
+        "db:seed": "tsx src/seed.ts",
+        "db:studio": "drizzle-kit studio"
     },
     "nx": {
         "targets": {
@@ -30,7 +33,22 @@
     },
     "main": "./dist/index.cjs",
     "module": "./dist/index.mjs",
+    "types": "./dist/index.d.cts",
+    "exports": {
+        ".": {
+            "import": "./dist/index.mjs",
+            "require": "./dist/index.cjs"
+        },
+        "./package.json": "./package.json"
+    },
+    "files": [
+        "CHANGELOG.md",
+        "dist",
+        "types"
+    ],
+    "type": "module",
     "dependencies": {
+        "@gbt/drizzle-blueprint": "workspace:*",
         "better-sqlite3": "^12.8.0",
         "drizzle-orm": "^0.45.2",
         "drizzle-zod": "^0.8.3",
@@ -52,7 +70,6 @@
         "typescript": "^6.0.3",
         "vitest": "^4.1.7"
     },
-    "type": "module",
     "author": {
         "name": "Gillian Tunney",
         "email": "gbtunney@mac.com"
@@ -61,22 +78,11 @@
     "repository": {
         "type": "git",
         "url": "https://github.com/gbtunney/gbt-template-boilerplate",
-        "directory": "packages/drizzle-blueprint"
+        "directory": "packages/drizzle-equipment"
     },
-    "files": [
-        "CHANGELOG.md",
-        "dist",
-        "types"
-    ],
     "keywords": [
-        "boilerplate"
-    ],
-    "types": "./dist/index.d.cts",
-    "exports": {
-        ".": {
-            "import": "./dist/index.mjs",
-            "require": "./dist/index.cjs"
-        },
-        "./package.json": "./package.json"
-    }
+        "boilerplate",
+        "drizzle",
+        "equipment"
+    ]
 }
