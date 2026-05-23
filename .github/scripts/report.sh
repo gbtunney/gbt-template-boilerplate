@@ -12,3 +12,4 @@ bash "$SCRIPT_DIR/report-env.sh"
 bash "$SCRIPT_DIR/report-repo.sh"
 bash "$SCRIPT_DIR/report-workspace.sh"
 bash "$SCRIPT_DIR/report-prettier.sh"
+pnpm exec nx report
