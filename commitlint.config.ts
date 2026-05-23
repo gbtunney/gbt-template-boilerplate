@@ -5,12 +5,5 @@
  */
 import { commitlint, type CommitlintUserConfig } from '@snailicid3/config'
 
-const configuration: CommitlintUserConfig = commitlint.configuration([
-    'root',
-    'actions',
-    'drizzle-blueprint',
-    'notes',
-    'template-example-package',
-    'todo:fix disable scope',
-])
+const configuration: CommitlintUserConfig = commitlint.configuration()
 export default configuration
