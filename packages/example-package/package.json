@@ -30,16 +30,16 @@
         }
     },
     "dependencies": {
-        "@snailicid3/utils": "^0.0.4"
+        "@snailicid3/utils": "^0.0.5"
     },
     "devDependencies": {
-        "@snailicid3/build-config": "^0.0.4",
-        "@snailicid3/config": "^0.0.5",
-        "@types/node": "^25.9.0",
+        "@snailicid3/build-config": "^0.0.5",
+        "@snailicid3/config": "^0.0.6",
+        "@types/node": "^25.9.1",
         "cross-var": "^1.1.0",
         "tsdown": "^0.22.0",
         "typescript": "^6.0.3",
-        "vitest": "^4.1.6"
+        "vitest": "^4.1.7"
     },
     "type": "module",
     "author": {
