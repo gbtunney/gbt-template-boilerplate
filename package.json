@@ -10,7 +10,7 @@
         "lint:staged": "pnpm exec lint-staged --relative",
         "\n========== BUILD >> ==========": "",
         "build": "pnpm nx:build",
-        "build:self": "pnpm exec nx run @gbt/root:build",
+        "build:self": "pnpm exec nx run $npm_package_name:build",
         "nx:build": "pnpm exec nx run-many -t build",
         "\n========== TEST >> ==========": "",
         "test": "pnpm nx:test",
@@ -44,13 +44,13 @@
         "nx:reset": "pnpm exec nx reset",
         "\n========== CHECK >> ==========": "",
         "check": "pnpm exec nx run-many -t lint",
-        "check:md": "pnpm exec nx run @gbt/root:lint:md",
+        "check:md": "pnpm exec nx run $npm_package_name:lint:md",
         "\n========== FIX >> ==========": "",
         "fix": "pnpm exec nx run-many -t fix",
-        "fix:md": "pnpm exec nx run @gbt/root:fix:md",
+        "fix:md": "pnpm exec nx run $npm_package_name:fix:md",
         "\n========== CLEAN >> ==========": "",
         "clean": "pnpm exec nx run-many -t clean",
-        "clean:self": "pnpm exec nx run @gbt/root:clean"
+        "clean:self": "pnpm exec nx run $npm_package_name:clean"
     },
     "dependencies": {
         "@gbt/root": "link:"
