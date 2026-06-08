@@ -57,7 +57,7 @@ individually, but the category is what I scan first when I’m trying to remembe
 ## Verb Semantics
 
 | Verb          | Meaning                                                                  | Return shape                       | Example                           | Category            |
-| -———— | ———————————————————————— | -——————————— | ——————————— | -—————— |
+| ------------- | ------------------------------------------------------------------------ | ---------------------------------- | --------------------------------- | ------------------- |
 | `is`          | Boolean identity/type/validity check                                     | `boolean` / type predicate         | `isValidUrl(value)`               | Predicate           |
 | `has`         | Boolean containment/capability check                                     | `boolean`                          | `hasWhitespace(value)`            | Predicate           |
 | `can`         | Boolean permission/capability check before action                        | `boolean`                          | `canParseJson(value)`             | Predicate           |
