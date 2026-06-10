@@ -11,7 +11,6 @@
 //
 // All mock paths below are relative to THIS file (src/index.test.ts).
 //
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
 
 import { describe, expect, test, vi } from 'vitest'
 
