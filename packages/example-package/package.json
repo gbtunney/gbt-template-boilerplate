@@ -33,13 +33,13 @@
         "@snailicid3/utils": "^0.0.5"
     },
     "devDependencies": {
-        "@snailicid3/build-config": "^0.0.6",
-        "@snailicid3/config": "^0.0.7",
-        "@types/node": "^25.9.1",
+        "@snailicid3/build-config": "^0.0.8",
+        "@snailicid3/config": "^0.1.2",
+        "@types/node": "^26.0.0",
         "cross-var": "^1.1.0",
-        "tsdown": "^0.22.0",
+        "tsdown": "^0.22.3",
         "typescript": "^6.0.3",
-        "vitest": "^4.1.7"
+        "vitest": "^4.1.9"
     },
     "type": "module",
     "author": {
