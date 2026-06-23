@@ -75,6 +75,7 @@ const routing: Routing = {
 
 const result = await createServer(config, routing)
 const app: Express = result.app
+// eslint-disable-next-line @typescript-eslint/naming-convention
 const { logger, servers } = result
 
 logger.info('Server started', { port: 8090 })

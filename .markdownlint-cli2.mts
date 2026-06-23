@@ -1,4 +1,2 @@
-import {
-    Markdownlint,
-} from '@snailicid3/config'
+import { Markdownlint } from '@snailicid3/config'
 export default Markdownlint.defineConfig(Markdownlint.config())
