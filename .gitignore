@@ -40,7 +40,6 @@ build/Release
 
 # Dependency directories
 node_modules/
-**/node_modules/
 jspm_packages/
 
 # TypeScript v1 declaration files
@@ -149,13 +148,22 @@ dist
 *.d.cts.map
 *.map
 
+# Docs
+docs
+
+# Un-ignore the @snailicid3/types source package
+!packages/types/
+# Un-ignore src/types/ subdirectories (source code, not declarations)
+!packages/*/src/types/
+
 #Husky
 .husky/_
 
-# Eslint JS - remove once switched to ts
-#!eslint.config.js
-
 # Scratch Files
 scratch
+temp
+tmp
 examples
-!notes/scratch
+!/notes/scratch
+
+.cursor/rules/nx-rules.mdc

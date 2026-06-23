@@ -18,7 +18,7 @@ then copy:
 - `cp -r` folders
   - .husky
   - .changeset
-  - .github (might need to hold off, idk?)
+  - .github (might need to hold off, idk?) EXCEPT.github/ISSUE_TEMPLATE
   - .vscode
 
 - **backups** ( add .bk.\* to old filename)
