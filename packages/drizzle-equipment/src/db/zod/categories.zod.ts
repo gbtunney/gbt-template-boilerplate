@@ -1,4 +1,4 @@
-// src/db/zod/categories.zod.ts
+// Src/db/zod/categories.zod.ts
 // Zod schemas derived from the categories table via drizzle-zod.
 // createSelectSchema / createInsertSchema / createUpdateSchema mirror the
 // column definitions so API validation stays in sync with the DB schema.

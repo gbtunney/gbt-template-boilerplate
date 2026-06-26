@@ -1,4 +1,4 @@
-// src/db/zod/users.zod.ts
+// Src/db/zod/users.zod.ts
 // Zod schemas derived from the users table definition.
 // These are used for runtime validation (API input/output, endpoint factories).
 // Do NOT point drizzle-kit at this file — it only needs the tables barrel.

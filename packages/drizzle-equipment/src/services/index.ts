@@ -1,4 +1,4 @@
-// src/services/index.ts
+// Src/services/index.ts
 // Services barrel.
 
 export * from './categories.service.js'

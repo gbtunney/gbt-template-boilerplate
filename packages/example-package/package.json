@@ -34,8 +34,8 @@
     },
     "devDependencies": {
         "@snailicid3/build-config": "^0.0.8",
-        "@snailicid3/config": "^0.1.2",
-        "@types/node": "^26.0.0",
+        "@snailicid3/config": "^0.1.3",
+        "@types/node": "^26.0.1",
         "cross-var": "^1.1.0",
         "tsdown": "^0.22.3",
         "typescript": "^6.0.3",

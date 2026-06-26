@@ -1,4 +1,4 @@
-// src/endpoints/makeCrudEndpoints.ts
+// Src/endpoints/makeCrudEndpoints.ts
 // Generic CRUD endpoint factory for express-zod-api.
 // Builds the five standard CRUD endpoints from a service + Zod schemas.
 //

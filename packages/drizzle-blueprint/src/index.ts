@@ -1,4 +1,4 @@
-// src/index.ts
+// Src/index.ts
 // @gbt/drizzle-blueprint public API.
 //
 // Re-exports everything needed by consumer packages:

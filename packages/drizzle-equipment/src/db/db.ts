@@ -1,4 +1,4 @@
-// src/db/db.ts
+// Src/db/db.ts
 // Equipment database connection.
 // Separate SQLite file from drizzle-blueprint's dev.db — each package owns its own data.
 // Foreign keys are enabled so the category_id → categories.id constraint is enforced.

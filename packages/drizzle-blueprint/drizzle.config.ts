@@ -1,4 +1,4 @@
-// drizzle.config.ts
+// Drizzle.config.ts
 // Drizzle Kit configuration. Points at the TABLES barrel only.
 // Do NOT point at the zod/ barrel — drizzle-kit only needs the schema graph.
 

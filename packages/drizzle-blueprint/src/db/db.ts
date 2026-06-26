@@ -1,4 +1,4 @@
-// src/db/db.ts
+// Src/db/db.ts
 // Database connection only.
 // Do NOT put schema definitions, services, or endpoints here.
 // Keep this file tiny — one export: `db`.

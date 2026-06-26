@@ -1,4 +1,4 @@
-// src/endpoints/categories.endpoints.ts
+// Src/endpoints/categories.endpoints.ts
 // Wires the CRUD endpoint factory (from @gbt/drizzle-blueprint) to the
 // categories service and its Zod schemas.
 // Produces: create, getById, list, update, remove endpoints.

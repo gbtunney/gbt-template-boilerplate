@@ -1,4 +1,4 @@
-// src/endpoints/index.ts
+// Src/endpoints/index.ts
 // Endpoints barrel.
 
 export * from './categories.endpoints.js'

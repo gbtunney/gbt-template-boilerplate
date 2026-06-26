@@ -1,4 +1,4 @@
-// src/db/tables/base-columns.ts
+// Src/db/tables/base-columns.ts
 // Local copy of baseColumns for this package's table definitions.
 //
 // WHY a local copy instead of importing from @gbt/drizzle-blueprint:

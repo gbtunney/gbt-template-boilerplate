@@ -1,4 +1,4 @@
-// src/db/tables/table-factory.ts
+// Src/db/tables/table-factory.ts
 // Optional convenience wrapper around sqliteTable that automatically spreads
 // baseColumns into every table definition.
 //

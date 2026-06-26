@@ -1,4 +1,4 @@
-// src/services/makeQueryHelpers.ts
+// Src/services/makeQueryHelpers.ts
 // Generic typed query helper factory. Produces filtered / relational lookup
 // helpers for any Drizzle SQLite table.
 //

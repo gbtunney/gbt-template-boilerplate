@@ -1,4 +1,4 @@
-// src/db/zod/index.ts
+// Src/db/zod/index.ts
 // Validation barrel. Use this in app code (services, endpoints, etc.).
 // Do NOT point drizzle-kit at this barrel.
 

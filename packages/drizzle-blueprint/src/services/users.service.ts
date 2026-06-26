@@ -1,4 +1,4 @@
-// src/services/users.service.ts
+// Src/services/users.service.ts
 // Per-table service for `users`.
 // Composes the generic CRUD service with typed query helpers.
 //
