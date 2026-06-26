@@ -8,10 +8,7 @@
 
         "build:ts": {
             "cache": true,
-            "dependsOn": [
-                { "projects": ["@snailicid3/config"], "target": "build" },
-                { "projects": ["@snailicid3/build-config"], "target": "build" }
-            ],
+            "dependsOn": [],
             "inputs": [
                 "{projectRoot}/*.ts",
                 "{projectRoot}/*.mts",
