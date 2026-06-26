@@ -1,4 +1,4 @@
-// src/db/tables/categories.table.ts
+// Src/db/tables/categories.table.ts
 // Table definition for `categories`.
 // Anchor table — no FK dependencies, so defined before equipment.
 //

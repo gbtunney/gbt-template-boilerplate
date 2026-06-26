@@ -1,4 +1,4 @@
-// src/services/orders.service.ts
+// Src/services/orders.service.ts
 // Per-table service for `orders`.
 // Composes the generic CRUD service with typed query helpers.
 // Demonstrates the foreign-key child pattern (userId -> users.id).

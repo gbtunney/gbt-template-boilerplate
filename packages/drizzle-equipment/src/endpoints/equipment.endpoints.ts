@@ -1,4 +1,4 @@
-// src/endpoints/equipment.endpoints.ts
+// Src/endpoints/equipment.endpoints.ts
 // Wires the CRUD endpoint factory (from @gbt/drizzle-blueprint) to the
 // equipment service and its Zod schemas.
 // Produces: create, getById, list, update, remove endpoints.

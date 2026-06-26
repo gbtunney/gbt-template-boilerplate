@@ -1,4 +1,4 @@
-// src/db/tables/users.table.ts
+// Src/db/tables/users.table.ts
 // Table definition for `users`. This is the schema source of truth for this entity.
 // Drizzle-kit reads this file (via the tables barrel).
 //

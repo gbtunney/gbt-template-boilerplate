@@ -1,4 +1,4 @@
-// src/seed.ts
+// Src/seed.ts
 // Seed script — populates dev.db with sample categories and equipment.
 // Run from the package root:
 //   pnpm exec tsx src/seed.ts

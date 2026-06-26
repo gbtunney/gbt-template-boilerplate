@@ -1,4 +1,4 @@
-// src/db/tables/orders.table.ts
+// Src/db/tables/orders.table.ts
 // Table definition for `orders`. This is the schema source of truth for this entity.
 // Demonstrates a foreign-key relationship: orders.userId -> users.id.
 //

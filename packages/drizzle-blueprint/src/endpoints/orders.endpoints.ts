@@ -1,4 +1,4 @@
-// src/endpoints/orders.endpoints.ts
+// Src/endpoints/orders.endpoints.ts
 // Wires the generic CRUD endpoint factory to the orders service and Zod schemas.
 // Custom endpoints (e.g. listByUserId, searchProducts) should be added here
 // as additional defaultEndpointsFactory.build() calls outside makeCrudEndpoints.

@@ -1,4 +1,4 @@
-// src/services/equipment.service.ts
+// Src/services/equipment.service.ts
 // Service for the `equipment` table.
 // Composes the generic CRUD service with typed query helpers, both imported from
 // @gbt/drizzle-blueprint. The local `db` instance is passed so this package

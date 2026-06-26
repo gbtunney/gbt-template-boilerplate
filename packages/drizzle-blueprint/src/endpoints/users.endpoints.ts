@@ -1,4 +1,4 @@
-// src/endpoints/users.endpoints.ts
+// Src/endpoints/users.endpoints.ts
 // Wires the generic CRUD endpoint factory to the users service and Zod schemas.
 // Custom endpoints (e.g. search by name) should be added here as additional
 // defaultEndpointsFactory.build() calls — outside of makeCrudEndpoints.

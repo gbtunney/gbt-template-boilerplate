@@ -1,4 +1,4 @@
-// src/db/tables/equipment.table.ts
+// Src/db/tables/equipment.table.ts
 // Table definition for `equipment`.
 // References categories.id via nullable FK.
 //

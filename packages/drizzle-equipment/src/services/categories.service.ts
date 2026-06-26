@@ -1,4 +1,4 @@
-// src/services/categories.service.ts
+// Src/services/categories.service.ts
 // Service for the `categories` table.
 // Composes the generic CRUD service with typed query helpers, both imported from
 // @gbt/drizzle-blueprint. The local `db` instance is passed as the first argument

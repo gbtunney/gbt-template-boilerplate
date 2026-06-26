@@ -1,4 +1,4 @@
-// src/db/tables/base-columns.ts
+// Src/db/tables/base-columns.ts
 // Shared column definitions spread into every table.
 // Provides: id (PK, autoincrement), datetime_created, datetime_modified.
 //

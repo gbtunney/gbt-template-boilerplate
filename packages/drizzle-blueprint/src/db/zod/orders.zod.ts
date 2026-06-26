@@ -1,4 +1,4 @@
-// src/db/zod/orders.zod.ts
+// Src/db/zod/orders.zod.ts
 // Zod schemas derived from the orders table definition.
 // Same pattern as users.zod.ts — select / insert / update.
 

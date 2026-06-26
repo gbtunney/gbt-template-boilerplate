@@ -1,4 +1,4 @@
-// src/services/makeCrudService.ts
+// Src/services/makeCrudService.ts
 // Generic CRUD service factory. Produces create / getById / list / update / remove
 // for any Drizzle SQLite table that follows the baseColumns convention.
 //

@@ -1,4 +1,4 @@
-// src/db/zod/equipment.zod.ts
+// Src/db/zod/equipment.zod.ts
 // Zod schemas derived from the equipment table via drizzle-zod.
 //
 // Status override: drizzle-zod produces z.string() for the `status` column because

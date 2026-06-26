@@ -1,4 +1,4 @@
-// drizzle.config.ts
+// Drizzle.config.ts
 // Drizzle Kit configuration for the equipment database.
 // Points at the TABLES barrel only — not the zod/ barrel.
 // Run from packages/drizzle-equipment: pnpm exec drizzle-kit push

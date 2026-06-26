@@ -1,4 +1,4 @@
-// src/index.ts
+// Src/index.ts
 // @gbt/drizzle-equipment public API.
 //
 // Exports:

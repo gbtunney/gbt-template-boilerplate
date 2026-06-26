@@ -1,4 +1,4 @@
-// src/index.test.ts
+// Src/index.test.ts
 // Smoke tests — confirm that services are correctly composed and shaped.
 //
 // @gbt/drizzle-blueprint is mocked to avoid loading its bundled output, which
@@ -17,7 +17,7 @@ import { describe, expect, test, vi } from 'vitest'
 // ─── Mocks ────────────────────────────────────────────────────────────────────
 
 vi.mock('@gbt/drizzle-blueprint', () => ({
-    // baseColumns is spread into sqliteTable calls — not needed at test time
+    // BaseColumns is spread into sqliteTable calls — not needed at test time
     // since table files are mocked below.
     baseColumns: {},
     makeCrudService: () => ({
