@@ -1,0 +1,42 @@
+# Runs only after merge to `main`.
+#
+# This workflow is intentionally a thin wrapper around call-release-plan.yml.
+# Release branching, version PR management, and publish decisions are all
+# centralized in the reusable workflow so manual dispatch and push-triggered
+# releases share one implementation.
+name: Push Release
+
+on:
+    push:
+        branches:
+            - main
+
+concurrency:
+    group: release-main
+    cancel-in-progress: false
+
+permissions:
+    actions: write
+    contents: write
+    pull-requests: write
+    id-token: write
+
+env:
+    HUSKY: 0
+    NPM_CONFIG_PROVENANCE: true
+    NX_NO_CLOUD: 'true'
+
+jobs:
+    release_plan:
+        name: release plan
+        uses: ./.github/workflows/call-release-plan.yml
+        secrets: inherit
+        with:
+            ref: ''
+            dry_run: false
+            allow_non_main: false
+            run_pipeline: true
+            upload_workspace_artifact: true
+            require_lockfile: true
+            node_version: lts/*
+            pnpm_cache: true
