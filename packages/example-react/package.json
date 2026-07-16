@@ -7,12 +7,11 @@
         "build:nx": "nx run $npm_package_name:build",
         "build:storybook:nx": "nx run $npm_package_name:build:storybook",
         "dev:nx": "nx run $npm_package_name:dev",
-        "dev:storybook": "pnpm check:nx && pnpm exec storybook dev -p 6006",
-        "check:nx": "pnpm exec nx run -p $npm_package_name -t build:ts check:ts",
+        "dev:storybook": "pnpm exec nx run -p $npm_package_name -t build:ts check:ts && pnpm exec storybook dev -p 6006",
         "test:nx": "nx run $npm_package_name:test",
         "clean:nx": "nx run $npm_package_name:clean",
-        "chromatic": "pnpm check:nx && pnpm run build:storybook:nx && pnpm exec chromatic --project-token=$CHROMATIC_PROJECT_TOKEN --build-script-name build:storybook:nx",
-        "test:chromatic": "pnpm exec dotenv -e .env.local -- pnpm run chromatic"
+        "chromatic:nx": "nx run $npm_package_name:chromatic",
+        "test:chromatic": "pnpm exec dotenv -e .env.local -- pnpm chromatic:nx"
     },
     "nx": {
         "targets": {
@@ -24,23 +23,8 @@
             "build:tsdown": {},
             "build:ts": {},
             "build": {},
-            "build:storybook": {
-                "cache": true,
-                "dependsOn": [
-                    "build"
-                ],
-                "command": "pnpm exec storybook build",
-                "inputs": [
-                    "{projectRoot}/src/**.tsx",
-                    "{projectRoot}/.storybook/**/*"
-                ],
-                "outputs": [
-                    "{projectRoot}/storybook-static"
-                ],
-                "options": {
-                    "cwd": "{projectRoot}"
-                }
-            },
+            "build:storybook": {},
+            "chromatic": {},
             "test": {},
             "test:watch": {},
             "lint": {},
