@@ -1,4 +1,4 @@
-name: Call Release Plan
+name: z Call Release Plan
 
 # ─────────────────────────────────────────────────────────────
 # WORKFLOW: Release Plan
@@ -164,30 +164,32 @@ jobs:
                   dry_run="${{ inputs.dry_run }}"
 
                   {
-                    echo "## Release plan"
+                    echo "## 🧭 Release plan"
                     echo ""
-                    echo "- input ref: \`${{ inputs.ref || 'github.sha' }}\`"
-                    echo "- checked ref: \`${{ needs.detect.outputs.checked_ref }}\`"
-                    echo "- dry run: \`${{ inputs.dry_run }}\`"
-                    echo "- allow non-main: \`${{ inputs.allow_non_main }}\`"
-                    echo "- phase: \`$phase\`"
+                    echo "- input ref: ${{ inputs.ref || 'github.sha' }}"
+                    echo "- checked ref: ${{ needs.detect.outputs.checked_ref }}"
+                    echo "- dry run: ${{ inputs.dry_run }}"
+                    echo "- allow non-main: ${{ inputs.allow_non_main }}"
+                    echo "- phase: $phase"
                     echo ""
-                    echo "## Release-state outputs"
+                    echo "## 📦 Release-state outputs"
                     echo ""
-                    echo "- changeset_count: \`${{ needs.detect.outputs.changeset_count }}\`"
-                    echo "- has_pending_changesets: \`${{ needs.detect.outputs.has_pending_changesets }}\`"
-                    echo "- package_count: \`${{ needs.detect.outputs.package_count }}\`"
-                    echo "- public_package_count: \`${{ needs.detect.outputs.public_package_count }}\`"
-                    echo "- private_package_count: \`${{ needs.detect.outputs.private_package_count }}\`"
-                    echo "- invalid_package_count: \`${{ needs.detect.outputs.invalid_package_count }}\`"
-                    echo "- new_package_count: \`${{ needs.detect.outputs.new_package_count }}\`"
-                    echo "- new_version_count: \`${{ needs.detect.outputs.new_version_count }}\`"
-                    echo "- already_published_count: \`${{ needs.detect.outputs.already_published_count }}\`"
-                    echo "- lookup_failed_count: \`${{ needs.detect.outputs.lookup_failed_count }}\`"
-                    echo "- publish_candidate_count: \`${{ needs.detect.outputs.publish_candidate_count }}\`"
-                    echo "- publish_candidates: \`${{ needs.detect.outputs.publish_candidates }}\`"
+                    echo "- changeset_count: ${{ needs.detect.outputs.changeset_count }}"
+                    echo "- changeset_slugs: ${{ needs.detect.outputs.changeset_slugs }}"
+                    echo "- primary_changeset_slug: ${{ needs.detect.outputs.primary_changeset_slug }}"
+                    echo "- has_pending_changesets: ${{ needs.detect.outputs.has_pending_changesets }}"
+                    echo "- package_count: ${{ needs.detect.outputs.package_count }}"
+                    echo "- public_package_count: ${{ needs.detect.outputs.public_package_count }}"
+                    echo "- private_package_count: ${{ needs.detect.outputs.private_package_count }}"
+                    echo "- invalid_package_count: ${{ needs.detect.outputs.invalid_package_count }}"
+                    echo "- new_package_count: ${{ needs.detect.outputs.new_package_count }}"
+                    echo "- new_version_count: ${{ needs.detect.outputs.new_version_count }}"
+                    echo "- already_published_count: ${{ needs.detect.outputs.already_published_count }}"
+                    echo "- lookup_failed_count: ${{ needs.detect.outputs.lookup_failed_count }}"
+                    echo "- publish_candidate_count: ${{ needs.detect.outputs.publish_candidate_count }}"
+                    echo "- publish_candidates: ${{ needs.detect.outputs.publish_candidates }}"
                     echo ""
-                    echo "## Planned action"
+                    echo "## ✅ Planned action"
                     echo ""
 
                     if [ "$phase" = "pending_changeset" ]; then
@@ -201,9 +203,9 @@ jobs:
                       echo "This ref has publish candidates and no pending changesets."
                       if [ "$dry_run" = "true" ]; then
                         echo "Dry run: would validate and prepare publish candidate artifacts."
-                        echo "Dry run: would publish: \`${{ needs.detect.outputs.publish_candidates }}\`."
+                        echo "Dry run: would publish: ${{ needs.detect.outputs.publish_candidates }}."
                       else
-                        echo "Real mode: would validate and publish: \`${{ needs.detect.outputs.publish_candidates }}\`."
+                        echo "Real mode: would validate and publish: ${{ needs.detect.outputs.publish_candidates }}."
                       fi
                     else
                       echo "No release action is needed."
@@ -244,8 +246,60 @@ jobs:
         needs: [detect, plan, guard_real_release]
         if: ${{ always() && needs.detect.outputs.should_version == 'true' && (inputs.dry_run == true || needs.guard_real_release.result == 'success') }}
         runs-on: ubuntu-latest
+        env:
+            HUSKY: 0
+            NX_NO_CLOUD: ${{ (vars.DISABLE_NX_CLOUD || 'true') == 'true' && 'true' || 'false' }}
 
         steps:
+            - name: Checkout release source
+              uses: actions/checkout@v4
+              with:
+                  fetch-depth: 0
+                  ref: ${{ inputs.ref || github.sha }}
+                  token: ${{ secrets.GH_PAT || github.token }}
+
+            - name: Derive release branch from pending changesets
+              id: release_branch
+              shell: bash
+              run: |
+                  set -euo pipefail
+
+                  changeset_count="${{ needs.detect.outputs.changeset_count }}"
+                  primary_changeset_slug="${{ needs.detect.outputs.primary_changeset_slug }}"
+
+                  if [[ "$changeset_count" -eq 0 || -z "$primary_changeset_slug" ]]; then
+                    echo "::error::No pending changeset files were found to derive the release branch slug."
+                    exit 1
+                  fi
+
+                  if [[ "$changeset_count" -eq 1 ]]; then
+                    release_slug="$primary_changeset_slug"
+                  else
+                    first_slug="$primary_changeset_slug"
+                    remaining_count="$((changeset_count - 1))"
+                    release_slug="${first_slug}-plus-${remaining_count}-more"
+                  fi
+
+                  release_slug="$(printf '%s' "$release_slug" | tr '[:upper:]' '[:lower:]' | sed -E 's/[^a-z0-9._-]+/-/g; s/^-+//; s/-+$//; s/-{2,}/-/g')"
+
+                  if [[ -z "$release_slug" ]]; then
+                    short_sha="${GITHUB_SHA:-$(git rev-parse --short HEAD)}"
+                    release_slug="changeset-${short_sha:0:8}"
+                  fi
+
+                  max_slug_length=120
+                  if [[ "${#release_slug}" -gt "$max_slug_length" ]]; then
+                    release_slug="${release_slug:0:max_slug_length}"
+                    release_slug="${release_slug%-}"
+                  fi
+
+                  release_branch="release/${release_slug}"
+
+                  echo "slug=$release_slug" >> "$GITHUB_OUTPUT"
+                  echo "branch=$release_branch" >> "$GITHUB_OUTPUT"
+                  echo "count=$changeset_count" >> "$GITHUB_OUTPUT"
+                  echo "Resolved release branch: $release_branch"
+
             - name: Plan version PR action
               if: ${{ inputs.dry_run == true }}
               shell: bash
@@ -254,16 +308,8 @@ jobs:
 
                   echo "Dry run: would create/update a Changesets version PR."
                   echo "Dry run: pending changeset count = ${{ needs.detect.outputs.changeset_count }}"
-                  echo "Dry run: target branch would be release/main."
+                  echo "Dry run: target branch would be ${{ steps.release_branch.outputs.branch }}."
                   echo "Dry run: commit/PR title would use release(root): version packages unless scope detection narrows it."
-
-            - name: Checkout release source
-              if: ${{ inputs.dry_run == false }}
-              uses: actions/checkout@v4
-              with:
-                  fetch-depth: 0
-                  ref: ${{ inputs.ref || github.sha }}
-                  token: ${{ secrets.GH_PAT || github.token }}
 
             - name: Setup pnpm
               if: ${{ inputs.dry_run == false }}
@@ -331,7 +377,7 @@ jobs:
 
             - name: Push release branch
               if: ${{ inputs.dry_run == false }}
-              run: git push origin HEAD:refs/heads/release/main --force
+              run: git push origin HEAD:refs/heads/${{ steps.release_branch.outputs.branch }} --force
 
             - name: Create or update version PR
               if: ${{ inputs.dry_run == false }}
@@ -341,36 +387,31 @@ jobs:
               run: |
                   set -euo pipefail
 
-                  title="${{ steps.version_msg.outputs.message }}"
+                  release_slug="${{ steps.release_branch.outputs.slug }}"
+                  title="release(${release_slug}): version packages"
                   body="Automated version bump from Changesets. Merge this PR to publish packages to npm."
+                  release_branch="${{ steps.release_branch.outputs.branch }}"
 
-                  pr="$(gh pr list --head release/main --base main --state open --json number -q '.[0].number' 2>/dev/null || true)"
+                  pr="$(gh pr list --head \"$release_branch\" --base main --state open --json number -q '.[0].number' 2>/dev/null || true)"
 
                   if [[ -z "$pr" ]]; then
-                    gh pr create --head release/main --base main --title "$title" --body "$body"
+                    gh pr create --head "$release_branch" --base main --title "$title" --body "$body"
                   else
                     gh pr edit "$pr" --title "$title" --body "$body"
                   fi
-
-            - name: Trigger version PR validation
-              if: ${{ inputs.dry_run == false }}
-              shell: bash
-              env:
-                  GH_TOKEN: ${{ secrets.GH_PAT || github.token }}
-              run: gh workflow run pr-checks.yml --ref release/main
 
             - name: Version PR summary
               if: ${{ always() }}
               shell: bash
               run: |
                   {
-                    echo "## Pending changeset version PR"
+                    echo "## 🧾 Pending changeset version PR"
                     echo ""
-                    echo "- dry_run: \`${{ inputs.dry_run }}\`"
-                    echo "- source_ref: \`${{ inputs.ref || github.sha }}\`"
-                    echo "- changeset_count: \`${{ needs.detect.outputs.changeset_count }}\`"
-                    echo "- target_branch: \`release/main\`"
-                    echo "- title: \`${{ steps.version_msg.outputs.message || 'release(root): version packages' }}\`"
+                    echo "- dry_run: ${{ inputs.dry_run }}"
+                    echo "- source_ref: ${{ inputs.ref || github.sha }}"
+                    echo "- changeset_count: ${{ needs.detect.outputs.changeset_count }}"
+                    echo "- target_branch: ${{ steps.release_branch.outputs.branch }}"
+                    echo "- title: release(${{ steps.release_branch.outputs.slug }}): version packages"
                   } >> "$GITHUB_STEP_SUMMARY"
 
     pending_release_pipeline:
@@ -391,6 +432,7 @@ jobs:
             pnpm_cache: ${{ inputs.pnpm_cache }}
             upload_workspace_artifact: ${{ inputs.upload_workspace_artifact }}
             artifact_name_prefix: release-candidate
+            disable_nx_cloud: 'vars'
 
     pending_release_publish_plan:
         name: pending release publish plan
@@ -405,12 +447,12 @@ jobs:
                   set -euo pipefail
 
                   {
-                    echo "## Publish plan"
+                    echo "## 🚀 Publish plan"
                     echo ""
-                    echo "- dry run: \`${{ inputs.dry_run }}\`"
-                    echo "- publish candidates: \`${{ needs.detect.outputs.publish_candidates }}\`"
-                    echo "- pipeline result: \`${{ needs.pending_release_pipeline.result }}\`"
-                    echo "- workspace artifact: \`${{ needs.pending_release_pipeline.outputs.workspace_artifact_name }}\`"
+                    echo "- dry run: ${{ inputs.dry_run }}"
+                    echo "- publish candidates: ${{ needs.detect.outputs.publish_candidates }}"
+                    echo "- pipeline result: ${{ needs.pending_release_pipeline.result }}"
+                    echo "- workspace artifact: ${{ needs.pending_release_pipeline.outputs.workspace_artifact_name }}"
                     echo ""
 
                     if [ "${{ inputs.dry_run }}" = "true" ]; then
@@ -432,7 +474,49 @@ jobs:
             require_lockfile: ${{ inputs.require_lockfile }}
             node_version: ${{ inputs.node_version }}
             pnpm_cache: ${{ inputs.pnpm_cache }}
-            post_overlay_command: npm whoami && pnpm changeset publish
+            post_overlay_command: |
+                set -euo pipefail
+
+                npm whoami
+                pnpm changeset publish
+
+                publish_candidates="${{ needs.detect.outputs.publish_candidates }}"
+
+                if [[ -z "$publish_candidates" ]]; then
+                  echo "No publish candidates detected after publish; skipping GitHub Release creation."
+                  exit 0
+                fi
+
+                for tag_name in $publish_candidates; do
+                  # Changesets creates tags locally during publish but may also push them.
+                  # If the tag is already on origin, skip. If it exists locally but not on
+                  # origin, push it with explicit src:dst. If it is absent locally (Changesets
+                  # pushed it already or tag creation failed), warn and continue so the
+                  # GitHub Release step still runs.
+                  if git ls-remote --exit-code --tags origin "refs/tags/${tag_name}" >/dev/null 2>&1; then
+                    echo "Tag already exists on origin: $tag_name"
+                  elif git rev-parse --verify "refs/tags/${tag_name}" >/dev/null 2>&1; then
+                    git push origin "refs/tags/${tag_name}:refs/tags/${tag_name}"
+                  else
+                    echo "::warning::Local tag not found for ${tag_name}; Changesets may have pushed it already."
+                  fi
+
+                  if gh release view "${tag_name}" >/dev/null 2>&1; then
+                    echo "GitHub Release already exists for $tag_name."
+                    continue
+                  fi
+
+                  echo "Creating GitHub Release for $tag_name."
+                  gh release create "${tag_name}" --title "${tag_name}" --generate-notes
+                done
+
+                {
+                  echo "## 🚀 Publish complete"
+                  echo ""
+                  echo "- published candidates: $publish_candidates"
+                  echo "- tags pushed: true"
+                  echo "- github releases ensured: true"
+                } >> "$GITHUB_STEP_SUMMARY"
 
     main:
         name: no release action
@@ -443,3 +527,49 @@ jobs:
         steps:
             - name: Noop
               run: echo "No release action needed."
+
+    outcome:
+        name: outcome summary
+        needs: [detect, plan, pending_changeset, pending_release_publish, main]
+        if: ${{ always() }}
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Summarize release outcome
+              shell: bash
+              run: |
+                  set -euo pipefail
+
+                  phase="${{ needs.plan.outputs.release_phase }}"
+                  changeset_result="${{ needs.pending_changeset.result }}"
+                  publish_result="${{ needs.pending_release_publish.result }}"
+                  main_result="${{ needs.main.result }}"
+
+                  {
+                    echo "## 🎯 Release outcome"
+                    echo ""
+                    echo "- phase: $phase"
+                    echo "- should_version: ${{ needs.detect.outputs.should_version }}"
+                    echo "- should_publish: ${{ needs.detect.outputs.should_publish }}"
+                    echo ""
+
+                    if [ "$phase" = "pending_changeset" ]; then
+                      if [ "$changeset_result" = "success" ]; then
+                        echo "✅ **Changeset PR flow ran successfully**"
+                      else
+                        echo "❌ **Changeset PR flow did not complete successfully** (result: $changeset_result)"
+                      fi
+                    elif [ "$phase" = "pending_release" ]; then
+                      if [ "$publish_result" = "success" ]; then
+                        echo "✅ **Publish flow ran successfully**"
+                      else
+                        echo "❌ **Publish flow did not complete successfully** (result: $publish_result)"
+                      fi
+                    else
+                      if [ "$main_result" = "success" ]; then
+                        echo "ℹ️ **No release action was required**"
+                      else
+                        echo "⚠️ **No-action path did not complete cleanly** (result: $main_result)"
+                      fi
+                    fi
+                  } >> "$GITHUB_STEP_SUMMARY"
