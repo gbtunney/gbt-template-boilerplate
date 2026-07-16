@@ -135,7 +135,7 @@
         "fix": {
             "cache": true,
             "dependsOn": ["check:ts", "build"],
-            "command": "pnpm exec prettier  --write . '!**/*.api.md'  --ignore-unknown && pnpm exec eslint . --fix",
+            "command": "pnpm exec prettier  --write . '!**/*.api.md'  --ignore-unknown && pnpm exec eslint . --fix --debug",
             "options": {
                 "cwd": "{projectRoot}"
             }
