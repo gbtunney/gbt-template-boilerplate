@@ -9,16 +9,18 @@ _Mapping data across meaning, structure, and interface._
 
 ## Why this exists
 
-When I’m deciding how to store a phone number, what TypeScript type to assign it, and what form
+When I'm deciding how to store a phone number, what TypeScript type to assign it, and what form
 element to render — those are actually three separate questions. For a long time I kept conflating
-them and couldn’t figure out why my data models felt messy or why picking a form widget felt harder
+them and couldn't figure out why my data models felt messy or why picking a form widget felt harder
 than it should.
 
 The answer is that there are three distinct layers, and each one has its own vocabulary. Once I
-named them separately, a lot of things stopped being confusing.
+named them separately, a lot of things stopped being confusing. Not every scenario uses all three —
+the UI layer is only relevant when a human is interacting with the data — but having names for all
+of them makes it easier to reason about the ones that do apply.
 
-This isn’t a TypeScript-specific idea. The same layers show up in Python, JSON Schema, Home
-Assistant YAML — anywhere you’re modeling data. The original problem that forced me to write this
+This isn't a TypeScript-specific idea. The same layers show up in Python, JSON Schema, Home
+Assistant YAML — anywhere you're modeling data. The original problem that forced me to write this
 down was mapping CLI prompt fields (Inquirer/Yargs) to Zod schema types, and from there to form
 elements. The three-layer framing is what made that mapping tractable.
 
@@ -64,18 +66,31 @@ Three questions. Each one is independent of the others.
 | **UI**         | _How should someone input or read this?_ |
 
 The same conceptual type can have multiple valid technical representations. The same technical type
-can map to multiple UI widgets. They don’t have a fixed 1:1:1 relationship. Keeping them separate is
+can map to multiple UI widgets. They don't have a fixed 1:1:1 relationship. Keeping them separate is
 what makes schemas flexible and refactorable.
+
+**The UI layer is optional.** Not every scenario has all three layers — the UI layer only applies
+when a human is interacting with the data directly. API request validation, internal processing
+pipelines, config files, database schemas, and backend-only Zod schemas typically only involve the
+first two layers. Some examples of where the UI layer simply doesn't exist:
+
+- A Zod schema validating an API request body → Conceptual + Technical only
+- A Home Assistant automation triggered by a sensor value → Conceptual + Technical only
+- A pyscript processing NFC tag data → Conceptual + Technical only
+- A CLI tool outputting JSON for piping to another process → Conceptual + Technical only
+
+The UI layer shows up when you reach the Lovelace dashboard, the web form, or the CLI prompt that a
+human actually types into.
 
 ---
 
 ### Conceptual Type (Meaning)
 
-> **_“What kind of thing is this?”_**
+> **_"What kind of thing is this?"_**
 
-The conceptual layer describes **what a value means in the real world**, independent of how it’s
+The conceptual layer describes **what a value means in the real world**, independent of how it's
 stored or displayed. These types are stable across systems — a phone number is a phone number
-whether you’re storing it in Postgres, validating it with Zod, or rendering it in a React form.
+whether you're storing it in Postgres, validating it with Zod, or rendering it in a React form.
 
 **Examples:**
 
@@ -94,7 +109,7 @@ whether you’re storing it in Postgres, validating it with Zod, or rendering it
 
 ### Technical Type (Structure)
 
-> **_“What shape is this data?”_**
+> **_"What shape is this data?"_**
 
 The technical layer describes the structural form used to store or transmit a value. This is where
 TypeScript types, Zod schemas, and JSON Schema definitions live. It cares about shape and format,
@@ -129,7 +144,7 @@ not meaning.
 
 ### User Interface Type (Interactive)
 
-> **_“How should someone input or read this?”_**
+> **_"How should someone input or read this?"_**
 
 The UI layer describes how a value is **presented to a human** — what interaction it affords. A
 slider implies a range. A toggle implies binary. A combobox implies search + selection.
@@ -157,9 +172,9 @@ slider implies a range. A toggle implies binary. A combobox implies search + sel
 | Technical  | `string` — stored as text |
 | UI         | text input (`type="tel"`) |
 
-Changing the UI from a plain input to a masked input doesn’t change the technical or conceptual
-type. Changing the storage from a plain string to a validated/normalized string doesn’t change what
-it _means_ or how it’s rendered. The layers are independent — that’s the point.
+Changing the UI from a plain input to a masked input doesn't change the technical or conceptual
+type. Changing the storage from a plain string to a validated/normalized string doesn't change what
+it _means_ or how it's rendered. The layers are independent — that's the point.
 
 ---
 
@@ -234,7 +249,7 @@ Starting from a Zod type and working toward a widget.
 | `z.discriminatedUnion(...)`        | Mode-based variant                         | segmented-control + conditional fields |
 
 > These are starting points. A `z.string()` might be a `textarea` if the field is long-form, or a
-> `code` editor if it’s structured. Context matters.
+> `code` editor if it's structured. Context matters.
 
 ---
 
@@ -270,7 +285,7 @@ Starting from a Zod type and working toward a widget.
 | Event               | Record of something that happened     | `{ [key: string]: any }`                         | table-editor, repeater       | List         |
 | File                | File object/ref                       | `Binary`, `{ id: string, name: string }`         | file-upload                  | Single       |
 | Image               | Image file                            | same as File                                     | image-upload                 | Single       |
-| Enum                | Closed set of predefined values       | `Enum<string>`, `Enum<number>`                   | select, radio-group          | Single       |
+| Enum                | Closed set of predefined values       | `Enum<string\|number>`                           | select, radio-group          | Single       |
 | Multi-Select Enum   | Multiple values from a predefined set | `Array<Enum<string>>`                            | multi-select, checkbox-group | List         |
 
 ---
@@ -348,16 +363,16 @@ Commonly confused because both use `{}` in TypeScript.
 | ------------ | --------------------------------- | -------------------------------- |
 | Keys         | Fixed, named, part of the schema  | Variable, part of the data       |
 | Values       | Each field has its own type       | All values share one type        |
-| Rename a key | Changes the meaning of the schema | Doesn’t change the schema at all |
+| Rename a key | Changes the meaning of the schema | Doesn't change the schema at all |
 
-> **Rule:** If you could swap out a key name without changing what your schema _means_, it’s a Map.
-> If the key name _is_ the meaning, it’s an Object.
+> **Rule:** If you could swap out a key name without changing what your schema _means_, it's a Map.
+> If the key name _is_ the meaning, it's an Object.
 
 ---
 
 ## Conceptual Types Deep Dive
 
-Some conceptual types deserve a longer treatment because they’re routinely confused with each other,
+Some conceptual types deserve a longer treatment because they're routinely confused with each other,
 or because they have multiple valid technical representations with real tradeoffs.
 
 ---
@@ -407,7 +422,7 @@ Time-related
 
 **What it represents:** A calendar day — no time component, no timezone.
 
-**Question it answers:** _“On what day?”_
+**Question it answers:** _"On what day?"_
 
 **Technical representations:**
 
@@ -424,7 +439,7 @@ Time-related
 
 **What it represents:** A precise moment in time.
 
-**Question it answers:** _“At what exact moment?”_
+**Question it answers:** _"At what exact moment?"_
 
 **Technical representations:**
 
@@ -444,7 +459,7 @@ constantly. Pick one and stay consistent within a project.
 
 **What it represents:** A length of time — not anchored to any point.
 
-**Question it answers:** _“How long?”_
+**Question it answers:** _"How long?"_
 
 **Technical representations:**
 
@@ -463,7 +478,7 @@ constantly. Pick one and stay consistent within a project.
 
 **What it represents:** A span defined by two endpoints.
 
-**Question it answers:** _“From when to when?”_
+**Question it answers:** _"From when to when?"_
 
 **Technical representation:**
 
@@ -489,7 +504,7 @@ constantly. Pick one and stay consistent within a project.
 
 ## Bridging Conceptual and Technical: Branded Types
 
-There’s a gap the three-layer model exposes but doesn’t automatically close: a `Phone` and an
+There's a gap the three-layer model exposes but doesn't automatically close: a `Phone` and an
 `Email` are both `string` at the Technical layer, which means TypeScript will happily let you pass
 one where the other is expected.
 
@@ -499,24 +514,24 @@ compiler without changing the runtime value.
 ```ts
 type Brand<T, B> = T & { readonly __brand: B }
 
-type Phone = Brand<string, "Phone">
-type Email = Brand<string, "Email">
-type UserId = Brand<string, "UserId">
+type Phone = Brand<string, 'Phone'>
+type Email = Brand<string, 'Email'>
+type UserId = Brand<string, 'UserId'>
 
 function sendEmail(address: Email) { ... }
 
-const phone = "+1-555-0100" as Phone
+const phone = '+1-555-0100' as Phone
 sendEmail(phone) // TS error — Phone is not assignable to Email
 ```
 
-The `__brand` property doesn’t exist at runtime. It’s a compile-time label that forces you to be
+The `__brand` property doesn't exist at runtime. It's a compile-time label that forces you to be
 explicit about which conceptual type you have.
 
-**When it’s worth it:**
+**When it's worth it:**
 
-- IDs that look the same but aren’t interchangeable (`UserId` vs `PostId` vs `SessionId`)
+- IDs that look the same but aren't interchangeable (`UserId` vs `PostId` vs `SessionId`)
 - Validated strings that carry a domain guarantee (`Email`, `Phone`, `Slug`)
-- Numeric values with different units that shouldn’t mix (`Meters`, `Seconds`, `Percentage`)
+- Numeric values with different units that shouldn't mix (`Meters`, `Seconds`, `Percentage`)
 
 **With Zod:**
 
@@ -526,8 +541,8 @@ type Email = z.infer<typeof EmailSchema>
 // Email is now string & { readonly [z.BRAND]: { Email: Email } }
 ```
 
-Zod’s `.brand()` does this automatically. Once a value has passed validation, the TypeScript type
-carries proof that it’s a valid `Email` — not just a raw string.
+Zod's `.brand()` does this automatically. Once a value has passed validation, the TypeScript type
+carries proof that it's a valid `Email` — not just a raw string.
 
 ---
 
@@ -539,21 +554,21 @@ These are orthogonal to the type — they describe whether a field must _exist_,
 _contains_. Worth keeping separate because TypeScript treats `undefined` and `null` differently and
 so does Zod.
 
-| Term                | Meaning                            | TypeScript                                            | ----- |
-| ------------------- | ---------------------------------- | ----------------------------------------------------- | ----- |
-| Required            | Field must be present              | `field: T`                                            | ----- |
-| Optional            | Field may be absent entirely       | `field?: T`                                           | ----- |
-| Nullable            | Field exists but value may be null | `field: T                                             | null` |
-| Optional + Nullable | May be absent or null              | `field?: T                                            | null` |
-| Default             | Value assumed if missing           | Doesn’t imply required or optional — separate concern | ----  |
+| Term                | Meaning                            | TypeScript                                            |
+| ------------------- | ---------------------------------- | ----------------------------------------------------- |
+| Required            | Field must be present              | `field: T`                                            |
+| Optional            | Field may be absent entirely       | `field?: T`                                           |
+| Nullable            | Field exists but value may be null | `field: T \| null`                                    |
+| Optional + Nullable | May be absent or null              | `field?: T \| null`                                   |
+| Default             | Value assumed if missing           | Doesn't imply required or optional — separate concern |
 
 **`undefined` vs `null`:**
 
-- `undefined` — property was never set / doesn’t exist
+- `undefined` — property was never set / doesn't exist
 - `null` — property exists and was explicitly set to nothing
 
 In practice: a field that was never filled in is `undefined`. A field a user deliberately cleared is
-`null`. They’re semantically different. In Zod: `z.optional()` wraps with `| undefined`,
+`null`. They're semantically different. In Zod: `z.optional()` wraps with `| undefined`,
 `z.nullable()` wraps with `| null`, `z.nullish()` does both.
 
 ```ts
@@ -614,7 +629,7 @@ type Example = {
 
 - `requiredIf` — required when another field has a specific value
 - `dependsOn` — value depends on another field
-- `mutuallyExclusiveWith` — two fields can’t both be present
+- `mutuallyExclusiveWith` — two fields can't both be present
 - `computedFrom` — value is derived from other fields
 
 ---
@@ -633,7 +648,7 @@ The three layers describe a universal problem, not a TypeScript feature.
 **JSON Schema**
 
 - A JSON Schema definition is a Technical layer description — shape and constraints, not meaning.
-  The `"title"` and `"description"` fields gesture toward the Conceptual layer but don’t fully
+  The `"title"` and `"description"` fields gesture toward the Conceptual layer but don't fully
   encode it.
 
 **Home Assistant (YAML)**
