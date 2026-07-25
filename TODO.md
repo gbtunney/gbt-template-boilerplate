@@ -18,9 +18,12 @@ Core files/folders to copy into other repos when applying this template:
 
 ### Workspace / Nx
 
-- `nx.json`
-- `project.json`
+- `nx.json` — `extends` the shared preset plus repo-only keys. Do **not** add `namedInputs` or
+  `targetDefaults`: Nx merges a preset with a top-level shallow spread, so either would replace the
+  preset's wholesale.
 - `pnpm-workspace.yaml`
+- No `project.json` — the `root:*` target stubs live in the root `package.json` under `nx.targets`,
+  and their recipes come from the preset.
 
 ### TypeScript
 
