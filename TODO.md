@@ -107,21 +107,11 @@ Core files/folders to copy into other repos when applying this template:
 
 ### Future
 
+- [ ] TODO: add github releases support
+- update package name.
 - [ ] List of repositories for reference
 - [ ] Way of using something as a generic formatter (via actions?)
   - [ ] Upload file without committing ideally
   - [ ] Runs standard fixer (prettier, eslint, markdownlint)
   - [ ] Lists non-blocking lint errors
   - [ ] Dumps the file somewhere to be cut/pasted or make artifact
-
-### TODO Fix missing packages from other repo - list here
-
-- [x] [error] TODO Cannot find package 'typescript-eslint', remember to remove
-
-- [x] config/dist/.markdownlint.json That file isn’t “pretty JSON” right now — it’s aJSON string
-      that contains JSON (everything is wrapped in quotes and escaped). Toread it, you need to
-      decode the string, then pretty-print.
-
-- [ ] Fix `scope-commit`/`scope-affected` in `@snailicid3/config` to strip any package namespace
-      prefix, not just `@snailicid3/`. Example: `@gbt/drizzle-blueprint` should emit
-      `drizzle-blueprint`.
