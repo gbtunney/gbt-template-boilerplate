@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { fn } from 'storybook/test'
 
-import { Header } from './../components/Header.tsx'
+import { Header } from './../components/Header.jsx'
 
 const meta = {
     args: {

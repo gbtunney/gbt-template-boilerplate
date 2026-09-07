@@ -1,13 +1,8 @@
 {
-    "extends": "@snailicid3/config/tsconfig.typecheck",
+    "extends": "@snailicid3/config/tsconfig.react",
     "compilerOptions": {
-        //   "noEmit": true
-        "jsxFactory": null,
-        "jsxFragmentFactory": null,
-        "jsx": "react-jsx",
-        "lib": ["ES2022", "DOM", "DOM.Iterable"],
-        //   "types": ["vite/client"],
-        "allowImportingTsExtensions": true,
+        //otherwise .storybook will error
+        "rootDir": ".",
         "noEmit": true
     },
     "exclude": ["./node_modules"],
@@ -22,10 +17,6 @@
         "./src/**/*.mts",
         "./**/*.test.ts",
         "./**/*.test.mts",
-        "./**/*.test.cts",
-        //specifc to this project
-        "./.storybook/**/*.ts",
-        "./.storybook/**/*.cts",
-        "./.storybook/**/*.mts"
+        "./**/*.test.cts"
     ]
 }
