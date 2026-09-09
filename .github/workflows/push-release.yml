@@ -1,0 +1,53 @@
+# ─────────────────────────────────────────────────────────────
+# SYNCED from gbtunney/snailicid3-actions/templates/workflows — do not edit
+# here. Change the template and re-run bin/sync-callers.sh.
+# ─────────────────────────────────────────────────────────────
+# Runs only after merge to `main`.
+name: Push Release
+
+on:
+    push:
+        branches:
+            - main
+
+concurrency:
+    group: release-main
+    cancel-in-progress: false
+
+permissions:
+    actions: write
+    contents: write
+    pull-requests: write
+    id-token: write
+
+env:
+    HUSKY: 0
+    NPM_CONFIG_PROVENANCE: true
+    NX_NO_CLOUD: 'true'
+
+jobs:
+    release_plan:
+        name: release plan
+        uses: gbtunney/snailicid3-actions/.github/workflows/call-release-plan.yml@v2
+        secrets:
+            GH_PAT: ${{ secrets.GH_PAT }}
+            NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        with:
+            ref: ''
+            # Your repository's release policy, and the only line most repos
+            # need to touch:
+            #
+            #   manual  nothing releases automatically. Pushes to main observe
+            #           and report; releases happen through Dispatch Release
+            #           Plan. This is the default.
+            #   main    a push to main runs the release policy automatically.
+            #
+            # Switching to `main` does not weaken any guard: the real-release
+            # guard, the branch restriction and the secret contract are
+            # unchanged, and a package version missing from the registry is
+            # still inventory rather than authorization.
+            release_mode: manual
+            # Advanced. Leave these alone unless you know you need them.
+            lockfile_mode: frozen
+            node_version: lts/*
+            adapter_ref: v2

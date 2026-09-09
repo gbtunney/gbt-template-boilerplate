@@ -1,0 +1,142 @@
+# ─────────────────────────────────────────────────────────────
+# SYNCED from gbtunney/snailicid3-actions/templates/workflows — do not edit
+# here. Change the template and re-run bin/sync-callers.sh.
+# ─────────────────────────────────────────────────────────────
+name: Dispatch Pipeline
+
+on:
+    workflow_dispatch:
+        inputs:
+            mode:
+                description: Failure policy for reporting, check, and API routines
+                required: true
+                default: abort_on_error
+                type: choice
+                options:
+                    - report
+                    - abort_on_error
+
+            check_mode:
+                description: Check routine operation
+                required: true
+                default: check
+                type: choice
+                options:
+                    - fix
+                    - check
+                    - skip
+
+            api_report_mode:
+                description: API report operation
+                required: true
+                default: skip
+                type: choice
+                options:
+                    - update
+                    - check
+                    - skip
+
+            lockfile_mode:
+                description: Lockfile handling — frozen validates, reconcile updates explicitly
+                required: true
+                default: frozen
+                type: choice
+                options:
+                    - frozen
+                    - reconcile
+
+            build_mode:
+                description: Build behavior
+                required: true
+                default: abort_on_error
+                type: choice
+                options:
+                    - skip
+                    - report
+                    - abort_on_error
+
+            test_mode:
+                description: Test behavior
+                required: true
+                default: skip
+                type: choice
+                options:
+                    - skip
+                    - report
+                    - abort_on_error
+
+            docs_mode:
+                description: Docs-build behavior
+                required: true
+                default: skip
+                type: choice
+                options:
+                    - skip
+                    - report
+                    - abort_on_error
+
+            require_clean_repo:
+                description: Fail if repository becomes dirty
+                required: true
+                default: false
+                type: boolean
+
+            node_version:
+                description: Node version to run
+                required: true
+                default: '24'
+                type: choice
+                options:
+                    - '20'
+                    - '22'
+                    - '24'
+
+            upload_workspace_artifact:
+                description: Upload workspace artifact for an explicit downstream/debug operation
+                required: true
+                default: false
+                type: boolean
+
+            artifact_name_prefix:
+                description: Artifact name prefix
+                required: true
+                default: workspace
+                type: string
+
+permissions:
+    contents: read
+    actions: read
+
+jobs:
+    pipeline:
+        uses: gbtunney/snailicid3-actions/.github/workflows/call-pipeline.yml@v2
+        with:
+            mode: ${{ inputs.mode }}
+            check_mode: ${{ inputs.check_mode }}
+            api_report_mode: ${{ inputs.api_report_mode }}
+            lockfile_mode: ${{ inputs.lockfile_mode }}
+            build_mode: ${{ inputs.build_mode }}
+            test_mode: ${{ inputs.test_mode }}
+            docs_mode: ${{ inputs.docs_mode }}
+            require_clean_repo: ${{ inputs.require_clean_repo }}
+            node_version: ${{ inputs.node_version }}
+            upload_workspace_artifact: ${{ inputs.upload_workspace_artifact }}
+            artifact_name_prefix: ${{ inputs.artifact_name_prefix }}
+
+    summary:
+        name: Summarize pipeline outputs
+        runs-on: ubuntu-latest
+        needs: pipeline
+        if: ${{ always() }}
+        steps:
+            - name: Output summary
+              shell: bash
+              run: |
+                  {
+                    echo "## Pipeline dispatch results"
+                    echo ""
+                    echo "- pipeline result: \`${{ needs.pipeline.result }}\`"
+                    echo "- is_repo_dirty: \`${{ needs.pipeline.outputs.is_repo_dirty }}\`"
+                    echo "- artifact_uploaded: \`${{ needs.pipeline.outputs.artifact_uploaded }}\`"
+                    echo "- workspace_artifact_name: \`${{ needs.pipeline.outputs.workspace_artifact_name }}\`"
+                  } >> "$GITHUB_STEP_SUMMARY"

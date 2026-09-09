@@ -1,0 +1,98 @@
+# ─────────────────────────────────────────────────────────────
+# SYNCED from gbtunney/snailicid3-actions/templates/workflows — do not edit
+# here. Change the template and re-run bin/sync-callers.sh.
+# ─────────────────────────────────────────────────────────────
+name: Dispatch Release Plan
+
+on:
+    workflow_dispatch:
+        inputs:
+            ref:
+                description: Branch, tag, or SHA to inspect. Leave empty to inspect the triggering commit.
+                required: false
+                default: ''
+                type: string
+
+            mode:
+                description: observe reports the release plan and changes nothing; release executes it
+                required: true
+                default: observe
+                type: choice
+                options:
+                    - observe
+                    - release
+
+            allow_non_main:
+                description: Advanced. Allow a release away from main.
+                required: true
+                default: false
+                type: boolean
+
+            lockfile_mode:
+                description: pnpm-lock.yaml handling — frozen fails on a stale lockfile, reconcile repairs it
+                required: true
+                default: frozen
+                type: choice
+                options:
+                    - frozen
+                    - reconcile
+
+            node_version:
+                description: Node version to run the validation pipeline with.
+                required: true
+                default: lts/*
+                type: choice
+                options:
+                    - 'lts/*'
+                    - '20'
+                    - '22'
+                    - '24'
+
+permissions:
+    contents: read
+
+jobs:
+    release_plan:
+        permissions:
+            contents: write
+            actions: write
+            id-token: write
+            pull-requests: write
+        uses: gbtunney/snailicid3-actions/.github/workflows/call-release-plan.yml@v2
+        secrets:
+            GH_PAT: ${{ secrets.GH_PAT }}
+            NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        with:
+            ref: ${{ inputs.ref }}
+            # Manual dispatch is the explicit escape hatch, so it names the mode
+            # outright rather than inheriting a repository policy. It works
+            # under release_mode: manual and release_mode: main alike.
+            mode: ${{ inputs.mode }}
+            allow_non_main: ${{ inputs.allow_non_main }}
+            lockfile_mode: ${{ inputs.lockfile_mode }}
+            node_version: ${{ inputs.node_version }}
+            adapter_ref: v2
+
+    summary:
+        name: summarize release plan
+        runs-on: ubuntu-latest
+        needs: release_plan
+        if: ${{ always() }}
+
+        steps:
+            - name: 🧧 Release plan summary
+              shell: bash
+              run: |
+                  {
+                    echo "## Release plan dispatch"
+                    echo ""
+                    echo "- workflow result: \`${{ needs.release_plan.result }}\`"
+                    echo "- checked ref: \`${{ needs.release_plan.outputs.checked_ref }}\`"
+                    echo "- release phase: \`${{ needs.release_plan.outputs.release_phase }}\`"
+                    echo "- should_version: \`${{ needs.release_plan.outputs.should_version }}\`"
+                    echo "- execution: \`${{ needs.release_plan.outputs.execution }}\`"
+                    echo "- should_publish: \`${{ needs.release_plan.outputs.should_publish }}\`"
+                    echo "- should_skip: \`${{ needs.release_plan.outputs.should_skip }}\`"
+                    echo "- publish_candidates: \`${{ needs.release_plan.outputs.publish_candidates }}\`"
+                    echo "- workspace_artifact_name: \`${{ needs.release_plan.outputs.workspace_artifact_name }}\`"
+                  } >> "$GITHUB_STEP_SUMMARY"

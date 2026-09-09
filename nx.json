@@ -1,0 +1,5 @@
+{
+    "$schema": "./node_modules/nx/schemas/nx-schema.json",
+    "extends": "@snailicid3/config/nx-preset.json",
+    "analytics": true
+}

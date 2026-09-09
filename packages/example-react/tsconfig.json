@@ -1,0 +1,23 @@
+{
+    "extends": "@snailicid3/config/tsconfig.react",
+    "compilerOptions": {
+        //otherwise .storybook will error
+        "rootDir": ".",
+        "noEmit": true
+    },
+    "exclude": ["./node_modules"],
+    "files": ["package.json"],
+    "include": [
+        "./*.ts",
+        "./.storybook/**/*.ts",
+        "./*.cts",
+        "./*.mts",
+        "./src/**/*.tsx",
+        "./src/**/*.ts",
+        "./src/**/*.cts",
+        "./src/**/*.mts",
+        "./**/*.test.ts",
+        "./**/*.test.mts",
+        "./**/*.test.cts"
+    ]
+}

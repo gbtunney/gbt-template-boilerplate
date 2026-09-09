@@ -1,0 +1,16 @@
+{
+    "extends": "@snailicid3/config/tsconfig.react",
+    "compilerOptions": {},
+    "include": [
+        "./src/**/*.ts",
+        "./src/**/*.cts",
+        "./src/**/*.mts",
+        "./src/**/*.tsx"
+    ],
+    "exclude": [
+        "**/*.test.ts",
+        "**/*.test.tsx",
+        "**/*.test.mts",
+        "**/*.test.cts"
+    ]
+}
