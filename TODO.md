@@ -1,4 +1,4 @@
-# gbt-template-boilerplate
+# snailicid3-consumer-monorepo
 
 Shared repository for commonly used files. Includes things like:
 

@@ -1,6 +1,7 @@
 # Scaffold Procedure
 
-Clone consumer template repo: `git clone https://github.com/gbtunney/gbt-template-boilerplate.git`
+Clone consumer template repo:
+`git clone https://github.com/gbtunney/snailicid3-consumer-monorepo.git`
 
 > Require a clean repository
 

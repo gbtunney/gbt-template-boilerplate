@@ -1,9 +1,9 @@
-# gbt-template-boilerplate 🐌
+# snailicid3-consumer-monorepo 🐌
 
 > Reference [Snailicid3](https://github.com/gbtunney/snailicid3) consumer — a pnpm + Nx workspace
 > wired to the shared `@snailicid3` configuration and the shared GitHub Actions callers.
 
-[![Push Main](https://github.com/gbtunney/gbt-template-boilerplate/actions/workflows/push-main.yml/badge.svg)](https://github.com/gbtunney/gbt-template-boilerplate/actions/workflows/push-main.yml)
+[![Push Main](https://github.com/gbtunney/snailicid3-consumer-monorepo/actions/workflows/push-main.yml/badge.svg)](https://github.com/gbtunney/snailicid3-consumer-monorepo/actions/workflows/push-main.yml)
 [![license](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://prettier.io/)
 
@@ -82,8 +82,8 @@ under `templates/workflows/` and re-run its `bin/sync-callers.sh`:
 
 ```sh
 # from a snailicid3-actions checkout, with this repo cloned alongside
-bin/sync-callers.sh ../gbt-template-boilerplate
-bin/sync-callers.sh --check ../gbt-template-boilerplate # verify, write nothing
+bin/sync-callers.sh ../snailicid3-consumer-monorepo
+bin/sync-callers.sh --check ../snailicid3-consumer-monorepo # verify, write nothing
 ```
 
 ## Using this repository as a template
