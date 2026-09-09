@@ -1,233 +1,101 @@
-# @snailicide/build-config 🐌
+# gbt-template-boilerplate 🐌
 
-[![NPM](https://img.shields.io/npm/v/@snailicide/build-config)](http://www.npmjs.com/package/@snailicide/build-config)
-![License: MIT](https://img.shields.io/npm/l/@snailicide/build-config)
-[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
+> Reference [Snailicid3](https://github.com/gbtunney/snailicid3) consumer — a pnpm + Nx workspace
+> wired to the shared `@snailicid3` configuration and the shared GitHub Actions callers.
 
-_Provides repository with base configurations that can be extended in new packages._
+[![Push Main](https://github.com/gbtunney/gbt-template-boilerplate/actions/workflows/push-main.yml/badge.svg)](https://github.com/gbtunney/gbt-template-boilerplate/actions/workflows/push-main.yml)
+[![license](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
+[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://prettier.io/)
 
----
+This repository is both a **template** to copy into new projects and a **live consumer** that proves
+the shared configuration and workflows still work end to end. It holds no published packages of its
+own: the two packages under `packages/` are private examples.
 
-![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
-![ESLint](https://img.shields.io/badge/ESLint-4B3263?style=for-the-badge&logo=eslint&logoColor=white)
-![RollupJS](https://img.shields.io/badge/RollupJS-ef3335?style=for-the-badge&logo=rollup.js&logoColor=white)
-![NPM](https://img.shields.io/badge/NPM-%23CB3837.svg?style=for-the-badge&logo=npm&logoColor=white)
-![Vite](https://img.shields.io/badge/vite-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=white)
-![Vitest](https://img.shields.io/badge/vitest-6E9F18?style=for-the-badge&logo=vitest&logoColor=white)
-![Zod](https://img.shields.io/badge/zod-%233068b7.svg?style=for-the-badge&logo=zod&logoColor=white)
+## Packages
 
-### Repository
+| Package                                                       | Status  | Purpose                                                          |
+| ------------------------------------------------------------- | ------- | ---------------------------------------------------------------- |
+| [`@gbt/template-example-package`](./packages/example-package) | Private | Node/TypeScript library example — tsdown build, Vitest tests     |
+| [`@gbt/template-example-react`](./packages/example-react)     | Private | React + Vite example — Storybook, a11y, and Vitest browser tests |
 
-- **Github:**
-  [`@snailicide/build-config`](https://github.com/gbtunney/snailicide-monorepo/tree/main/packages/build-config)
-  • [`snailicide-monorepo`](https://github.com/gbtunney/snailicide-monorepo.git)
-- **CDN**: [jsdeliver](https://cdn.jsdelivr.net/npm/@snailicide/build-config/dist/index.min.js)
-- **Documentation**: [@snailicide/build-config docs](https://build-config.snailicide.com)
+## Shared configuration
 
-### Author
+| Package                                                                                      | Used for                                               |
+| -------------------------------------------------------------------------------------------- | ------------------------------------------------------ |
+| [`@snailicid3/config`](https://www.npmjs.com/package/@snailicid3/config)                     | ESLint, Prettier, markdownlint, commitlint, Nx presets |
+| [`@snailicid3/build-config`](https://www.npmjs.com/package/@snailicid3/build-config)         | tsdown build plans (`tsdown.config.ts`)                |
+| [`@snailicid3/storybook-config`](https://www.npmjs.com/package/@snailicid3/storybook-config) | Storybook `main` / `preview` entries                   |
 
-👤 **Gillian Tunney**
+## Requirements
 
-- [github](https://github.com/gbtunney)
-- [email](mailto:gbtunney@mac.com)
+- Node.js `>=20.0.0`
+- pnpm `>=10.30.2 <11` (`pnpm@10.30.2` is pinned in `package.json`)
 
-> Recommended package manager is [pnpm](http://pnpm.io)
->
-> [![PNPM](https://img.shields.io/badge/pnpm-%234a4a4a.svg?style=for-the-badge&logo=pnpm&logoColor=f69220)](http://pnpm.io)
+## Getting started
 
-## @snailicide/build-config 🐌
-
----
-
-This package provides reusable configuration files for commonly used tooling. It aims to
-define,extend, and manage build settings , ensuring consistency across different environments,
-projects and packages.
-
-### `@snailicide/build-config` _contains configurations for:_
-
-#### Build Tooling
-
-- [**commitlint**](https://commitlint.js.org/#/) • _Lint commit messages_
-- [**@commitlint/config-conventional**](https://www.npmjs.com/package/@commitlint/config-conventional)
-  • _Shareable commitlint configuration_
-- [**commitizen**](https://commitizen-tools.github.io/commitizen/) • _Command-line utility to create
-  commits with your rules._
-- [**eslint**](https://eslint.org/) • _Find and fix problems in your JavaScript code._
-- [**typescript-eslint**](https://typescript-eslint.io/getting-started/) • _Tooling that enables
-  ESLint and Prettier to support TypeScript._
-- [**npm**](https://www.npmjs.com/) • _Node package manager_
-- [**prettier**](https://prettier.io/) • _Opinionated code formatter_
-- [**rollup**](https://rollupjs.org/guide/en/) • _The JavaScript module bundler_
-- [**typedoc**](https://typedoc.org/) • _Documentation generator for TypeScript projects_
-- [**typedoc-plugin-markdown**](https://typedoc-plugin-markdown.org/) • _Generate TypeScript
-  documentation as markdown_
-- [**vite**](https://vitejs.dev/) • _Next generation frontend tooling_
-- [**vitest**](https://vitest.dev/) • _A Vite-native testing framework_
-- [**vitepress**](https://vitepress.dev/) • _Vite & Vue powered static site generator_
-
-#### Eslint Plugins
-
-- [**typescript-eslint**](https://typescript-eslint.io/packages/typescript-eslint/) • _Provides
-  linting rules for TypeScript code._
-- [**eslint-comments**](https://www.npmjs.com/package/eslint-plugin-eslint-comments) • _Enforces
-  best practices for ESLint directive comments._
-- [**filenames-simple**](https://www.npmjs.com/package/eslint-plugin-filenames-simple) • _Ensures
-  consistent and simple file naming conventions._
-- [**import**](https://www.npmjs.com/package/eslint-plugin-import) • _Supports linting of ES2015+
-  import/export syntax, and prevent issues with misspelling of file paths and import names._
-- [**jsdoc**](https://www.npmjs.com/package/eslint-plugin-jsdoc) • _Enforces JSDoc comments and
-  validates their syntax._
-- [**sort**](https://www.npmjs.com/package/eslint-plugin-sort) • _Provides rules for sorting various
-  code elements, including: exports, object properties, TypeScript type properties, and string
-  unions._
-- [**unused-imports**](https://www.npmjs.com/package/eslint-plugin-unused-imports) • _Identifies and
-  removes unused imports in your code._
-- [**vitest**](https://www.npmjs.com/package/eslint-plugin-vitest) • _Contains linting rules for
-  Vitest, a Vite-native testing framework._
-
-#### Rollup Plugins
-
-- [**rollup-plugin-ts**](https://www.npmjs.com/package/rollup-plugin-ts) • _Allows Rollup to bundle
-  declarations, and respects Browserslists, and enables integration with transpilers_
-- [**@rollup/plugin-json**](https://www.npmjs.com/package/@rollup/plugin-json) • _Allows Rollup to
-  import JSON files, converting them to ES6 modules._
-- [**@rollup/plugin-commonjs**](https://www.npmjs.com/package/@rollup/plugin-commonjs) • _Converts
-  CommonJS modules to ES6, so they can be included in a Rollup bundle._
-- [**@rollup/plugin-node-resolve**](https://www.npmjs.com/package/@rollup/plugin-node-resolve) •
-  _Locates and bundles third-party dependencies in `node_modules`._
-- [**rollup-plugin-node-externals**](https://www.npmjs.com/package/rollup-plugin-node-externals) •
-  _Excludes Node.js built-in modules, dependencies & devDependencies from the bundle._
-- [**rollup-plugin-polyfill-node**](https://www.npmjs.com/package/rollup-plugin-polyfill-node) •
-  _Provides polyfills for Node.js core modules when bundling for the browser._
-- [**@rollup/plugin-terser**](https://www.npmjs.com/package/@rollup/plugin-terser) • _Minifies the
-  generated Rollup bundle using Terser._
-
-## Installation
+Run every command from the repository root — never `cd` into a package:
 
 ```sh
-#pnpm
-$ pnpm add @snailicide/build-config -D
-
-#yarn
-$ yarn add @snailicide/build-config -D
-
-#npm
-$ npm install @snailicide/build-config --development
+pnpm install
+pnpm --filter=@gbt/root build
 ```
 
-## Examples
+## Common commands
 
-### Typescript
+| Task                | Command                              |
+| ------------------- | ------------------------------------ |
+| Build the workspace | `pnpm --filter=@gbt/root build`      |
+| Run all tests       | `pnpm --filter=@gbt/root test`       |
+| Run lint checks     | `pnpm --filter=@gbt/root check`      |
+| Apply lint fixes    | `pnpm --filter=@gbt/root fix`        |
+| Check Markdown      | `pnpm --filter=@gbt/root check:md`   |
+| Check API reports   | `pnpm --filter=@gbt/root api:check`  |
+| Open the Nx graph   | `pnpm --filter=@gbt/root inspect:nx` |
 
-```json5
-/* @file tsconfig.json */
+Target one package through its workspace name:
 
-{
-  extends: '@snailicide/build-config/tsconfig-base',
-  compilerOptions: {
-    outDir: './../types',
-    rootDir: '.',
-    declarationDir: './../types',
-  },
-  exclude: ['**/*.test.ts'],
-  include: ['**/*.ts', '**/*.cts', '**/*.mts'],
-}
+```sh
+pnpm --filter=@gbt/template-example-package build:nx
+pnpm --filter=@gbt/template-example-react build:storybook:nx
 ```
 
----
+## GitHub Actions
 
-### Eslint
+The workflows in `.github/workflows/` are **thin callers**. The implementation lives in
+[`gbtunney/snailicid3-actions`](https://github.com/gbtunney/snailicid3-actions) and is consumed
+through the moving `@v1` tag.
 
-```ts
-/* @file eslint.config.js */
+| Workflow                        | Trigger        | Purpose                                              |
+| ------------------------------- | -------------- | ---------------------------------------------------- |
+| `pr-checks.yml`                 | Pull request   | Release-state detection plus the validation pipeline |
+| `push-main.yml`                 | Push to `main` | Required validation pipeline                         |
+| `push-release.yml`              | Push to `main` | Release plan (dry run by default)                    |
+| `dispatch-pipeline.yml`         | Manual         | Run the pipeline with explicit routine modes         |
+| `dispatch-nx-targets.yml`       | Manual         | Run arbitrary Nx targets across all/affected         |
+| `dispatch-release-plan.yml`     | Manual         | Version and publish                                  |
+| `dispatch-release-state.yml`    | Manual         | Read-only release-state report                       |
+| `dispatch-smoke-matrix.yml`     | Manual         | Pipeline across the supported Node versions          |
+| `dispatch-workspace-update.yml` | Manual         | Apply fixes, docs, or API reports and commit         |
 
-import { EsLint } from '@snailicide/build-config'
+These files are **generated**. Do not edit them here — change the template in `snailicid3-actions`
+under `templates/workflows/` and re-run its `bin/sync-callers.sh`:
 
-const FLAT_CONFIG = await EsLint.flatConfig()
-
-export default [
-  ...FLAT_CONFIG,
-  {
-    ignores: ['packages/**/docs/**/*'],
-  },
-]
+```sh
+# from a snailicid3-actions checkout, with this repo cloned alongside
+bin/sync-callers.sh ../gbt-template-boilerplate
+bin/sync-callers.sh --check ../gbt-template-boilerplate # verify, write nothing
 ```
 
----
+## Using this repository as a template
 
-### Prettier
+[`TODO.md`](./TODO.md) holds the copy manifest — the files and folders to lift into a new repository
+— along with the outstanding template checklist. `notes/Scaffold Procedure.md` records the scaffold
+steps.
 
-```json5
-/* @file package.json (include prettier property) */
-{
-  prettier: '@snailicide/build-config/prettier',
-}
+## Repository layout
+
+```text
+.github/    Thin caller workflows, issue templates, and instructions
+notes/      Scaffold procedure, knowledge base, and scratch notes
+packages/   Private example packages
 ```
-
-**_OR_**
-
-```ts
-/** @file Prettier.config.cjs Extend the base configuration */
-const { Prettier, merge } = require('@snailicide/build-config')
-const options = {
-  plugins: ['@shopify/prettier-plugin-liquid'],
-  overrides: [
-    {
-      files: '*.liquid',
-      options: {
-        tabWidth: 2,
-      },
-    },
-  ],
-}
-module.exports = merge(Prettier.config, options)
-```
-
----
-
-### Typedoc
-
-```ts
-/** @file Typedoc.config.ts Basic Typedoc Config using Material Theme */
-import { typedoc } from '@snailicide/build-config'
-import url from 'node:url'
-const __dirname = url.fileURLToPath(new URL('.', import.meta.url))
-
-const typeDocConfig = typedoc.configMaterialTheme(__dirname, {})
-
-export default typeDocConfig
-```
-
-**_OR_**
-
-```ts
-/** @file Typedoc.config.ts Basic Typedoc Markdown Config */
-import path from 'node:path'
-import url from 'node:url'
-import { typedoc } from './types/index.js'
-const __dirname = url.fileURLToPath(new URL('.', import.meta.url))
-
-/** Custom properties to override */
-const newTypeDocConfig = {
-  githubPages: false,
-  useCodeBlocks: true,
-}
-const typeDocConfig = {
-  /** Markdown Configuration */
-  ...typedoc.configMarkdown(__dirname, newTypeDocConfig),
-
-  /** Entrypoint and excludes array is overwritten */
-  entryPoints: [
-    path.resolve(`${__dirname}/src/**/index.ts`),
-    path.resolve(`${__dirname}/src/utilities.ts`),
-  ],
-  exclude: [path.resolve(`${__dirname}/src/index.ts`)],
-}
-
-export default typeDocConfig
-```
-
-## Helpful Links
-
-- [Linting with Type Information | typescript-eslint](https://typescript-eslint.io/getting-started/typed-linting)
-- [How to quickly configure ESLint for import sorting | Medium](https://medium.com/@diballesteros/how-to-quickly-configure-eslint-for-import-sorting-3a4017bd4853)

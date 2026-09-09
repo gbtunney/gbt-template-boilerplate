@@ -1,5 +1,16 @@
 import type { Preview } from '@storybook/react-vite'
 
+/*
+ * This entry deliberately does not use `defineStorybookPreview` from
+ * `@snailicid3/storybook-config`. Storybook bundles `preview.ts` into the
+ * browser preview, and that helper reaches `@snailicid3/config`, whose barrel
+ * pulls in api-extractor, node-utils, and the ESLint stack. Vite externalizes
+ * node:fs / node:path / node:child_process for the browser and the preview
+ * build then fails. `main.ts` is loaded in Node, so it uses the shared config.
+ *
+ * Revisit once `@snailicid3/storybook-config` reaches its `defineConfig`
+ * helper without a Node-only import.
+ */
 const preview: Preview = {
     parameters: {
         a11y: {

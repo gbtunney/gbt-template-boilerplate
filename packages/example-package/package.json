@@ -38,13 +38,13 @@
         "@snailicid3/utils": "^0.1.0"
     },
     "devDependencies": {
-        "@snailicid3/build-config": "^0.1.0",
-        "@snailicid3/config": "^0.3.0",
-        "@types/node": "^26.0.1",
+        "@snailicid3/build-config": "^0.2.0",
+        "@snailicid3/config": "^0.3.2",
+        "@types/node": "^26.5.0",
         "cross-var": "^1.1.0",
         "tsdown": "^0.22.3",
         "typescript": "^6.0.3",
-        "vitest": "^4.1.9"
+        "vitest": "^5.0.0"
     },
     "type": "module",
     "author": {
@@ -54,10 +54,9 @@
     "license": "MIT",
     "repository": {
         "type": "git",
-        "url": "https://github.com/OWNER/REPOSITORY",
+        "url": "https://github.com/gbtunney/gbt-template-boilerplate",
         "directory": "packages/example-package"
     },
-    "packageManager": "pnpm@10.9.0",
     "files": [
         "CHANGELOG.md",
         "dist",

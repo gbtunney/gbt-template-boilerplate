@@ -9,6 +9,7 @@
     "files": ["package.json"],
     "include": [
         "./*.ts",
+        "./.storybook/**/*.ts",
         "./*.cts",
         "./*.mts",
         "./src/**/*.tsx",
