@@ -80,7 +80,7 @@
     "license": "MIT",
     "repository": {
         "type": "git",
-        "url": "https://github.com/gbtunney/gbt-template-boilerplate",
+        "url": "https://github.com/gbtunney/snailicid3-consumer-monorepo",
         "directory": "packages/example-react"
     },
     "files": [

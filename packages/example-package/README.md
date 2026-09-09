@@ -8,8 +8,8 @@
 ### Repository
 
 - **Github:**
-  [`@gbt/template-example-package`](https://github.com/gbtunney/gbt-template-boilerplate/tree/main/packages/example-package)
-  • [`gbt-template-boilerplate`](https://github.com/gbtunney/gbt-template-boilerplate)
+  [`@gbt/template-example-package`](https://github.com/gbtunney/snailicid3-consumer-monorepo/tree/main/packages/example-package)
+  • [`snailicid3-consumer-monorepo`](https://github.com/gbtunney/snailicid3-consumer-monorepo)
 
 ### Author
 

@@ -9,8 +9,8 @@
 ### Repository
 
 - **Github:**
-  [`@gbt/template-example-react`](https://github.com/gbtunney/gbt-template-boilerplate/tree/main/packages/example-react)
-  • [`gbt-template-boilerplate`](https://github.com/gbtunney/gbt-template-boilerplate)
+  [`@gbt/template-example-react`](https://github.com/gbtunney/snailicid3-consumer-monorepo/tree/main/packages/example-react)
+  • [`snailicid3-consumer-monorepo`](https://github.com/gbtunney/snailicid3-consumer-monorepo)
 
 ### Author
 
