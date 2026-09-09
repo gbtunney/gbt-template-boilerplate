@@ -117,6 +117,9 @@ importers:
             '@snailicid3/config':
                 specifier: ^0.3.2
                 version: 0.3.2(@types/node@26.5.0)(@typescript-eslint/eslint-plugin@8.70.0(@typescript-eslint/parser@8.70.0(eslint@10.10.0(jiti@2.7.0))(typescript@6.0.3))(eslint@10.10.0(jiti@2.7.0))(typescript@6.0.3))(@typescript-eslint/utils@8.70.0(eslint@10.10.0(jiti@2.7.0))(typescript@6.0.3))(jiti@2.7.0)(nx@23.2.0)(ramda@0.32.0)(typescript@6.0.3)(vitest@5.0.0)
+            '@snailicid3/storybook-config':
+                specifier: ^0.1.3
+                version: 0.1.3(@types/node@26.5.0)(@typescript-eslint/eslint-plugin@8.70.0(@typescript-eslint/parser@8.70.0(eslint@10.10.0(jiti@2.7.0))(typescript@6.0.3))(eslint@10.10.0(jiti@2.7.0))(typescript@6.0.3))(@typescript-eslint/utils@8.70.0(eslint@10.10.0(jiti@2.7.0))(typescript@6.0.3))(jiti@2.7.0)(nx@23.2.0)(ramda@0.32.0)(typescript@6.0.3)(vitest@5.0.0)
             '@storybook/addon-a11y':
                 specifier: ^10.6.0
                 version: 10.6.0(storybook@10.6.0(@types/react@19.2.18)(prettier@3.9.6)(react@19.2.8))
@@ -2625,6 +2628,12 @@ packages:
         resolution:
             {
                 integrity: sha512-PmcJLFq3GGOxfOL7fhdQQU88wxfJqE2nOBYacWtHUanwORu/9EKSXWmxlM3LtpC3FmmuIVwh2QpqjZNJjSsduQ==,
+            }
+
+    '@snailicid3/storybook-config@0.1.3':
+        resolution:
+            {
+                integrity: sha512-drGBTWrcVlNx+1g6rbN84rdUtw9GS7E93m2btMg37+BYZQvHpmSg77xx1mHFDLoxppIi/Jd5ZOIpwT53JWvA8w==,
             }
 
     '@snailicid3/types@0.0.3':
@@ -12878,6 +12887,20 @@ snapshots:
             zod: 4.5.4
         transitivePeerDependencies:
             - ramda
+
+    '@snailicid3/storybook-config@0.1.3(@types/node@26.5.0)(@typescript-eslint/eslint-plugin@8.70.0(@typescript-eslint/parser@8.70.0(eslint@10.10.0(jiti@2.7.0))(typescript@6.0.3))(eslint@10.10.0(jiti@2.7.0))(typescript@6.0.3))(@typescript-eslint/utils@8.70.0(eslint@10.10.0(jiti@2.7.0))(typescript@6.0.3))(jiti@2.7.0)(nx@23.2.0)(ramda@0.32.0)(typescript@6.0.3)(vitest@5.0.0)':
+        dependencies:
+            '@snailicid3/config': 0.3.2(@types/node@26.5.0)(@typescript-eslint/eslint-plugin@8.70.0(@typescript-eslint/parser@8.70.0(eslint@10.10.0(jiti@2.7.0))(typescript@6.0.3))(eslint@10.10.0(jiti@2.7.0))(typescript@6.0.3))(@typescript-eslint/utils@8.70.0(eslint@10.10.0(jiti@2.7.0))(typescript@6.0.3))(jiti@2.7.0)(nx@23.2.0)(ramda@0.32.0)(typescript@6.0.3)(vitest@5.0.0)
+        transitivePeerDependencies:
+            - '@types/node'
+            - '@typescript-eslint/eslint-plugin'
+            - '@typescript-eslint/utils'
+            - jiti
+            - nx
+            - ramda
+            - supports-color
+            - typescript
+            - vitest
 
     '@snailicid3/types@0.0.3':
         dependencies:
