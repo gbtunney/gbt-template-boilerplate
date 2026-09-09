@@ -71,10 +71,14 @@ Also fixed in passing: `.storybook/*.ts` sat outside every tsconfig project, so 
 parse those files. Pre-existing; it only surfaced because these files changed. The `include` globs
 never matched the directory despite the `//otherwise .storybook will error` comment.
 
-## 2. Blocked by Actions v1
+## 2. Actions v2 (resolved)
 
-`v1` is stale. It points at `fb4f2dd` (PR #21, 2026-08-22), 20 commits behind `main`, and
-`call-release-observe.yml` does not exist on it.
+`v1` points at `fb4f2dd` (PR #21, 2026-08-22) and does not carry `call-release-observe.yml`. It
+stays there, unchanged, for consumers that have not migrated.
+
+The finished semantic contract is published as **`v2` → `b2e63bb`** (annotated `v2.0.0` at the same
+commit). This repository's callers are now synced to that generation; the interim v1-compatible
+repair described below is history.
 
 **The caller sync itself was not blocked.** snailicid3's checked-in callers are still the pre-#30
 generation and pass only inputs `v1` declares; every caller job's inputs and secrets were checked
@@ -89,12 +93,16 @@ The finished contract is **not** published by moving `v1`. Moving a major alias 
 contract is what broke this repository in the first place. It is published as a new major tag, `v2`,
 leaving `v1` in place for consumers that have not migrated — see snailicid3-actions#31.
 
-Once `v2.0.0` and `v2` exist at `b2e63bb` and #31 is merged, both repos re-sync together:
+`v2.0.0` and `v2` are now published at `b2e63bb`, and both consumers have re-synced — snailicid3#282
+and this PR. Re-sync either repo with:
 
 ```sh
 bin/sync-callers.sh ../snailicid3 ../gbt-template-boilerplate
 bin/sync-callers.sh --check ../snailicid3 ../gbt-template-boilerplate
 ```
+
+All nine caller files are byte-identical between the two consumers, so there is no
+repository-specific divergence left in the generated workflows.
 
 ### Confirmed by a live run
 
@@ -150,10 +158,9 @@ snailicid3's own example package likewise declares no api targets. Only publishe
 That caveat is now cleared: PR #57's `pr-checks` run is green and `mergeable_state` is clean, so the
 caller set is proven rather than assumed.
 
-The remaining sequencing point is Actions `v2`. The callers here are the interim v1-compatible
-generation; the finished semantic contract ships as `v2` (snailicid3-actions#31), and this repo
-re-syncs to it once that tag exists. The repository is green either way — the v2 sync is a
-follow-up, not a prerequisite for the squash and move.
+That sequencing point is also cleared. `v2` is published and this repository is synced to the
+finished semantic caller generation, matching snailicid3. Nothing about the caller set is
+provisional any more.
 
 ## Left for Gillian, untouched
 
