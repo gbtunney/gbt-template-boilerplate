@@ -11,7 +11,7 @@
         "test:nx": "nx run $npm_package_name:test",
         "clean:nx": "nx run $npm_package_name:clean",
         "chromatic:nx": "nx run $npm_package_name:chromatic",
-        "test:chromatic": "pnpm exec dotenv -e .env.local -- pnpm chromatic:nx"
+        "test:chromatic": "pnpm exec dotenv -- pnpm chromatic:nx"
     },
     "nx": {
         "targets": {
@@ -29,7 +29,9 @@
                 ]
             },
             "build:storybook": {},
-            "chromatic": {},
+            "chromatic": {
+                "command": "pnpm exec chromatic --project-token=$CHROMATIC_PROJECT_TOKEN_EXAMPLE_REACT --build-script-name build:storybook:nx"
+            },
             "test": {},
             "test:watch": {},
             "lint": {},
