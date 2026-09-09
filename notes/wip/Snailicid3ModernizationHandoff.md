@@ -85,7 +85,11 @@ What _is_ blocked is the post-#30 generation on `main`: its `pr-checks.yml` call
 **snailicid3 is itself deliberately drifted for exactly this reason.** So this repo was synced from
 `3c7d151` (pre-#30) — the newest template generation whose contract matches `v1`.
 
-After `v1` promotion, both repos re-sync from `main` templates together:
+The finished contract is **not** published by moving `v1`. Moving a major alias onto an incompatible
+contract is what broke this repository in the first place. It is published as a new major tag, `v2`,
+leaving `v1` in place for consumers that have not migrated — see snailicid3-actions#31.
+
+Once `v2.0.0` and `v2` exist at `b2e63bb` and #31 is merged, both repos re-sync together:
 
 ```sh
 bin/sync-callers.sh ../snailicid3 ../gbt-template-boilerplate
@@ -143,9 +147,13 @@ Validation is green from the repository root: frozen install, build, check, test
 `api:check` runs zero tasks, which is **correct** — neither example package is published, and
 snailicid3's own example package likewise declares no api targets. Only published packages do.
 
-The caveat: no green _CI_ run exists yet. Get one PR green here first, so the move does not inherit
-an unproven caller set. Ideally promote `v1` before or soon after — the callers work against today's
-`v1`, but this repo stays a generation behind the finished implementation until then.
+That caveat is now cleared: PR #57's `pr-checks` run is green and `mergeable_state` is clean, so the
+caller set is proven rather than assumed.
+
+The remaining sequencing point is Actions `v2`. The callers here are the interim v1-compatible
+generation; the finished semantic contract ships as `v2` (snailicid3-actions#31), and this repo
+re-syncs to it once that tag exists. The repository is green either way — the v2 sync is a
+follow-up, not a prerequisite for the squash and move.
 
 ## Left for Gillian, untouched
 
