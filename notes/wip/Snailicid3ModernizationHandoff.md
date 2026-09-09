@@ -92,11 +92,23 @@ bin/sync-callers.sh ../snailicid3 ../gbt-template-boilerplate
 bin/sync-callers.sh --check ../snailicid3 ../gbt-template-boilerplate
 ```
 
-### Not verified by a live run
+### Confirmed by a live run
 
-Workflow dispatch returns `403` for this session, and the branch has no PR, so `pr-checks` has not
-fired. The new callers are verified against the `v1` contract **statically, not by a live run**. The
-first PR or dispatch will confirm it.
+PR #57's `pr-checks` run is the first successful run on this repository since the break — it
+resolved `call-pipeline.yml@v1` and `call-detect-release-state.yml@v1` at `fb4f2dd` and came back
+green:
+
+| Check                  | Result                          |
+| ---------------------- | ------------------------------- |
+| `merge main`           | success                         |
+| `detect release state` | success                         |
+| `pending changeset`    | skipped — no pending changesets |
+| `pending release`      | skipped — no publish candidates |
+| `main / pipeline`      | success                         |
+| `required`             | success                         |
+
+The two skipped jobs are the router working as designed: the detector reported no pending changesets
+and no publish candidates, so `should_skip` selected the plain validation pipeline.
 
 ### Separate: snailicid3 needs a re-sync
 
