@@ -51,7 +51,8 @@ pnpm --filter=@gbt/template-example-react build:storybook:nx # static Storybook
 pnpm --filter=@gbt/template-example-react test:nx            # Vitest
 ```
 
-Chromatic runs through its own Nx target and needs `CHROMATIC_PROJECT_TOKEN` in `.env.local`:
+Chromatic runs through its own Nx target and needs `CHROMATIC_PROJECT_TOKEN_EXAMPLE_REACT` in `.env`
+at the repository root — see `.env.example`:
 
 ```sh
 pnpm --filter=@gbt/template-example-react test:chromatic
